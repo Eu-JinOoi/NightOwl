@@ -1,8 +1,3 @@
-<?php
-       $ip=$_SERVER['REMOTE_ADDR'];
-?>
-
-
 <!doctype html>
 <html>
 <head>
@@ -274,13 +269,8 @@
 	}
 	#menu
 	{
-		
-		/*width:60%;*/
-		/*min-width:100px;
-		max-width:200px;*/
 		width:200px;
 		height:100%;
-		/*background-color:rgba(75,0,130,.7);*/
 		background-color:rgba(47,47,47,.98);
 		color:#FFF;
 		z-index:55555;
@@ -315,8 +305,6 @@
 		color:#777;
 		font-weight:300;
 		border-top:1px solid #777;
-		
-		
 	}
 	.storeOpen
 	{
@@ -366,6 +354,11 @@
 		  border-top: 0.4em double #FFF;
 		  border-bottom: 0.125em solid #FFF;
 	}
+	#locationDesc
+	{
+		/*font-size:15px;*/
+		color:#777;
+	}
 </style>
 </head>
 
@@ -375,9 +368,6 @@
         	SomeName
     </div>
 	<div id='maincont'>
-    	<div id='dumpdata'  style="color:#000; font-size:10px;">
-        </div>
-		<!--<div id='menu' ontouchstart="touchStart(event,'menu');" ontouchend="touchEnd(event);" ontouchmove="touchMove(event);" ontouchcancel="touchCancel(event);">-->
         <div id='menu'>
             <div class="menuitem" id='Nhome' onClick="loadPg('home');">Home</div>
             <div class="menuitem" id='Nadd' onClick="loadPg('addplace');">Add a Place</div>
