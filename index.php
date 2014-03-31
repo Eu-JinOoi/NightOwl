@@ -37,6 +37,18 @@
 		$("#menu").stop().animate({"left":"-60%"});
 		menuState=0;  
 	}
+	function loadingStart()
+	{
+		//$("#maincont").css("background-color","rgb(23,23,23)");
+		//$("#maincont").css("opacity",".5");
+		//$("#maincont").css("z-index","77777");
+	}
+	function loadingStop()
+	{
+		//$("#maincont").css("background-color","rgb(255,255,255)");
+		//$("#maincont").css("opacity","0");
+		//$("#maincont").css("z-index","0");
+	}
 	function dump(obj) {
     var out = '';
     for (var i in obj) {
@@ -83,6 +95,7 @@
     });
 	function loadPg(page)
 	{
+		loadingStart();
 		var isOk=true;
 		if(page=="")
 			page=document.URL.split('#')[1];
@@ -114,6 +127,7 @@
 		  }
 		  location.hash=page;
 		  //var param = document.URL.split('#')[1];
+		  loadingStop();
 		  closeMenu();
 		});
 	}
