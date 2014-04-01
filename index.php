@@ -243,6 +243,7 @@
 		overflow-x: hidden;	
 		z-index:44444;
 		background-color:#EEE;
+		height:110%;
 	}
 	div.card
 	{
@@ -373,12 +374,16 @@
 		/*font-size:15px;*/
 		color:#777;
 	}
+	#fixScroll
+	{
+		height:100px;	
+	}
 </style>
 </head>
 
 <body id='bodytag'>
 	<div id='brandingBar' >
-        	<div style="width:48px; height:48px; position:absolute; top:2px; left:0; cursor:pointer;" id='menubutton'><div class='border-menu'>&nbsp;</div></div>
+        	<a id='menubutton'><div style="width:48px; height:48px; position:absolute; top:2px; left:0; cursor:pointer;" ><div class='border-menu'>&nbsp;</div></div></a>
         	SomeName
     </div>
 	<div id='maincont'>
@@ -396,6 +401,7 @@
         <div id='scrollableContent'>
         	
         </div>
+        <div id='fixScroll'>&nbsp;<!--This is to fix the URL bar hiding on Chrome. I know this is a terrible fix but it works--></div>
     </div>
 </body>
 </html>
