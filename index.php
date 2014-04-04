@@ -69,6 +69,11 @@
 		  //alert("location: " + document.location + ", state: " + JSON.stringify(event.state));
 		  loadPg(event.state.hash.substr(1))
 		};
+		$(".day").click(function(e)
+		{
+			alert ("DAY");	
+		});
+		
 		/*$(document).mousedown(function(e) {
 			if(e.target.className=="menuitem")
 			{
@@ -191,193 +196,32 @@
 			}
 		//});	
 	}
+	function daySelect(dow)
+	{
+		var dsow=new Array("M","T","W","R","F","S","U");
+		for(i=0; i<7; i++)
+		{
+			if(dsow[i]==dow)
+			{
+				$("#day"+dow).css("background-color","#19649f");
+				$("#day"+dsow[i]).css("color","#FFFFFF");
+				$("#h_"+dow).css("opacity","1");
+			}
+			else
+			{
+				$("#day"+dsow[i]).css("background-color","#2f2f2f");
+				$("#day"+dsow[i]).css("color","#777777");
+				$("#h_"+dsow[i]).css("opacity","0");
+			}
+			
+		}
+	}
 	
 </script>
 <link href='http://fonts.googleapis.com/css?family=Roboto:900,800,700,600,500,400,300,200,100' rel='stylesheet' type='text/css'>
+<link href='/resources/no.css' rel="stylesheet" type="text/css">
 <style>
-	*
-	{
-		font-family: 'Roboto', sans-serif;
-		font-weight:200;
-		text-shadow:none;	
-	}
-	body,html
-	{
-		margin:0px;
-		padding:0px;
-		height:100%;	
-		width:100%;
-	}
-	#maincont
-	{
-		height:100%;
-		width:100%;	
-		color:#FFF;
-		padding-top:0px;
-		maring-top:0px;	
-		position:relative;
-		
-		overflow-x: hidden;	
-		
-	}
-	#brandingBar
-	{
-		width:100%;
-		height:40px;
-		line-height:40px;
-		font-size:30px;
-		/*background-color:#4B0082;*/
-		background-color:#196A9F;
-		color:#FFF;	
-		text-align:center;
-		position:fixed;
-		top:0px;
-		z-index:99999;
-	}
-	#scrollableContent
-	{
-		position:relative;
-		padding:20px;
-		padding-top:55px;
-		overflow-y: scroll;
-		overflow-x: hidden;	
-		z-index:44444;
-		background-color:#EEE;
-		height:110%;
-	}
-	div.card
-	{
-		margin:auto;
-		margin-top:10px;
-		margin-bottom:10px;
-		width: 97%;
-		height: 100px;
-		background-color: #CCE;
-		z-index:44445;
-		position:relative;
-		cursor:pointer;
-	}
-	div.card_result, div.card_dynamic
-	{
-		margin:auto;
-		margin-top:10px;
-		margin-bottom:10px;
-		width: 95%;
-		background-color: #CCE;
-		z-index:44445;
-		position:relative;
-		cursor:pointer;
-	}
-	div.cardOverlay
-	{
-		/*padding-left:10px;
-		padding-top:5px;*/
-		font-size:38px;
-		position:absolute;
-		bottom:5px;
-		right:10px;
-	}
-	div.card_result_icons
-	{
-		float:left;	
-		margin:15px;
-	}
-	#menu
-	{
-		width:200px;
-		height:100%;
-		background-color:rgba(47,47,47,.98);
-		color:#FFF;
-		z-index:55555;
-		position:fixed;
-		top:40px;
-		left:-60%;
-	}
-	.menubottom
-	{
-		position:fixed;
-		width:inherit;
-		bottom:0;	
-	}
-	.menuitem
-	{
-		display:block;
-		height:40px;
-		line-height:40px;
-		font-size:24px;
-		border-bottom:1px solid #FFF;	
-		cursor:pointer;
-		position:relative;
-	}
-	.menuitemr
-	{
-		display:block;
-		height:24px;
-		line-height:24px;
-		font-size:16px;	
-		cursor:pointer;
-		position:relative;
-		color:#777;
-		font-weight:300;
-		border-top:1px solid #777;
-	}
-	.storeOpen
-	{
-		color:#090;
-		font-weight:800;
-		margin-top:0px;
-		margin-bottom:0px;
-	}
-	address
-	{
-		font-color:#CCC;
-		font-style:normal;
-	}
-	table
-	{
-		border-collapse:collapse;
-		border-spacing:10px 50px;
-		width:100%;	
-	}
-	th
-	{
-		font-weight:500;
-	}
-	.dth
-	{
-		opacity:0;	
-	}
-	tr
-	{
-		/*outline: thin solid white;*/
-		border-bottom:1px solid white;
-	}
-	/*These next two classes are for the menu button*/
-	.border-menu 
-	{
-  		position: relative;
-  		padding-left: 1.25em;
-	}
-	.border-menu:before 
-	{
-		  content: "";
-		  position: absolute;
-		  top: 0.25em;
-		  left: 0;
-		  width: 1em;
-		  height: 0.135em;
-		  border-top: 0.4em double #FFF;
-		  border-bottom: 0.125em solid #FFF;
-	}
-	#locationDesc
-	{
-		/*font-size:15px;*/
-		color:#777;
-	}
-	#fixScroll
-	{
-		height:100px;	
-	}
+	
 </style>
 </head>
 
@@ -388,20 +232,24 @@
     </div>
 	<div id='maincont'>
         <div id='menu'>
+        	<!--<div class="menuitem" id='Nsearch' style=""><input type='text' id='searchBox' name='searchBox' style=" border:1px solid white; text-shadow:none; margin:0; background-color:rgba(0,0,0,0); border-radius:0; max-width:150px; color:#FFF;">Go</div>-->
             <div class="menuitem" id='Nhome' onClick="loadPg('home');">Home</div>
             <div class="menuitem" id='Nadd' onClick="loadPg('addplace');">Add a Place</div>
             
             <div class='menuitem' id='Nlocation'>Location <img src='no_location.png' id='Ilocation' alt='location not found' style='margin-top:6px; position:absolute; right:5px;'/></div>
             
             <div class="menubottom">
-            <div class='menuitemr'>Settings</div>
-           	<div class='menuitemr'>&copy; 2014 - Company Name</div>
+                <div class='menuitemr'>Settings</div>
+                <div class='menuitemr'>&copy; 2014 - Company Name</div>
             </div>
         </div>
         <div id='scrollableContent'>
         	
         </div>
-        <div id='fixScroll'>&nbsp;<!--This is to fix the URL bar hiding on Chrome. I know this is a terrible fix but it works--></div>
+        <?php
+		/*
+        <div id='fixScroll'>&nbsp;<!--This is to fix the URL bar hiding on Chrome. I know this is a terrible fix but it works--></div>*/
+		?>
     </div>
 </body>
 </html>
