@@ -22,6 +22,28 @@
         
     </div>
     <div class="card_dynamic" style="color:#000;">
+    	<h3>New Hours Card</h3>
+        <div id='dayDiv'>
+        	<span class='day' id='dayM' onClick="daySelect('M');">M</span>
+            <span class='day' id='dayT' onClick="daySelect('T');">T</span>
+            <span class='day' id='dayW' onClick="daySelect('W');">W</span>
+            <span class='day' id='dayR' onClick="daySelect('R');">T</span>
+            <span class='day' id='dayF' onClick="daySelect('F');">F</span>
+            <span class='day' id='dayS' onClick="daySelect('S');">S</span>
+            <span class='day' id='dayU' onClick="daySelect('U');">S</span>
+            <div style="clear:both;">&nbsp;</div>
+        </div>
+        <div id='hourDiv'>
+        	<div class='hours' id='h_M'>
+                Open<input type="time" id='nho_m' name='nho_m'>
+                Close<input type="time" id='nhc_m' name='nhc_m'>
+                <span class='dth'><br>Drive Thru<input type="time" id='dt_m' name='dt_m'></span>
+            </div>
+        </div>
+        
+        
+    </div>
+    <div class="card_dynamic" style="color:#000;">
     	<h3>Business Hours</h3>
         <table style="border-spacing:10px;">
         	<tr>

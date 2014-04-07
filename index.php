@@ -12,6 +12,7 @@
 	var counter=0;
 	var currentLocation_full=null;
 	var menuState=1;//0 is away 1 is in frame
+	var searchState=0;//0 is away, 1 is shown
 	function toggleMenu()
 	{
 		
@@ -64,6 +65,9 @@
 			toggleMenu();
 		  	
 		});
+		$("#searchbutton").click(function(){
+			toggleSearch();
+		});
 		loadPg("");
 		window.onpopstate = function(event) {
 		  //alert("location: " + document.location + ", state: " + JSON.stringify(event.state));
@@ -98,6 +102,23 @@
 		
 		
     });
+	function toggleSearch()
+	{
+		if(searchState==0)
+		{
+			$("#scrollableContent").stop().animate({"padding-top":"0px"});
+			$("#searchRegion").stop().animate({"padding-top":"55px","height":"40px"});
+			$("#searchRegion").html("<div style='margin:auto;'><input type='text' id='searchBox' name='searchBox' style='width:75%; float:left;'> <div id='doSearch'>Search</div></div>");
+			searchState=1;
+		}
+		else
+		{
+			$("#scrollableContent").stop().animate({"padding-top":"55px"});
+			$("#searchRegion").stop().animate({"padding-top":"0px","height":"0px"});
+			$("#searchRegion").html("");
+			searchState=0;	
+		}
+	}
 	function loadPg(page)
 	{
 		loadingStart();
@@ -227,8 +248,19 @@
 
 <body id='bodytag'>
 	<div id='brandingBar' >
-        	<a id='menubutton'><div style="width:48px; height:48px; position:absolute; top:2px; left:0; cursor:pointer;" ><div class='border-menu'>&nbsp;</div></div></a>
-        	SomeName
+        	<a id='menubutton'>
+            	<div style="width:48px; height:48px; position:absolute; top:2px; left:0; cursor:pointer;" >
+                	<div class='border-menu'>&nbsp;</div>
+                </div>
+            </a>
+        	240&deg;
+            <a id='searchbutton'>
+            	<div style="width:48px; height:48px; position:absolute; top:-5px; right:0; cursor:pointer;">
+                	<img src='search.png' alt='Search' style='max-height:48px; max-width:48px;' />
+                </div>
+            </a>
+    </div>
+	<div id='searchRegion'>
     </div>
 	<div id='maincont'>
         <div id='menu'>
