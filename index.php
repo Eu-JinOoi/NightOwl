@@ -20,22 +20,27 @@
 			{
 				//$("#menu").css("left","0%");
 				$("#menu").stop().animate({"left":"0%"});
+				$("#searchRegion").stop().animate({"padding-left":"215px"});
 				menuState=1;
 			}
 			else
 			{
 				$("#menu").stop().animate({"left":"-60%"});
+				$("#searchRegion").stop().animate({"padding-left":"15px"});
 				menuState=0;  
 			}
 	}
 	function openMenu()
 	{
 		$("#menu").stop().animate({"left":"0%"});
+		$("#searchRegion").stop().animate({"padding-left":"215px"});
+		//,"padding-left":"215px"
 		menuState=1;
 	}
 	function closeMenu()
 	{
 		$("#menu").stop().animate({"left":"-60%"});
+		$("#searchRegion").stop().animate({"padding-left":"15px"});
 		menuState=0;  
 	}
 	function loadingStart()
@@ -119,9 +124,18 @@
 			searchState=0;	
 		}
 	}
+	function startLoading()
+	{
+		closeMenu();
+		//alert("Loading Started");	
+		var loadingMessages=new Array("Loading...","Looking for good places for you!");
+		var r=Math.floor((Math.random()*100)%loadingMessages.length);
+		$("#scrollableContent").html("<div style='text-align:center; margin-left:auto; margin-right:auto;'>"+loadingMessages[r]+"<br><img src='/ajax-loader.gif'></div>");
+		
+	}
 	function loadPg(page)
 	{
-		loadingStart();
+		startLoading();
 		var isOk=true;
 		if(page=="")
 			page=document.URL.split('#')[1];
@@ -136,6 +150,7 @@
 								  //alert('page not found');
 								  isOk=false;
 							   }
+							
 						   },
 			  async: false
 			  //async should be false to ensure that it loads the home page if it dne
@@ -152,9 +167,7 @@
 				fillLocation();  
 		  }
 		  location.hash=page;
-		  //var param = document.URL.split('#')[1];
-		  loadingStop();
-		  closeMenu();
+		  //var param = document.URL.split('#')[1];	
 		});
 	}
 	function getLocation()
