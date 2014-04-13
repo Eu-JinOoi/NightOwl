@@ -48,7 +48,6 @@
 		z-index:44444;
 		background-color:#EEE;
 		height:100%;
-		width:100%;
 	}
 	div.card
 	{
@@ -190,7 +189,9 @@
 	}
 	#fixScroll
 	{
-		height:100px;	
+		/*height:100px;	*/
+		z-index:44444;
+		background-color:#EEE;
 	}
 	#dayDiv
 	{

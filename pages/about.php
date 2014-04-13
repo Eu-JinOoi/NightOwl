@@ -38,15 +38,15 @@
     <div style='margin:auto; text-align:center; position:relative;'>
     <ul>
     	<li>
-    	        <img src='/resources/images/about/bryanyoshinaga.png' style='width:100px;'>
+    	        <img src='/resources/images/about/bryanyoshinaga.png' style='width:90%;'>
 	            <h2 style="color:#000;">Bryan Yoshinaga</h2>
         </li>
        	<li>
-                <img src='/resources/images/about/eu-jinooi.png' style='width:100px;'>
+                <img src='/resources/images/about/eu-jinooi.png' style='width:90%;'>
                 <h2 style="color:#000;">Eu-Jin Ooi</h2>
         </li>
         <li>
-            <img src='/resources/images/about/kendallreiter.png' style='width:100px;'>
+            <img src='/resources/images/about/kendallreiter.png' style='width:90%;'>
             <h2 style="color:#000;">Kendall Reiter</h2>
         </li>
      </ul>

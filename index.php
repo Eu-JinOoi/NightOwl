@@ -43,18 +43,6 @@
 		$("#searchRegion").stop().animate({"padding-left":"15px"});
 		menuState=0;  
 	}
-	function loadingStart()
-	{
-		//$("#maincont").css("background-color","rgb(23,23,23)");
-		//$("#maincont").css("opacity",".5");
-		//$("#maincont").css("z-index","77777");
-	}
-	function loadingStop()
-	{
-		//$("#maincont").css("background-color","rgb(255,255,255)");
-		//$("#maincont").css("opacity","0");
-		//$("#maincont").css("z-index","0");
-	}
 	function dump(obj) {
     var out = '';
     for (var i in obj) {
@@ -78,35 +66,13 @@
 		window.onpopstate = function(event) {
 		  //alert("location: " + document.location + ", state: " + JSON.stringify(event.state));
 		  loadPg(event.state.hash.substr(1))
+		  //Add in fix for scrolling
 		};
 		$(".day").click(function(e)
 		{
 			alert ("DAY");	
 		});
-		
-		/*$(document).mousedown(function(e) {
-			if(e.target.className=="menuitem")
-			{
-				$("#"+e.target.id).css('background-color','#4B0082');
-			}
-		});
-		$(document).mouseup(function(e) {
-            if(e.target.className=="menuitem")
-			{
-				$("#"+e.target.id).css('background-color','');
-				//dump(e.target);
-			}
-        });
-		
-		$(".menuitem").on("tap",function()
-		{
-			$(this).delay(2000).css('background-color','');
-			$(this).css('background-color','#4B0082');
 			
-		});*/
-		
-		
-		
     });
 	function toggleSearch()
 	{
@@ -128,10 +94,9 @@
 	function startLoading()
 	{
 		closeMenu();
-		//alert("Loading Started");	
 		var loadingMessages=new Array("Loading...","Looking for good places for you!");
 		var r=Math.floor((Math.random()*100)%loadingMessages.length);
-		$("#scrollableContent").html("<div style='text-align:center; margin-left:auto; margin-right:auto;'>"+loadingMessages[r]+"<br><img src='/ajax-loader.gif'></div>");
+		$("#scrollableContent").html("<div style='text-align:center; margin-left:auto; margin-right:auto;'>"+loadingMessages[r]+"<br><img src='ajax-loader.gif'></div>");
 		
 	}
 	function loadPg(page)
@@ -162,6 +127,7 @@
 		  }
 		$.get( "pages/"+page+".php", function( data ) {
 		  //alert( "Data Loaded: " + data );
+		  data=data+"<div id='fixScroll'>&nbsp;</div>";
 		  $("#scrollableContent").html(data);
 		  if(page=="addplace")
 		  {
@@ -169,6 +135,12 @@
 		  }
 		  location.hash=page;
 		  //var param = document.URL.split('#')[1];	
+		  //Check Doc Height and scrollable;
+		  var dheight=$(document).height();
+		  var scheight=$("#scrollableContent").height();
+		  var nheight=dheight-scheight-50+150;
+		  //alert(dheight+"/"+scheight+"/"+nheight);
+		  $("#fixScroll").css("height",nheight+"px");
 		});
 	}
 	function getLocation()
@@ -286,16 +258,16 @@
             
             <div class="menubottom">
                 <div class='menuitemr'>Settings</div>
-                <div class='menuitemr'>&copy; 2014 - Company Name</div>
+                <div class='menuitemr' onClick="loadPg('about');">&copy; 2014 - Company Name</div>
             </div>
         </div>
         <div id='scrollableContent'>
         	
         </div>
-        <?php
-		/*
-        <div id='fixScroll'>&nbsp;<!--This is to fix the URL bar hiding on Chrome. I know this is a terrible fix but it works--></div>*/
-		?>
+		<!--<div id='fixScroll'>&nbsp;This is to fix the URL bar hiding on Chrome. I know this is a terrible fix but it works</div>-->
+		
+        
+
     </div>
 </body>
 </html>
