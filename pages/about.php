@@ -12,21 +12,24 @@
 	}
 	ul
 	{
-		display:inline;	
-		list-style-type: none;
-		margin:0;
 		padding:0;
+		list-style:none;
+		list-style-type:none;
 	}
 	ul li
 	{
 		display:inline;	
-		max-width:200px;
+		width:33%;
+		list-style:none;
+		list-style-type:none;
+		position:relative;
 		text-decoration:none;	
+		float:left;
 	}
 	li h2
 	{
-		display:inline;
 		margin:none;
+		
 	}
 </style>
 <div style='margin:auto; max-width:90%; text-align:center; position:relative;'>
@@ -35,12 +38,12 @@
     <div style='margin:auto; text-align:center; position:relative;'>
     <ul>
     	<li>
-            <img src='/resources/images/about/bryanyoshinaga.png' style='width:100px;'>
-            <h2 style="color:#000;">Bryan Yoshinaga</h2>
+    	        <img src='/resources/images/about/bryanyoshinaga.png' style='width:100px;'>
+	            <h2 style="color:#000;">Bryan Yoshinaga</h2>
         </li>
        	<li>
-            <img src='/resources/images/about/eu-jinooi.png' style='width:100px;'>
-            <h2 style="color:#000;">Eu-Jin Ooi</h2>
+                <img src='/resources/images/about/eu-jinooi.png' style='width:100px;'>
+                <h2 style="color:#000;">Eu-Jin Ooi</h2>
         </li>
         <li>
             <img src='/resources/images/about/kendallreiter.png' style='width:100px;'>
