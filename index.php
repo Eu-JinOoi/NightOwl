@@ -25,7 +25,7 @@
 			}
 			else
 			{
-				$("#menu").stop().animate({"left":"-60%"});
+				$("#menu").stop().animate({"left":"-65%"});
 				$("#searchRegion").stop().animate({"padding-left":"15px"});
 				menuState=0;  
 			}
@@ -66,6 +66,7 @@
 	}
 	$(document).ready(function(e) {
 		getLocation();
+		//$("#scrollableContent").css("height",$(window).height()*1.01);
 		$( "#menubutton" ).click(function() {
 			toggleMenu();
 		  	
