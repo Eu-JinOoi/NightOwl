@@ -1,3 +1,6 @@
+<?php
+sleep(10);
+?>
 <style>
 	.person
 	{

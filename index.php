@@ -96,18 +96,21 @@
 		closeMenu();
 		var loadingMessages=new Array("Loading...","Looking for good places for you!");
 		var r=Math.floor((Math.random()*100)%loadingMessages.length);
-		$("#scrollableContent").html("<div style='text-align:center; margin-left:auto; margin-right:auto;'>"+loadingMessages[r]+"<br><img src='ajax-loader.gif'></div>");
+		$("#scrollableContent").html("<div style='text-align:center; margin-left:auto; margin-right:auto; color:#000;'>"+loadingMessages[r]+"<br><img src='ajax-loader.gif'></div>");
 		
 	}
 	function loadPg(page)
 	{
 		startLoading();
 		var isOk=true;
+		var isLoaded=false;
 		if(page=="")
 			page=document.URL.split('#')[1];
+		if(page==undefined)
+			page="home";
 		$.ajax(
 		  {
-			  type: "get",
+			  type: "script",
 			  url: "pages/"+page+'.php',
 			  cache: false,
 			  statusCode: {
@@ -118,30 +121,51 @@
 							   }
 							
 						   },
-			  async: false
+			  async: false,
 			  //async should be false to ensure that it loads the home page if it dne
+			  success: function(e)
+			  {
+				  var data=e+"<div id='fixScroll'>&nbsp;</div>";
+				  $("#scrollableContent").html(data);
+				  if(page=="addplace")
+				  {
+						fillLocation();  
+				  }
+				  location.hash=page;
+				  //var param = document.URL.split('#')[1];	
+				  //Check Doc Height and scrollable;
+				  var dheight=$(document).height();
+				  var scheight=$("#scrollableContent").height();
+				  var nheight=dheight-scheight-50+150;
+				  //alert(dheight+"/"+scheight+"/"+nheight);
+				  $("#fixScroll").css("height",nheight+"px");
+				  isLoaded=true;
+			  }
 		  });
-		  if(isOk==false)
+		  if(isLoaded==false)
 		  {
-		 		page="home";
+			  if(isOk==false)
+			  {
+					page="home";
+			  }
+			$.get( "pages/"+page+".php", function( data ) {
+			  //alert( "Data Loaded: " + data );
+			  data=data+"<div id='fixScroll'>&nbsp;</div>";
+			  $("#scrollableContent").html(data);
+			  if(page=="addplace")
+			  {
+					fillLocation();  
+			  }
+			  location.hash=page;
+			  //var param = document.URL.split('#')[1];	
+			  //Check Doc Height and scrollable;
+			  var dheight=$(document).height();
+			  var scheight=$("#scrollableContent").height();
+			  var nheight=dheight-scheight-50+150;
+			  //alert(dheight+"/"+scheight+"/"+nheight);
+			  $("#fixScroll").css("height",nheight+"px");
+			});
 		  }
-		$.get( "pages/"+page+".php", function( data ) {
-		  //alert( "Data Loaded: " + data );
-		  data=data+"<div id='fixScroll'>&nbsp;</div>";
-		  $("#scrollableContent").html(data);
-		  if(page=="addplace")
-		  {
-				fillLocation();  
-		  }
-		  location.hash=page;
-		  //var param = document.URL.split('#')[1];	
-		  //Check Doc Height and scrollable;
-		  var dheight=$(document).height();
-		  var scheight=$("#scrollableContent").height();
-		  var nheight=dheight-scheight-50+150;
-		  //alert(dheight+"/"+scheight+"/"+nheight);
-		  $("#fixScroll").css("height",nheight+"px");
-		});
 	}
 	function getLocation()
 	{
@@ -254,10 +278,10 @@
             <div class="menuitem" id='Nhome' onClick="loadPg('home');">Home</div>
             <div class="menuitem" id='Nadd' onClick="loadPg('addplace');">Add a Place</div>
             
-            <div class='menuitem' id='Nlocation'>Location <img src='no_location.png' id='Ilocation' alt='location not found' style='margin-top:6px; position:absolute; right:5px;'/></div>
+            <div class='menuitem' id='Nlocation' style="cursor:default;">Location <img src='no_location.png' id='Ilocation' alt='location not found' style='margin-top:6px; position:absolute; right:5px;'/></div>
             
             <div class="menubottom">
-                <div class='menuitemr'>Settings</div>
+                <div class='menuitemr' onClick="loadPg('settings');">Settings</div>
                 <div class='menuitemr' onClick="loadPg('about');">&copy; 2014 - Company Name</div>
             </div>
         </div>
