@@ -96,7 +96,12 @@
 		closeMenu();
 		var loadingMessages=new Array("Loading...","Looking for good places for you!");
 		var r=Math.floor((Math.random()*100)%loadingMessages.length);
-		$("#scrollableContent").html("<div style='text-align:center; margin-left:auto; margin-right:auto; color:#000;'>"+loadingMessages[r]+"<br><img src='ajax-loader.gif'></div>");
+		$("#scrollableContent").html("<div style='text-align:center; margin-left:auto; margin-right:auto; color:#000;'>"+loadingMessages[r]+"<br><img src='ajax-loader.gif'></div>"+"<div id='fixScroll'>&nbsp;</div>");
+		var dheight=$(document).height();
+		var scheight=$("#scrollableContent").height();
+		var nheight=dheight-scheight-50+150;
+		 //alert(dheight+"/"+scheight+"/"+nheight);
+		$("#fixScroll").css("height",nheight+"px");
 		
 	}
 	function loadPg(page)
