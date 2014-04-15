@@ -104,12 +104,18 @@
 		position:fixed;
 		top:40px;
 		left:-60%;
+		overflow-y:scroll;
+		overflow-x:hidden;
+		
 	}
 	.menubottom
 	{
-		position:fixed;
-		width:inherit;
+		/*
+		position:absolute;
 		bottom:0;	
+		*/
+		width:inherit;
+		position:relative;
 		z-index:55556;
 	}
 	.menuitem

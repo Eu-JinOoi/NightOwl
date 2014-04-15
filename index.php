@@ -281,6 +281,10 @@
         <div id='menu'>
         	<!--<div class="menuitem" id='Nsearch' style=""><input type='text' id='searchBox' name='searchBox' style=" border:1px solid white; text-shadow:none; margin:0; background-color:rgba(0,0,0,0); border-radius:0; max-width:150px; color:#FFF;">Go</div>-->
             <div class="menuitem" id='Nhome' onClick="loadPg('home');">Home</div>
+            <div class="menuitem" id='Nhome' onClick="loadPg('food');">Food</div>
+            <div class="menuitem" id='Nhome' onClick="loadPg('entertainment');">Entertainment</div>
+            <div class="menuitem" id='Nhome' onClick="loadPg('shopping');">Shopping</div>
+            <div class="menuitem" id='Nhome' onClick="loadPg('special');">Events</div>
             <div class="menuitem" id='Nadd' onClick="loadPg('addplace');">Add a Place</div>
             
             <div class='menuitem' id='Nlocation' style="cursor:default;">Location <img src='no_location.png' id='Ilocation' alt='location not found' style='margin-top:6px; position:absolute; right:5px;'/></div>
