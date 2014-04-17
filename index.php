@@ -13,6 +13,9 @@
 	var currentLocation_full=null;
 	var menuState=1;//0 is away 1 is in frame
 	var searchState=0;//0 is away, 1 is shown
+	var selfLat=0;
+	var selfLong=0;
+	var locSet=false;
 	function toggleMenu()
 	{
 		
@@ -54,6 +57,7 @@
 	}
 	$(document).ready(function(e) {
 		getLocation();
+		
 		//$("#scrollableContent").css("height",$(window).height()*1.01);
 		$( "#menubutton" ).click(function() {
 			toggleMenu();
@@ -71,8 +75,7 @@
 		$(".day").click(function(e)
 		{
 			alert ("DAY");	
-		});
-			
+		});			
     });
 	function toggleSearch()
 	{
@@ -192,6 +195,9 @@
 		$("#Ilocation").prop("src","location.png");
 		$("#Ilocation").prop("alt","Location Found");
 		//$("#locationmsg").html(" - Location Found");
+		selfLat=position.coords.latitude;
+		selfLong=position.coords.longitude;
+		locSet=true;
 		$.getJSON("https://maps.googleapis.com/maps/api/geocode/json?latlng="+position.coords.latitude+","+position.coords.longitude+"&sensor=true",function( data ) {
 			//alert( "Data Loaded: " + data );
 			//dump(data);
@@ -212,7 +218,9 @@
 				ndata+="3";	
 			}
 			currentLocation_full=data.results[0].formatted_address;
-			$("#Nlocation").html(ndata);
+			$("#Nlocation").html(ndata);		
+			var d=getDistance(34.05482801970849,-118.2381269802915);
+			alert("You are currently "+Math.round(d*100)/100+" mi from L.A. Union Station");
 		});
 	}
 	function fillLocation()
@@ -251,6 +259,24 @@
 			}
 			
 		}
+	}
+	Number.prototype.toRad = function() {
+   		return this * Math.PI / 180;
+	}
+	function getDistance(destLat,destLong)
+	{
+		var R = 6371; // km
+		
+		var dLat = (selfLat-destLat).toRad();
+		var dLon = (selfLong-destLong).toRad();
+		var lat1 = selfLat.toRad();
+		var lat2 = destLat.toRad();
+		//alert(selfLat+","+selfLong+" "+destLat+","+destLong+" "+dLat+","+dLon+"\n"+lat1+","+lat2);
+		var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2); 
+		var c = 2 * Math.atan2(Math.sqrt(Math.abs(a)), Math.sqrt(Math.abs(1-a))); 
+		var d = R * c;
+		//alert(a+"\n"+c+"\n"+d);
+		return d*0.62137;//.62137 converts to mi
 	}
 	
 </script>
