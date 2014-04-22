@@ -289,6 +289,7 @@
 </script>
 <link href='http://fonts.googleapis.com/css?family=Roboto:900,800,700,600,500,400,300,200,100' rel='stylesheet' type='text/css'>
 <link href='/resources/no.css' rel="stylesheet" type="text/css">
+<link href='/resources/openclose.css' rel="stylesheet" type="text/css">
 <style>
 	
 </style>
