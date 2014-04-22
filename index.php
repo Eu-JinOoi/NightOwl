@@ -107,6 +107,24 @@
 		$("#fixScroll").css("height",nheight+"px");
 		
 	}
+	function ucwords(str) {
+	  //  discuss at: http://phpjs.org/functions/ucwords/
+	  // original by: Jonas Raoni Soares Silva (http://www.jsfromhell.com)
+	  // improved by: Waldo Malqui Silva
+	  // improved by: Robin
+	  // improved by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+	  // bugfixed by: Onno Marsman
+	  //    input by: James (http://www.james-bell.co.uk/)
+	  //   example 1: ucwords('kevin van  zonneveld');
+	  //   returns 1: 'Kevin Van  Zonneveld'
+	  //   example 2: ucwords('HELLO WORLD');
+	  //   returns 2: 'HELLO WORLD'
+	
+	  return (str + '')
+		.replace(/^([a-z\u00E0-\u00FC])|\s+([a-z\u00E0-\u00FC])/g, function($1) {
+		  return $1.toUpperCase();
+		});
+	}
 	function loadPg(page)
 	{
 		startLoading();
@@ -124,6 +142,16 @@
 			$("#category").prop("disabled",false);
 			$("#category").css("cursor","pointer");
 			$("#siteTitle").css({"position":"absolute","right":"50px","top":"0"});
+			$("select option").each(function(){
+			  if ($(this).val() == page)
+			  {
+				$(this).attr("selected","selected");
+				$("#category-button span").first().html($(this).text());
+			  }
+			  else
+			    $(this).removeAttr("selected");
+			});
+			
 		}
 		else
 		{
@@ -159,10 +187,15 @@
 				  //var param = document.URL.split('#')[1];	
 				  //Check Doc Height and scrollable;
 				  var dheight=$(document).height();
+				  var wheight=$(window).height();
 				  var scheight=$("#scrollableContent").height();
-				  var nheight=dheight-scheight-50+150;
+				  //var nheight=dheight-scheight-50+150;
+				  var nheight=wheight+50;
+				  //alert(dheight+" "+wheight+" "+scheight);
 				  //alert(dheight+"/"+scheight+"/"+nheight);
-				  $("#fixScroll").css("height",nheight+"px");
+				 $("#fixScroll").css("height",nheight+"px");
+				  //alert(nheight+" "+dheight+" ");
+				  $(".menubottom").css("bottom",nheight-125+"px");
 				  isLoaded=true;
 			  }
 		  });
@@ -188,6 +221,8 @@
 			  var nheight=dheight-scheight-50+150;
 			  //alert(dheight+"/"+scheight+"/"+nheight);
 			  $("#fixScroll").css("height",nheight+"px");
+			  //alert(nheight+" "+dheight+" ");
+			  $(".menubottom").css("bottom",nheight-125+"px");
 			});
 		  }
 	}
@@ -313,9 +348,9 @@
             </a>
             	<div style="width:175px; position:absolute; top:2px; left:55px; margin-top:-22px; height:48px;" id="dropDownArea">
           		<select name="category" id='category' style="margin:0;" onChange="loadPg(this.value.toLowerCase());">
-                	<option>Food</option>
-                    <option>Entertainment</option>
-                    <option>Shopping</option>
+                	<option value='food'>Food</option>
+                    <option value='entertainment'>Entertainment</option>
+                    <option value='shopping'>Shopping</option>
                     <option value='special'>Special Events</option>
                 </select>
                 </div>
