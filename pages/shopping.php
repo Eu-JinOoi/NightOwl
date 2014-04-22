@@ -1,1 +1,3 @@
-<h1>This is Shopping!</h1>
+<?php
+echo file_get_contents("http://nightowl.eu-niverse.com/pages/results.php?page=shopping");
+?>

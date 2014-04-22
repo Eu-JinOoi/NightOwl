@@ -116,6 +116,13 @@
 			page=document.URL.split('#')[1];
 		if(page==undefined)
 			page="home";
+		/*var getArgs="";
+		var loadpage=page;
+		if(page=="entertainment" || page=="food" || page=="shopping" || page=="special")
+		{
+			getArgs="?page="+page;
+			loadpage="results";	
+		}*/
 		$.ajax(
 		  {
 			  type: "script",
