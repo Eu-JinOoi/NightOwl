@@ -117,12 +117,21 @@
 		if(page==undefined)
 			page="home";
 		/*var getArgs="";
-		var loadpage=page;
+		var loadpage=page;*/
 		if(page=="entertainment" || page=="food" || page=="shopping" || page=="special")
 		{
-			getArgs="?page="+page;
-			loadpage="results";	
-		}*/
+			$("#dropDownArea").css("opacity","1");
+			$("#category").prop("disabled",false);
+			$("#category").css("cursor","pointer");
+			$("#siteTitle").css({"position":"absolute","right":"50px","top":"0"});
+		}
+		else
+		{
+			$("#dropDownArea").css("opacity","0");	
+			$("#category").prop("disabled",true);
+			$("#category").css("cursor","default");
+			$("#siteTitle").removeAttr("style");
+		}
 		$.ajax(
 		  {
 			  type: "script",
@@ -227,7 +236,7 @@
 			currentLocation_full=data.results[0].formatted_address;
 			$("#Nlocation").html(ndata);		
 			var d=getDistance(34.05482801970849,-118.2381269802915);
-			alert("You are currently "+Math.round(d*100)/100+" mi from L.A. Union Station");
+			//alert("You are currently "+Math.round(d*100)/100+" mi from L.A. Union Station");
 		});
 	}
 	function fillLocation()
@@ -302,7 +311,15 @@
                 	<div class='border-menu'>&nbsp;</div>
                 </div>
             </a>
-        	240&deg;
+            	<div style="width:175px; position:absolute; top:2px; left:55px; margin-top:-22px; height:48px;" id="dropDownArea">
+          		<select name="category" id='category' style="margin:0;" onChange="loadPg(this.value.toLowerCase());">
+                	<option>Food</option>
+                    <option>Entertainment</option>
+                    <option>Shopping</option>
+                    <option value='special'>Special Events</option>
+                </select>
+                </div>
+        	<span id='siteTitle'>240&deg;</span>
             <a id='searchbutton'>
             	<div style="width:48px; height:48px; position:absolute; top:-5px; right:0; cursor:pointer;">
                 	<img src='search.png' alt='Search' style='max-height:48px; max-width:48px;' />
@@ -315,10 +332,10 @@
         <div id='menu'>
         	<!--<div class="menuitem" id='Nsearch' style=""><input type='text' id='searchBox' name='searchBox' style=" border:1px solid white; text-shadow:none; margin:0; background-color:rgba(0,0,0,0); border-radius:0; max-width:150px; color:#FFF;">Go</div>-->
             <div class="menuitem" id='Nhome' onClick="loadPg('home');">Home</div>
-            <div class="menuitem" id='Nhome' onClick="loadPg('food');">Food</div>
+            <!--<div class="menuitem" id='Nhome' onClick="loadPg('food');">Food</div>
             <div class="menuitem" id='Nhome' onClick="loadPg('entertainment');">Entertainment</div>
             <div class="menuitem" id='Nhome' onClick="loadPg('shopping');">Shopping</div>
-            <div class="menuitem" id='Nhome' onClick="loadPg('special');">Events</div>
+            <div class="menuitem" id='Nhome' onClick="loadPg('special');">Events</div>-->
             <div class="menuitem" id='Nadd' onClick="loadPg('addplace');">Add a Place</div>
             
             <div class='menuitem' id='Nlocation' style="cursor:default;">Location <img src='no_location.png' id='Ilocation' alt='location not found' style='margin-top:6px; position:absolute; right:5px;'/></div>
@@ -336,5 +353,12 @@
         
 
     </div>
+    <script>
+	$(window).load(function()
+	{
+		$("#category-button").css({"background-color":"#196a9f","color":"#FFF","border-color":"#104a6f"});
+	});
+	</script>
 </body>
+
 </html>
