@@ -87,14 +87,14 @@
 		{
 			$("#scrollableContent").stop().animate({"padding-top":"0px"});
 			$("#searchRegion").stop().animate({"padding-top":"55px","height":"40px"});
-			$("#searchRegion").html("<div style='margin:auto;'><input type='text' id='searchBox' name='searchBox' style='width:75%; float:left;'> <div id='doSearch'>Search</div></div>");
+			//$("#searchRegion").html("<div style='margin:auto;'><input type='text' id='searchBox' name='searchBox' style='width:75%; float:left;'> <div id='doSearch'>Search</div></div>");
 			searchState=1;
 		}
 		else
 		{
 			$("#scrollableContent").stop().animate({"padding-top":"55px"});
-			$("#searchRegion").stop().animate({"padding-top":"0px","height":"0px"});
-			$("#searchRegion").html("");
+			$("#searchRegion").stop().animate({"padding-top":"-10px","height":"0px"});
+			//$("#searchRegion").html("");
 			searchState=0;	
 		}
 	}
@@ -366,6 +366,7 @@
             </a>
     </div>
 	<div id='searchRegion'>
+    	<div style='margin:auto;'><input type='text' id='searchBox' name='searchBox' style='width:75%; float:left;' data-role="none"><div id='doSearch'>Search</div></div>
     </div>
 	<div id='maincont'>
         <div id='menu'>
