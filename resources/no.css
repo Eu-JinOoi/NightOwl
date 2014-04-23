@@ -65,6 +65,7 @@
 		z-index:44445;
 		position:relative;
 		cursor:pointer;
+		color:#FFF;
 	}
 	div.card_result, div.card_dynamic
 	{

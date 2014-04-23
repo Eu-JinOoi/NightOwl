@@ -350,7 +350,7 @@
                 	<div class='border-menu'>&nbsp;</div>
                 </div>
             </a>
-            	<div style="width:175px; position:absolute; top:2px; left:55px; margin-top:-22px; height:48px;" id="dropDownArea">
+            	<div style="width:160px; position:absolute; top:2px; left:55px; margin-top:-22px; height:48px;" id="dropDownArea">
           		<select name="category" id='category' style="margin:0;" onChange="loadPg(this.value.toLowerCase());">
                 	<option value='food'>Food</option>
                     <option value='entertainment'>Entertainment</option>
