@@ -166,8 +166,8 @@
 		}
 		$.ajax(
 		  {
-			  type: "script",
-			  url: "pages/"+page+'.php',
+			  type: "post",
+			  url: "pages/"+page+'.php?lat='+selfLat+'&long='+selfLong,
 			  cache: false,
 			  statusCode: {
 							404: function ()
@@ -235,6 +235,7 @@
 		if (navigator.geolocation)
 		{
 			navigator.geolocation.getCurrentPosition(showPosition);
+			
 		}
 		else
 		{
@@ -252,7 +253,7 @@
 		//$("#locationmsg").html(" - Location Found");
 		selfLat=position.coords.latitude;
 		selfLong=position.coords.longitude;
-		locSet=true;
+		
 		$.getJSON("https://maps.googleapis.com/maps/api/geocode/json?latlng="+position.coords.latitude+","+position.coords.longitude+"&sensor=true",function( data ) {
 			//alert( "Data Loaded: " + data );
 			//dump(data);
@@ -277,6 +278,7 @@
 			var d=getDistance(34.05482801970849,-118.2381269802915);
 			//alert("You are currently "+Math.round(d*100)/100+" mi from L.A. Union Station");
 		});
+		locSet=true;
 	}
 	function fillLocation()
 	{

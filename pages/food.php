@@ -1,3 +1,5 @@
+<?php
+/*
 <div class="card_result" ><!--make page a /v[enue]/venueid-->
 	<div style="float:left; margin:15px;">
            	<h3 style="margin-top:0px; margin-bottom:0px;">In-N-Out</h3>
@@ -26,3 +28,7 @@
     	<img src='http://www.in-n-out.com/images_stores/store_138.gif' style="max-width:50%; float:right;">
         <div style="clear:both;">&nbsp;</div>
 </div>
+*/
+echo $_GET['lat'].",".$_GET['long'];
+echo file_get_contents("http://nightowl.eu-niverse.com/pages/results.php?page=food&lat=".$_GET['lat']."&long=".$_GET['long']);
+?>
