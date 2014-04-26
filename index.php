@@ -155,7 +155,24 @@
 			  else
 			    $(this).removeAttr("selected");
 			});
-			
+			$.getJSON("pages/resultsJSON.php",{category: page, latitude: selfLat, longitude: selfLong})
+				.done(function(json){
+					console.log(json);
+					if(json.status=="success")
+					{
+						alert("Continue");
+						isLoaded=true;
+					}
+					else
+					{
+						alert("GPS Data incorrect");	
+					}
+				})
+				.fail(function(jqxhr, textStatus,error)
+				{
+					alert("Correct! You failed.");		
+				});
+				
 		}
 		else
 		{
@@ -163,46 +180,47 @@
 			$("#category").prop("disabled",true);
 			$("#category").css("cursor","default");
 			$("#siteTitle").removeAttr("style");
-		}
-		$.ajax(
-		  {
-			  type: "post",
-			  url: "pages/"+page+'.php?lat='+selfLat+'&long='+selfLong,
-			  cache: false,
-			  statusCode: {
-							404: function ()
-							   {
-								  //alert('page not found');
-								  isOk=false;
-							   }
-							
-						   },
-			  async: false,
-			  //async should be false to ensure that it loads the home page if it dne
-			  success: function(e)
+		
+			$.ajax(
 			  {
-				  var data=e+"<div id='fixScroll'>&nbsp;</div>";
-				  $("#scrollableContent").html(data);
-				  if(page=="addplace")
+				  type: "post",
+				  url: "pages/"+page+'.php?lat='+selfLat+'&long='+selfLong,
+				  cache: false,
+				  statusCode: {
+								404: function ()
+								   {
+									  //alert('page not found');
+									  isOk=false;
+								   }
+								
+							   },
+				  async: false,
+				  //async should be false to ensure that it loads the home page if it dne
+				  success: function(e)
 				  {
-						fillLocation();  
+					  var data=e+"<div id='fixScroll'>&nbsp;</div>";
+					  $("#scrollableContent").html(data);
+					  if(page=="addplace")
+					  {
+							fillLocation();  
+					  }
+					  location.hash=page;
+					  //var param = document.URL.split('#')[1];	
+					  //Check Doc Height and scrollable;
+					  var dheight=$(document).height();
+					  var wheight=$(window).height();
+					  var scheight=$("#scrollableContent").height();
+					  //var nheight=dheight-scheight-50+150;
+					  var nheight=wheight+50;
+					  //alert(dheight+" "+wheight+" "+scheight);
+					  //alert(dheight+"/"+scheight+"/"+nheight);
+					 $("#fixScroll").css("height",nheight+"px");
+					  //alert(nheight+" "+dheight+" ");
+					  $(".menubottom").css("bottom",nheight-125+"px");
+					  isLoaded=true;
 				  }
-				  location.hash=page;
-				  //var param = document.URL.split('#')[1];	
-				  //Check Doc Height and scrollable;
-				  var dheight=$(document).height();
-				  var wheight=$(window).height();
-				  var scheight=$("#scrollableContent").height();
-				  //var nheight=dheight-scheight-50+150;
-				  var nheight=wheight+50;
-				  //alert(dheight+" "+wheight+" "+scheight);
-				  //alert(dheight+"/"+scheight+"/"+nheight);
-				 $("#fixScroll").css("height",nheight+"px");
-				  //alert(nheight+" "+dheight+" ");
-				  $(".menubottom").css("bottom",nheight-125+"px");
-				  isLoaded=true;
-			  }
-		  });
+			  });
+		  }
 		  if(isLoaded==false)
 		  {
 			  if(isOk==false)
