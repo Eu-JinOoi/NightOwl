@@ -29,6 +29,9 @@
         <div style="clear:both;">&nbsp;</div>
 </div>
 */
-echo $_GET['lat'].",".$_GET['long'];
+//echo $_GET['lat'].",".$_GET['long'];
+if($_GET['lat']==0 && $_GET['long']==0)
+echo "An error occurres while retrieving your location. <a onClick='loadPg(\"food\")'>Try again?</a>";
+else
 echo file_get_contents("http://nightowl.eu-niverse.com/pages/results.php?page=food&lat=".$_GET['lat']."&long=".$_GET['long']);
 ?>
