@@ -71,7 +71,8 @@
 		//loadPg("");
 		window.onpopstate = function(event) {
 		  //alert("location: " + document.location + ", state: " + JSON.stringify(event.state));
-		  loadPg(event.state.hash.substr(1))
+		  if(event.state!=null)
+			  loadPg(event.state.hash.substr(1))
 		  //Add in fix for scrolling
 		};
 		$(".day").click(function(e)
@@ -171,7 +172,8 @@
 					}
 					else
 					{
-						//alert("GPS Data incorrect");	
+						//alert("GPS Data incorrect");
+						isLoaded=true;	
 					}
 				})
 				.fail(function(jqxhr, textStatus,error)
@@ -231,7 +233,7 @@
 			  if(isOk==false)
 			  {
 					page="home";
-			  }
+			  
 			$.get( "pages/"+page+".php", function( data ) {
 			  //alert( "Data Loaded: " + data );
 			  data=data+"<div id='fixScroll'>&nbsp;</div>";
@@ -251,6 +253,7 @@
 			  //alert(nheight+" "+dheight+" ");
 			 //$(".menubottom").css("bottom",nheight-125+"px");
 			});
+			  }
 		  }
 	}
 	function getLocation()
