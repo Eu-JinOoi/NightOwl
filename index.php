@@ -145,8 +145,12 @@
 			page="home";
 		/*var getArgs="";
 		var loadpage=page;*/
-		if(page=="entertainment" || page=="food" || page=="shopping" || page=="special")
+		if(page=="entertainment" || page=="food" || page=="shopping" || page=="special" || page=="home")
 		{
+			/*Temp Fix*/
+				if(page=="home")
+					isOk=false;
+			/*Temp Fix*/
 			$("#dropDownArea").css("opacity","1");
 			$("#category").prop("disabled",false);
 			$("#category").css("cursor","pointer");
@@ -382,6 +386,7 @@
             </a>
             	<div style="width:160px; position:absolute; top:2px; left:55px; margin-top:-22px; height:48px;" id="dropDownArea">
           		<select name="category" id='category' style="margin:0;" onChange="loadPg(this.value.toLowerCase());">
+                	<option value='home'>Everything</option>
                 	<option value='food'>Food</option>
                     <option value='entertainment'>Entertainment</option>
                     <option value='shopping'>Shopping</option>
