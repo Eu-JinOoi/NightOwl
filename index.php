@@ -60,9 +60,7 @@
 	$("#dumpdata").html(out);
 	}
 	$(document).ready(function(e) {
-		getLocation();
 		
-		//$("#scrollableContent").css("height",$(window).height()*1.01);
 		$( "#menubutton" ).click(function() {
 			toggleMenu();
 		  	
@@ -70,7 +68,7 @@
 		$("#searchbutton").click(function(){
 			toggleSearch();
 		});
-		loadPg("");
+		//loadPg("");
 		window.onpopstate = function(event) {
 		  //alert("location: " + document.location + ", state: " + JSON.stringify(event.state));
 		  loadPg(event.state.hash.substr(1))
@@ -81,6 +79,12 @@
 			alert ("DAY");	
 		});			
     });
+	$(window).load(function()
+	{
+		$("#category-button").css({"background-color":"#196a9f","color":"#FFF","border-color":"#104a6f"});
+		getLocation();
+		loadPg("");
+	});
 	function toggleSearch()
 	{
 		if(searchState==0)
@@ -108,7 +112,7 @@
 		var scheight=$("#scrollableContent").height();
 		var nheight=dheight-scheight-50+150;
 		 //alert(dheight+"/"+scheight+"/"+nheight);
-		$("#fixScroll").css("height",nheight+"px");
+		//$("#fixScroll").css("height",nheight+"px");
 		
 	}
 	function ucwords(str) {
@@ -155,24 +159,25 @@
 			  else
 			    $(this).removeAttr("selected");
 			});
+			var locfail=true;
 			$.getJSON("pages/resultsJSON.php",{category: page, latitude: selfLat, longitude: selfLong})
 				.done(function(json){
 					console.log(json);
-					if(json.status=="success")
+					if(json.gps=="success")
 					{
-						alert("Continue");
+						//alert("Correct GPS Data");
 						isLoaded=true;
+						locfail=false;
 					}
 					else
 					{
-						alert("GPS Data incorrect");	
+						//alert("GPS Data incorrect");	
 					}
 				})
 				.fail(function(jqxhr, textStatus,error)
 				{
 					alert("Correct! You failed.");		
 				});
-				
 		}
 		else
 		{
@@ -214,9 +219,9 @@
 					  var nheight=wheight+50;
 					  //alert(dheight+" "+wheight+" "+scheight);
 					  //alert(dheight+"/"+scheight+"/"+nheight);
-					 $("#fixScroll").css("height",nheight+"px");
+					 //$("#fixScroll").css("height",nheight+"px");
 					  //alert(nheight+" "+dheight+" ");
-					  $(".menubottom").css("bottom",nheight-125+"px");
+					 //$(".menubottom").css("bottom",nheight-125+"px");
 					  isLoaded=true;
 				  }
 			  });
@@ -242,9 +247,9 @@
 			  var scheight=$("#scrollableContent").height();
 			  var nheight=dheight-scheight-50+150;
 			  //alert(dheight+"/"+scheight+"/"+nheight);
-			  $("#fixScroll").css("height",nheight+"px");
+			 //$("#fixScroll").css("height",nheight+"px");
 			  //alert(nheight+" "+dheight+" ");
-			  $(".menubottom").css("bottom",nheight-125+"px");
+			 //$(".menubottom").css("bottom",nheight-125+"px");
 			});
 		  }
 	}
@@ -253,7 +258,6 @@
 		if (navigator.geolocation)
 		{
 			navigator.geolocation.getCurrentPosition(showPosition);
-			
 		}
 		else
 		{
@@ -264,13 +268,11 @@
 	}
 	function showPosition(position)
 	{
-		//$("#lat").val(position.coords.latitude);
-		//$("#long").val(position.coords.longitude);
-		$("#Ilocation").prop("src","location.png");
-		$("#Ilocation").prop("alt","Location Found");
-		//$("#locationmsg").html(" - Location Found");
 		selfLat=position.coords.latitude;
 		selfLong=position.coords.longitude;
+		$("#Ilocation").prop("src","location.png");
+		$("#Ilocation").prop("alt","Location Found");
+		
 		
 		$.getJSON("https://maps.googleapis.com/maps/api/geocode/json?latlng="+position.coords.latitude+","+position.coords.longitude+"&sensor=true",function( data ) {
 			//alert( "Data Loaded: " + data );
@@ -293,10 +295,15 @@
 			}
 			currentLocation_full=data.results[0].formatted_address;
 			$("#Nlocation").html(ndata);		
-			var d=getDistance(34.05482801970849,-118.2381269802915);
+			//var d=getDistance(34.05482801970849,-118.2381269802915);
 			//alert("You are currently "+Math.round(d*100)/100+" mi from L.A. Union Station");
 		});
 		locSet=true;
+		//-------------------
+		
+		loadPg(document.URL.split('#')[1]);
+		
+		
 	}
 	function fillLocation()
 	{
@@ -414,10 +421,7 @@
 
     </div>
     <script>
-	$(window).load(function()
-	{
-		$("#category-button").css({"background-color":"#196a9f","color":"#FFF","border-color":"#104a6f"});
-	});
+	
 	</script>
 </body>
 

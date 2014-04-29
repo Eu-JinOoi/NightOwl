@@ -2,9 +2,10 @@
 //var_dump($_REQUEST);
 //echo "{\"status\":\"success\"}";
 if($_GET['latitude']==0 && $_GET['longitude']==0)
-	echo "{\"status\":\"failure\"}";
+	echo "{\"gps\":\"failure\"}";
 else
-	echo "{\"status\":\"success\"}";
+	echo "{\"gps\":\"success\"}";
+
 $mysqli=new mysqli('localhost','eunive5_projNO','NightOwl2014','eunive5_projectNO');
 if ($mysqli->connect_error) 
 {
