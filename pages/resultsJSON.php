@@ -26,7 +26,12 @@ else
 	else 
 		echo "\"mysql\":\"success\",";
 	$distance=12;
-	$query="SELECT *, (acos(sin(RADIANS(".$lat."))*sin(RADIANS(latitude))+cos(RADIANS(".$lat."))*cos(RADIANS(latitude))*cos(RADIANS(longitude) - RADIANS(".$lon.")))*6371) AS kmdist FROM places ".$whereType." HAVING kmdist <='".$distance."' ORDER BY kmdist";
+	$query="SELECT *, (acos(sin(RADIANS(".$lat."))*sin(RADIANS(places.latitude))+cos(RADIANS(".$lat."))*cos(RADIANS(places.latitude))*cos(RADIANS(places.longitude) - RADIANS(".$lon.")))*6371) AS kmdist 
+			FROM places 
+			LEFT JOIN hours ON places.PID=hours.PID
+			".$whereType." 
+			HAVING kmdist <='".$distance."' 
+			ORDER BY kmdist";
 	//echo "\"queryCont\":\"".$query."\",";
 	if($result=$mysqli->query($query))
 	{
@@ -46,16 +51,77 @@ else
 				echo ",";	
 			}
 			echo "{";
-			echo '"PID":""'.$row['PID'].'",';
+			echo '"PID":"'.$row['PID'].'",';
 			echo '"name":"'.$row['name'].'",';
 			echo '"distance":"'.$row['kmdist'].'",';
-			echo '"status":"closed",';
+
 			//Address Components
 			echo '"address1":"'.$row['address1'].'",';
 			echo '"address2":"'.$row['address2'].'",';
 			echo '"city":"'.$row['city'].'",';
 			echo '"state":"'.$row['stateprov'].'",';
-			echo '"zip":"'.$row['zip'].'"';
+			echo '"zip":"'.$row['zip'].'",';
+			//Time Components
+			$dow=date("w");
+			$isOpen=false;
+			$isUnknown=true;
+			echo '"hours":[';
+				for($i=0;$i<7;$i++)
+				{
+					//echo '"hours_'.$i.'":[';
+					echo "{";
+						echo '"open":"'.$row['hours_'.$i.'_o'].'",';
+						echo '"close":"'.$row['hours_'.$i.'_c'].'"';
+					echo "}";		
+					if($i==$dow)
+					{
+						if($row['hours_'.$i.'_o']=="00:00:00" && $row['hours_'.$i.'_c']=="00:00:00")
+						{
+							$isUnkown=true;
+						}
+						$now=strtotime(date("H:i:s"));
+						$open=strtotime($row['hours_'.$i.'_o']);
+						$close=strtotime($row['hours_'.$i.'_c']);
+						$l59=strtotime("23:59:59");//L59 $leven fity nine
+						if($open>$close)//For Places that span midnight
+						{
+							if($now<=$l59)
+							{
+								if($now>$open)
+								{
+									$isOpen=true;
+									$isUnkown=false;
+								}
+							}
+							else
+							{
+								if($now<$close)
+								{
+									$isOpen=true;
+									$isUnkown=false;
+								}
+							}
+						}
+						if($now>=$open && $now<$close)
+						{
+							$isOpen=true;	
+							$isUnkown=false;
+						}
+						
+					}
+					if($i!=6)
+					echo ",";
+					//echo '],';
+				}
+			echo '],';
+			
+			if($isOpen)
+				echo '"status":"open"';
+			else
+				if($isUnknown)
+					echo '"status":"unknown"';
+				else	
+					echo '"status":"closed"';
 			echo "}";
 		}
 		echo ']';
