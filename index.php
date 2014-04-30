@@ -30,7 +30,7 @@
 			}
 			else
 			{
-				$("#menu").stop().animate({"left":"-65%"});
+				$("#menu").stop().animate({"left":"-100%"});
 				$("#searchRegion").stop().animate({"padding-left":"15px"});
 				$("#doSearch").css({"padding-left":"10px","padding-right":"10px"});
 				$("#doSearch").html("Search");
@@ -46,7 +46,7 @@
 	}
 	function closeMenu()
 	{
-		$("#menu").stop().animate({"left":"-60%"});
+		$("#menu").stop().animate({"left":"-100%"});
 		$("#searchRegion").stop().animate({"padding-left":"15px"});
 		menuState=0;  
 	}
@@ -151,14 +151,29 @@
 		ret+="</div>"
 		return ret;
 	}
-	function handleJSON(json)
+	function handleJSON(json,page)
 	{
 		var fdata="";
 		$.each(json.places,function(i, item)
 		{
 			fdata+=createCard(item);
 		});
-		$("#scrollableContent").html("JSON Data Recived:<br>"+json.places.length+" results were returned<br>"+fdata);
+		if(json.places.length!=0)
+		{
+			var extraextra="";
+			if(page=="home")
+			{	
+				extraextra="<div class='card' style='background-color:#222222; color:#eee; border-left:3px solid #196a9f;'>";
+				extraextra+="<h2 style='font-weight:400; margin-left:3px;'>Welcome to 240&deg;</h2>";
+				extraextra+="<p style='margin-left:7px;'>Instructions on how to do things on the site. Have an option to hide this box forever (maybe - maybe not may be good references since this is the 'landing' page.</p>";
+				extraextra+="</div>";
+			}
+			$("#scrollableContent").html(extraextra+"<br>"+json.places.length+" results were returned."+fdata);
+		}
+		else
+		{
+			$("#scrollableContent").html("<h3>Um....you must live in the middle of nowhere...or we haven't gottent your area yet. We couldn't find anything in this category.");	
+		}
 	}
 	function loadPg(page)
 	{
@@ -200,7 +215,7 @@
 						isLoaded=true;
 						locfail=false;
 						location.hash=page;
-						handleJSON(json);
+						handleJSON(json,page);
 						
 					}
 					else

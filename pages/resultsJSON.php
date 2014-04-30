@@ -64,7 +64,7 @@ else
 			//Time Components
 			$dow=date("w");
 			$isOpen=false;
-			$isUnknown=true;
+			$isUnknown=false;
 			echo '"hours":[';
 				for($i=0;$i<7;$i++)
 				{
@@ -73,40 +73,35 @@ else
 						echo '"open":"'.$row['hours_'.$i.'_o'].'",';
 						echo '"close":"'.$row['hours_'.$i.'_c'].'"';
 					echo "}";		
+					
 					if($i==$dow)
 					{
-						if($row['hours_'.$i.'_o']=="00:00:00" && $row['hours_'.$i.'_c']=="00:00:00")
-						{
-							$isUnkown=true;
+						if(
+							($row['hours_'.$i.'_o']=="00:00:00" && $row['hours_'.$i.'_c']=="00:00:00") 
+							||
+							($row['hours_'.$i.'_o']==NULL && $row['hours_'.$i.'_c']==NULL))
+						{	
+							$isUnknown=true;
 						}
+						
+						
 						$now=strtotime(date("H:i:s"));
 						$open=strtotime($row['hours_'.$i.'_o']);
 						$close=strtotime($row['hours_'.$i.'_c']);
 						$l59=strtotime("23:59:59");//L59 $leven fity nine
-						if($open>$close)//For Places that span midnight
-						{
-							if($now<=$l59)
-							{
-								if($now>$open)
-								{
-									$isOpen=true;
-									$isUnkown=false;
-								}
-							}
-							else
-							{
-								if($now<$close)
-								{
-									$isOpen=true;
-									$isUnkown=false;
-								}
-							}
-						}
+						//Need to check previous day
 						if($now>=$open && $now<$close)
 						{
 							$isOpen=true;	
-							$isUnkown=false;
 						}
+						else if($open>$close)//For Places that span midnight
+						{
+							if($now<$close && $now<$open)
+							{
+								$isOpen=true;	
+							}							
+						}
+						
 						
 					}
 					if($i!=6)
@@ -116,12 +111,20 @@ else
 			echo '],';
 			
 			if($isOpen)
+			{
 				echo '"status":"open"';
+			}
 			else
-				if($isUnknown)
-					echo '"status":"unknown"';
+			{
+				if(!$isUnknown)
+				{
+						echo '"status":"closed"';
+				}
 				else	
-					echo '"status":"closed"';
+				{
+						echo '"status":"unknown"';
+				}
+			}
 			echo "}";
 		}
 		echo ']';
