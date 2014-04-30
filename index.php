@@ -139,9 +139,9 @@
 		var ret="";
 		ret+="<div class='"+pjson.status+"' id='"+pjson.pid+"'>";
 		ret+="<h2>"+pjson.name+"</h2>";
-		ret+="<h3>"+(Math.round(pjson.distance*100)*.01)+" km away</h3>";
-		ret+="<h3>"+(Math.round(pjson.distance*0.62137*100)*.01)+" mi away</h3>";
-		ret+="<address>"+pjson.address1+"<br>"+pjson.address2+"</address>";
+		//ret+="<h3 style='margin:0;'>"+(Math.round(pjson.distance*100)*.01)+" km away</h3>";
+		ret+="<h3 style='margin:0;'>"+(Math.round(pjson.distance*0.62137*100)*.01)+" mi away</h3>";
+		ret+="<address>"+pjson.address1+"<br>"+pjson.address2+"<br>"+pjson.city+", "+pjson.state+" "+pjson.zip+"</address>";
 		ret+="</div>"
 		return ret;
 	}

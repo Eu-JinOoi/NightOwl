@@ -9,8 +9,8 @@ else
 {
 	$lat=$_GET['latitude'];
 	$lon=$_GET['longitude'];
-	$type=$_GET['type'];
-	$whereType=" AND type='".$type."'";
+	$type=$_GET['category'];
+	$whereType=" WHERE type='".$type."'";
 	if($type=="home")
 	{
 		$whereType="";
@@ -26,8 +26,8 @@ else
 	else 
 		echo "\"mysql\":\"success\",";
 	$distance=12;
-	$query="SELECT *, (acos(sin(RADIANS(".$lat."))*sin(RADIANS(latitude))+cos(RADIANS(".$lat."))*cos(RADIANS(latitude))*cos(RADIANS(longitude) - RADIANS(".$lon.")))*6371) AS kmdist FROM places WHERE acos(sin(RADIANS(".$lat."))*sin(RADIANS(latitude))+cos(RADIANS(".$lat."))*cos(RADIANS(latitude))*cos(RADIANS(longitude) - RADIANS(".$lon.")))*6371 <='".$distance."' ".$whereType." ORDER BY kmdist";
-	//echo $query;
+	$query="SELECT *, (acos(sin(RADIANS(".$lat."))*sin(RADIANS(latitude))+cos(RADIANS(".$lat."))*cos(RADIANS(latitude))*cos(RADIANS(longitude) - RADIANS(".$lon.")))*6371) AS kmdist FROM places ".$whereType." HAVING kmdist <='".$distance."' ORDER BY kmdist";
+	//echo "\"queryCont\":\"".$query."\",";
 	if($result=$mysqli->query($query))
 	{
 		echo "\"query\":\"success\",";
@@ -46,11 +46,16 @@ else
 				echo ",";	
 			}
 			echo "{";
+			echo '"PID":""'.$row['PID'].'",';
 			echo '"name":"'.$row['name'].'",';
 			echo '"distance":"'.$row['kmdist'].'",';
 			echo '"status":"closed",';
+			//Address Components
 			echo '"address1":"'.$row['address1'].'",';
-			echo '"address2":"'.$row['address2'].'"';
+			echo '"address2":"'.$row['address2'].'",';
+			echo '"city":"'.$row['city'].'",';
+			echo '"state":"'.$row['stateprov'].'",';
+			echo '"zip":"'.$row['zip'].'"';
 			echo "}";
 		}
 		echo ']';
@@ -59,7 +64,7 @@ else
 	}	
 	else
 	{
-		echo "\"query\":\"failure\",";
+		echo "\"query\":\"failure\"}";
 	}
 	/*
 	echo '"places":[';

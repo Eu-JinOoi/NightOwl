@@ -245,3 +245,11 @@
 		border-radius: .3125em;
 		font-size:16px;
 	}
+	address br
+	{
+		line-height:0;	
+		height:0;
+		display:block;
+		margin:0px;
+		content:" ";
+	}
