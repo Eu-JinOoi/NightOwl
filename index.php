@@ -68,13 +68,28 @@
 		$("#searchbutton").click(function(){
 			toggleSearch();
 		});
-		//loadPg("");
+		$("#filteropennow").click(function(){
+			alert("CLICK");
+			/*if($(this).hasClass("filterselected"))
+			{
+				$(this).removeClass("filterselected");
+			}
+			else
+			{
+				$(this).addClass("filterselected");	
+			}*/
+		});
 		window.onpopstate = function(event) {
-		  //alert("location: " + document.location + ", state: " + JSON.stringify(event.state));
 		  if(event.state!=null)
 			  loadPg(event.state.hash.substr(1))
 		  //Add in fix for scrolling
 		};
+		
+		
+		
+		
+		
+		
 		$(".day").click(function(e)
 		{
 			alert ("DAY");	
@@ -102,6 +117,27 @@
 			//$("#searchRegion").html("");
 			searchState=0;	
 		}
+	}
+	function filterthis(self)
+	{
+			if($(self).hasClass("filterselected"))
+			{
+				$(self).removeClass("filterselected");
+				if($(self).attr("id")=="filteropennow")
+				{
+					$(".closed").show();
+					//$(".unknown").show();
+				}
+			}
+			else
+			{
+				$(self).addClass("filterselected");	
+				if($(self).attr("id")=="filteropennow")
+				{
+					$(".closed").hide();
+					//$(".unknown").hide();
+				}
+			}
 	}
 	function startLoading()
 	{
@@ -168,7 +204,11 @@
 				extraextra+="<p style='margin-left:7px;'>Instructions on how to do things on the site. Have an option to hide this box forever (maybe - maybe not may be good references since this is the 'landing' page.</p>";
 				extraextra+="</div>";
 			}
-			$("#scrollableContent").html(extraextra+"<br>"+json.places.length+" results were returned."+fdata);
+			var filters="<div id='filters'>";
+			filters+="Filters";
+			filters+="<div id='filteropennow' class='filter' onclick='filterthis(this);'>Open Now</div>";
+			filters+="</div>";
+			$("#scrollableContent").html(extraextra+filters+fdata);//+json.places.length+" results were returned."+fdata);
 		}
 		else
 		{
@@ -206,7 +246,7 @@
 			    $(this).removeAttr("selected");
 			});
 			var locfail=true;
-			$.getJSON("pages/resultsJSON.php",{category: page, latitude: selfLat, longitude: selfLong})
+			$.getJSON("pages/resultsJSON.php",{category: page, latitude: selfLat, longitude: selfLong, distance:'12'})
 				.done(function(json){
 					console.log(json);
 					if(json.gps=="success")
@@ -220,8 +260,12 @@
 					}
 					else
 					{
-						//alert("GPS Data incorrect");
-						isLoaded=true;	
+						var extraextra="";
+						extraextra+="<div class='card' style='background-color:#fc6e51; border:1px solid white;'>";
+						extraextra+="<h2 style='margin-left:3px;'>Not so fast!</h2>";
+						extraextra+="<p style='margin-left:7px;'>We can't give you suggestions if we don't know where you are. You're going to need to either allow your browser to tell us or set your location. [<==LINK THAT]</p>";
+						extraextra+="</div>";
+						$("#scrollableContent").html(extraextra);
 					}
 				})
 				.fail(function(jqxhr, textStatus,error)
@@ -276,7 +320,7 @@
 				  }
 			  });
 		  }
-		  if(isLoaded==false)
+		  /*if(isLoaded==false)
 		  {
 			  if(isOk==false)
 			  {
@@ -302,7 +346,7 @@
 			 //$(".menubottom").css("bottom",nheight-125+"px");
 			});
 			  }
-		  }
+		  }*/
 	}
 	function getLocation()
 	{
@@ -449,7 +493,6 @@
     </div>
 	<div id='maincont'>
         <div id='menu'>
-        	<!--<div class="menuitem" id='Nsearch' style=""><input type='text' id='searchBox' name='searchBox' style=" border:1px solid white; text-shadow:none; margin:0; background-color:rgba(0,0,0,0); border-radius:0; max-width:150px; color:#FFF;">Go</div>-->
             <div class="menuitem" id='Nhome' onClick="loadPg('home');">Home</div>
             <!--<div class="menuitem" id='Nhome' onClick="loadPg('food');">Food</div>
             <div class="menuitem" id='Nhome' onClick="loadPg('entertainment');">Entertainment</div>

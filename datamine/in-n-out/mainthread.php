@@ -10,7 +10,7 @@
 	{
 			
 	}*/
-	$zip=92887;
+	$zip=93101;
 	$url=$url1.$zip.$url2;
 	$xml=file_get_contents($url);
 	
@@ -31,13 +31,16 @@
 		$latitude="";
 		$longitude="";
 		$phone="";
-		$type="restaurant_fastfood";
+		$open=array_fill(0,7,"00:00:00");
+		$close=array_fill(0,7,"00:00:00");
+		$type="food";
 		
 		foreach($poi as $epoi)
 		{
 			echo $epoi->getName().":".$epoi."<br>";
 			if($epoi->getName()=="name")
-				$name.=$epoi;
+				$name="In-N-Out";
+				//$name.=$epoi;
 			else if($epoi->getName()=="address1")
 				$address1=$epoi;
 			else if($epoi->getName()=="address2")
@@ -56,14 +59,96 @@
 				$phone=$epoi;
 			else if($epoi->getName()=="postalcode")
 				$zip=$epoi;
+			else if($epoi->getName()=="friday_hours")
+			{
+				$hours=explode("-",$epoi);
+				$hours[0]=trim($hours[0]);
+				$hours[1]=trim($hours[1]);
+				if(stripos($hours[0],"a.m.")!==false)
+				{
+					$open[4]=substr($hours[0],0,strpos($hours[0]," ")).":00";
+				}
+				else
+				{
+					$open[4]=((substr($hours[0],0,2)+12)%24).substr($hours[0],2,strpos($hours[0]," ")).":00";	
+				}
+				if(stripos($hours[1],"a.m.")!==false)
+				{
+					$close[4]=str_pad(substr($hours[1],0,strpos($hours[1]," ")).":00",8,"0",STR_PAD_LEFT);
+				}
+				else
+				{
+					$close[4]=str_pad(((substr($hours[1],0,2)+12)%24),3,"0",STR_PAD_LEFT).substr($hours[1],2,strpos($hours[1]," ")).":00";	
+				}
+				
+			}
+			else if($epoi->getName()=="saturday_hours")
+			{
+				$hours=explode("-",$epoi);
+				$hours[0]=trim($hours[0]);
+				$hours[1]=trim($hours[1]);
+				if(stripos($hours[0],"a.m.")!==false)
+				{
+					$open[5]=substr($hours[0],0,strpos($hours[0]," ")).":00";
+				}
+				else
+				{
+					$open[5]=((substr($hours[0],0,2)+12)%24).substr($hours[0],2,strpos($hours[0]," ")).":00";	
+				}
+				if(stripos($hours[1],"a.m.")!==false)
+				{
+					$close[5]=str_pad(substr($hours[1],0,strpos($hours[1]," ")).":00",8,"0",STR_PAD_LEFT);
+				}
+				else
+				{
+					$close[5]=str_pad(((substr($hours[1],0,2)+12)%24),3,"0",STR_PAD_LEFT).substr($hours[1],2,strpos($hours[1]," ")).":00";	
+				}
+			}
+			else if($epoi->getName()=="weekday_hours")
+			{
+				$hours=explode("-",$epoi);
+				$hours[0]=trim($hours[0]);
+				$hours[1]=trim($hours[1]);
+				if(strpos($hours[0]," a.m.")!==false)
+				{
+					for($i=0; $i<4; $i++)
+					{
+						$open[$i]=substr($hours[0],0,strpos($hours[0]," ")).":00";
+					}
+					$open[6]=substr($hours[0],0,strpos($hours[0]," ")).":00";
+				}
+				else
+				{
+					
+				}
+				if(strpos($hours[1]," a.m.")!==false)
+				{
+					for($i=0; $i<4; $i++)
+					{
+						$close[$i]=str_pad(substr($hours[1],0,strpos($hours[1]," ")).":00",8,"0",STR_PAD_LEFT);
+					}
+					$close[6]=str_pad(substr($hours[1],0,strpos($hours[1]," ")).":00",8,"0",STR_PAD_LEFT);
+				}
+				else
+				{
+					for($i=0; $i<4; $i++)
+					{
+						$close[$i]=str_pad(((substr($hours[1],0,2)+12)%24),3,"0",STR_PAD_LEFT).substr($hours[1],2,strpos($hours[1]," ")).":00";	
+					}
+					$close[6]=str_pad(((substr($hours[1],0,2)+12)%24),3,"0",STR_PAD_LEFT).substr($hours[1],2,strpos($hours[1]," ")).":00";	
+				}
+			}
 		}
-		$query="INSERT INTO places VALUES(NULL,'".$name."','".$address1."','".$address2."','".$city."','".$state."','".$country."','".$zip."','".$phone."','".$latitude."','".$longitude."','".$type."')";
+		$hash=sha1($address1.$address2.$city.$state.$country.$zip);
+		$query="INSERT INTO places VALUES(NULL,'".$hash."','".$name."','".$address1."','".$address2."','".$city."','".$state."','".$country."','".$zip."','".$phone."','".$latitude."','".$longitude."','".$type."','-8','1','".$open[0]."','".$close[0]."','".$open[1]."','".$close[1]."','".$open[2]."','".$close[2]."','".$open[3]."','".$close[3]."','".$open[4]."','".$close[4]."','".$open[5]."','".$close[5]."','".$open[6]."','".$close[6]."')";
 		if($res=$mysqli->query($query))
 		{
 				
 		}
-		/*var_dump($poi);
-		echo $poi["name"];*/
+		var_dump($open);
+		var_dump($close);
+		//var_dump($poi);
+		//echo $poi["name"];
 		echo "<br><br><br>";
 	}
 	

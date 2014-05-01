@@ -253,3 +253,22 @@
 		margin:0px;
 		content:" ";
 	}
+	
+	#filters
+	{
+		
+	}
+	.filter
+	{
+		margin:auto;
+		text-align:center;
+		font-size:18px;
+		border-top:1px solid #e6e6e6;
+		border-bottom:1px solid #e6e6e6;
+		color:#606060;
+	}
+	.filterselected
+	{
+		color:#093;
+		font-weight:500;
+	}

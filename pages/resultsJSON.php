@@ -10,6 +10,7 @@ else
 	$lat=$_GET['latitude'];
 	$lon=$_GET['longitude'];
 	$type=$_GET['category'];
+	$distance=$_GET['distance'];//in km
 	$whereType=" WHERE type='".$type."'";
 	if($type=="home")
 	{
@@ -25,14 +26,15 @@ else
 	}
 	else 
 		echo "\"mysql\":\"success\",";
-	$distance=12;
+	//$distance=12;
 	$query="SELECT *, (acos(sin(RADIANS(".$lat."))*sin(RADIANS(places.latitude))+cos(RADIANS(".$lat."))*cos(RADIANS(places.latitude))*cos(RADIANS(places.longitude) - RADIANS(".$lon.")))*6371) AS kmdist 
 			FROM places 
-			LEFT JOIN hours ON places.PID=hours.PID
+			
 			".$whereType." 
 			HAVING kmdist <='".$distance."' 
 			ORDER BY kmdist";
 	//echo "\"queryCont\":\"".$query."\",";
+	//LEFT JOIN hours ON places.PID=hours.PID
 	if($result=$mysqli->query($query))
 	{
 		echo "\"query\":\"success\",";
@@ -84,24 +86,28 @@ else
 							$isUnknown=true;
 						}
 						
-						
 						$now=strtotime(date("H:i:s"));
 						$open=strtotime($row['hours_'.$i.'_o']);
 						$close=strtotime($row['hours_'.$i.'_c']);
+						$popen=strtotime($row['hours_'.(($i+6)&7).'_o']);
+						$pclose=strtotime($row['hours_'.(($i+6)&7).'_c']);
 						$l59=strtotime("23:59:59");//L59 $leven fity nine
 						//Need to check previous day
 						if($now>=$open && $now<$close)
 						{
 							$isOpen=true;	
 						}
-						else if($open>$close)//For Places that span midnight
+						else//places that span midnight
 						{
-							if($now<$close && $now<$open)
+							if($now>=$open && $open>$close)
 							{
 								$isOpen=true;	
-							}							
+							}
+							if($now<$pclose && $now<$open)
+							{
+								$isOpen=true;	
+							}
 						}
-						
 						
 					}
 					if($i!=6)
