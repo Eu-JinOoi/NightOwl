@@ -10,7 +10,7 @@
 	{
 			
 	}*/
-	$zip=93101;
+	$zip=92024;
 	$url=$url1.$zip.$url2;
 	$xml=file_get_contents($url);
 	
@@ -34,6 +34,8 @@
 		$open=array_fill(0,7,"00:00:00");
 		$close=array_fill(0,7,"00:00:00");
 		$type="food";
+		$storeno=-1;
+		$drivethru=0;
 		
 		foreach($poi as $epoi)
 		{
@@ -59,6 +61,10 @@
 				$phone=$epoi;
 			else if($epoi->getName()=="postalcode")
 				$zip=$epoi;
+			else if($epoi->getName()=="clientkey")
+				$storeno=intval($epoi);
+			else if($epoi->getName()=="drive_through")
+				$drivethru=intval($epoi);
 			else if($epoi->getName()=="friday_hours")
 			{
 				$hours=explode("-",$epoi);
@@ -140,10 +146,22 @@
 			}
 		}
 		$hash=sha1($address1.$address2.$city.$state.$country.$zip);
-		$query="INSERT INTO places VALUES(NULL,'".$hash."','".$name."','".$address1."','".$address2."','".$city."','".$state."','".$country."','".$zip."','".$phone."','".$latitude."','".$longitude."','".$type."','-8','1','".$open[0]."','".$close[0]."','".$open[1]."','".$close[1]."','".$open[2]."','".$close[2]."','".$open[3]."','".$close[3]."','".$open[4]."','".$close[4]."','".$open[5]."','".$close[5]."','".$open[6]."','".$close[6]."')";
+		$query="INSERT INTO places VALUES(NULL,'".$hash."','".$name."','".$storeno."','".$address1."','".$address2."','".$city."','".$state."','".$country."','".$zip."','".$phone."','".$latitude."','".$longitude."','".$type."','".$drivethru."','-8','1','".$open[0]."','".$close[0]."','".$open[1]."','".$close[1]."','".$open[2]."','".$close[2]."','".$open[3]."','".$close[3]."','".$open[4]."','".$close[4]."','".$open[5]."','".$close[5]."','".$open[6]."','".$close[6]."')";
 		if($res=$mysqli->query($query))
 		{
-				
+			echo "SUCCESS!";		
+		}
+		else
+		{
+			echo "UPDATE: ".$mysqli->error;
+			$query="UPDATE places SET name='".$name."',storenumber='".$storeno."',drivethru='".$drivethru."' WHERE hash='".$hash."'";
+			if($res=$mysqli->query($query))
+			{
+			}	
+			else
+			{
+				echo "Unable to update: ".$mysqli->error;
+			}
 		}
 		var_dump($open);
 		var_dump($close);
