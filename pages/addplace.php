@@ -2,7 +2,7 @@
 	<p style="padding:10px; font-weight:300;">Chances are you know about places that we don't so why not share it with everyone? While we only require that you provide us with the name of the place and it's location, we would appreciate any other information you could provide. </p>
 </div>
 <form>
-    <div class="card_dynamic" style="color:#000;">
+    <!--<div class="card_dynamic" style="color:#000;">
             Venue Name <input type="text" name='vname' id='vname' style="max-width:100%;"><br>
             Address <input type='text' name='vlocation' id='vlocation'><br>
             
@@ -73,6 +73,11 @@
                
             </tr>
         </table>
+    </div>-->
+    <div class="card">
+    	<h2>The Minimum</h2>
+         Venue Name <input type="text" name='vname' id='vname' style="max-width:100%;"><br>
+         Address <input type='text' name='vlocation' id='vlocation'><br>
     </div>
     
 </form>

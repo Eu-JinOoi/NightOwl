@@ -384,6 +384,10 @@
 			{
 				ndata+="<br><span id='locationDesc'>"+data.results[2].address_components[1].long_name+", "+data.results[2].address_components[3].short_name+"</span>";
 			}
+			else if(data.results[6].address_components[6].types[0]=='locality')
+			{
+				ndata+="<br><span id='locationDesc'>"+data.results[6].address_components[0].long_name+", "+data.results[6].address_components[2].short_name+"</span>";
+			}
 			else
 			{
 				ndata+="3";	

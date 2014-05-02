@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <dwsync>
-<file name="addplace.php" server="ftp.eu-niverse.com" local="130408734404621914" remote="130408734600000000" Dst="2" />
+<file name="addplace.php" server="ftp.eu-niverse.com" local="130434594884953291" remote="130434595200000000" Dst="2" />
 <file name="entertainment.php" server="ftp.eu-niverse.com" local="130418429587492530" remote="130418430000000000" Dst="2" />
 <file name="food.php" server="ftp.eu-niverse.com" local="130432414608201767" remote="130432414800000000" Dst="2" />
 <file name="home.php" server="ftp.eu-niverse.com" local="130407275562891224" remote="130404465600000000" Dst="2" />
@@ -11,4 +11,5 @@
 <file name="settings.php" server="ftp.eu-niverse.com" local="130419367962137133" remote="130419367800000000" Dst="2" />
 <file name="results.php" server="ftp.eu-niverse.com" local="130428087317274385" remote="130428087600000000" Dst="2" />
 <file name="resultsJSON.php" server="ftp.eu-niverse.com" local="130434127097757914" remote="130434127200000000" Dst="2" />
+<file name="location.php" server="ftp.eu-niverse.com" local="130434595738312100" remote="130434596400000000" Dst="2" />
 </dwsync>
