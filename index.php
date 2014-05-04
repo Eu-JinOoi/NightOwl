@@ -170,6 +170,10 @@
 		  return $1.toUpperCase();
 		});
 	}
+	function openplace(PID)
+	{
+		alert("This will open details about place with PID "+PID+".");	
+	}
 	function createCard(pjson)
 	{
 		//var d=new Date();
@@ -179,11 +183,30 @@
 		
 		var ret="";
 		ret+="<div class='"+pjson.status+"' id='"+pjson.pid+"'>";
-		ret+="<h2>"+pjson.name+"</h2>";
+		ret+="<div class='leftcard'>";
+		if(pjson.status=="open")
+		{
+			ret+="<h2 style='margin-bottom:0px; margin-top:2px;'>"+pjson.name+"</h2>";
+			ret+="<h3 style='margin-top:0; margin-bottom:0; color:green; font-weight:bold;'>Open Until "+pjson.hours[<?php echo date("w");?>].close+"</h3>";
+		}
+		else if(pjson.status=="closed")
+		{
+			ret+="<h2 style='margin-bottom:0px; margin-top:2px;'>"+pjson.name+"</h2>";
+			ret+="<h3 style='margin-top:0; margin-bottom:0; color:green; font-weight:bold;'>Opens at "+pjson.hours[<?php echo (date("w")+1)%7;?>].close+"</h3>";
+		}
+		else
+		{
+			ret+="<h2 style='margin-top:2px;'>"+pjson.name+"</h2>";
+		}
+		
 		//ret+="<h3 style='margin:0;'>"+(Math.round(pjson.distance*100)*.01)+" km away</h3>";
 		ret+="<h3 style='margin:0;'>"+(Math.round(pjson.distance*0.62137*100)*.01)+" mi away</h3>";
 		ret+="<address>"+pjson.address1+"<br>"+pjson.address2+"<br>"+pjson.city+", "+pjson.state+" "+pjson.zip+"</address>";
-		
+		ret+="</div>";
+		ret+="<div class='rightcard' onclick='openplace("+pjson.PID+")'>&nbsp;";
+		//ret+="<img src='resources/images/arrow.png'>";
+		ret+="</div>"
+		ret+="<div class='clear'>&nbsp;</div>";
 		ret+="</div>"
 		return ret;
 	}
@@ -497,22 +520,32 @@
     </div>
 	<div id='maincont'>
         <div id='menu'>
-            <div class="menuitem" id='Nhome' onClick="loadPg('home');">Home</div>
-            <!--<div class="menuitem" id='Nhome' onClick="loadPg('food');">Food</div>
-            <div class="menuitem" id='Nhome' onClick="loadPg('entertainment');">Entertainment</div>
-            <div class="menuitem" id='Nhome' onClick="loadPg('shopping');">Shopping</div>
-            <div class="menuitem" id='Nhome' onClick="loadPg('special');">Events</div>-->
-            <div class="menuitem" id='Nadd' onClick="loadPg('addplace');">Add a Place</div>
-            
-            <div class='menuitem' id='Nlocation' style="cursor:default;">Location <img src='no_location.png' id='Ilocation' alt='location not found' style='margin-top:6px; position:absolute; right:5px;'/></div>
+        	<div class='menusection'>
+                <div class="menuitem" id='Nhome' onClick="loadPg('home');">Home</div>
+                <!--<div class="menuitem" id='Nhome' onClick="loadPg('food');">Food</div>
+                <div class="menuitem" id='Nhome' onClick="loadPg('entertainment');">Entertainment</div>
+                <div class="menuitem" id='Nhome' onClick="loadPg('shopping');">Shopping</div>
+                <div class="menuitem" id='Nhome' onClick="loadPg('special');">Events</div>-->
+                <div class="menuitem" id='Nadd' onClick="loadPg('addplace');">Add a Place</div>
+            </div>
+            <div class='menusection'>
+            	<div class='menuitem' id='Nlocation' style="cursor:default;">Location <img src='no_location.png' id='Ilocation' alt='location not found' style='margin-top:6px; position:absolute; right:5px;'/></div>
+                <div class='menuitem' onClick="loadPg('settings');">Settings</div>
+            </div>
             
             <div class="menubottom">
-                <div class='menuitemr' onClick="loadPg('settings');">Settings</div>
+                
                 <div class='menuitemr' onClick="loadPg('about');">&copy; 2014 - Company Name</div>
             </div>
         </div>
-        <div id='scrollableContent'>
-        	
+        <div class='clear'>&nbsp;</div>
+        <div id='pagearea'>
+            <div id='scrollableContent'>
+                
+            </div>
+            <div id='placemat'>
+            	<span style="color:#FF0000;">Test</span>
+            </div>
         </div>
 		<!--<div id='fixScroll'>&nbsp;This is to fix the URL bar hiding on Chrome. I know this is a terrible fix but it works</div>-->
 		

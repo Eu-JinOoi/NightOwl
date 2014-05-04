@@ -38,12 +38,12 @@
 		top:0px;
 		z-index:99999;
 	}
-	#scrollableContent
+	#ableContent
 	{
 		position:relative;
 		padding:20px;
 		padding-top:55px;
-		overflow-y: scroll;
+		overflow-y: ;
 		overflow-x: hidden;	
 		z-index:44444;
 		background-color:#EEE;
@@ -96,9 +96,28 @@
 		float:left;	
 		margin:15px;
 	}
+	.leftcard
+	{
+		float:left;	
+	}
+	.rightcard
+	{
+		float:right;
+		min-height:120px;
+		width:40px;
+		position:relative;
+		background-image:url(/resources/images/arrow.png);
+		background-repeat:no-repeat;
+		background-position:center right;
+	}
+	.clear
+	{
+		clear:both;	
+		height:0px;
+	}
 	#menu
 	{
-		width:200px;
+		width:250px;
 		height:100%;
 		background-color:rgba(47,47,47,.98);
 		color:#FFF;
@@ -106,9 +125,13 @@
 		position:fixed;
 		top:40px;
 		left:-100%;
-		/*overflow-y:scroll;
+		/*overflow-y:;
 		overflow-x:hidden;*/
 		
+	}
+	.menusection
+	{
+		border-top:1px solid #646464;	
 	}
 	.menubottom
 	{
@@ -126,7 +149,7 @@
 		height:40px;
 		line-height:40px;
 		font-size:24px;
-		border-bottom:1px solid #FFF;	
+		/*border-bottom:1px solid #FFF;	*/
 		cursor:pointer;
 		position:relative;
 	}
@@ -195,7 +218,7 @@
 		/*font-size:15px;*/
 		color:#777;
 	}
-	#fixScroll
+	#fix
 	{
 		/*height:100px;	*/
 		z-index:44444;
@@ -271,4 +294,9 @@
 	{
 		color:#093;
 		font-weight:500;
+	}
+	#placemat
+	{
+		height:100%;
+		position:absolute;	
 	}
