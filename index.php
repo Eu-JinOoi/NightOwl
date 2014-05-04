@@ -186,13 +186,33 @@
 		ret+="<div class='leftcard'>";
 		if(pjson.status=="open")
 		{
+			var lclose=pjson.hours[<?php echo date("w");?>].close;
+			if(pjson.previous=="true")
+				lclose=pjson.hours[<?php echo ((date("w")+5)%7);?>].close
+			if(lclose.substr(0,1)=="0")
+			{
+				lclose=lclose.substr(1,lclose.length-4);
+			}
+			else
+			{
+				lclose=lclose.substr(0,lclose.length-4);	
+			}
 			ret+="<h2 style='margin-bottom:0px; margin-top:2px;'>"+pjson.name+"</h2>";
-			ret+="<h3 style='margin-top:0; margin-bottom:0; color:green; font-weight:bold;'>Open Until "+pjson.hours[<?php echo date("w");?>].close+"</h3>";
+			ret+="<h3 style='margin-top:0; margin-bottom:0; color:green; font-weight:bold;'>Open Until "+lclose+"</h3>";
 		}
 		else if(pjson.status=="closed")
 		{
+			var lopen=pjson.hours[<?php echo (date("w"))%7;?>].open;
+			if(lopen.substr(0,1)=="0")
+			{
+				lopen=lopen.substr(1,lopen.length-3);
+			}
+			else
+			{
+				lopen=lopen.substr(0,lopen.length-3);	
+			}
 			ret+="<h2 style='margin-bottom:0px; margin-top:2px;'>"+pjson.name+"</h2>";
-			ret+="<h3 style='margin-top:0; margin-bottom:0; color:green; font-weight:bold;'>Opens at "+pjson.hours[<?php echo (date("w")+1)%7;?>].close+"</h3>";
+			ret+="<h3 style='margin-top:0; margin-bottom:0; color:green;'>Opens at "+lopen+"</h3>";
 		}
 		else
 		{
@@ -543,9 +563,9 @@
             <div id='scrollableContent'>
                 
             </div>
-            <div id='placemat'>
+            <!--<div id='placemat'>
             	<span style="color:#FF0000;">Test</span>
-            </div>
+            </div>-->
         </div>
 		<!--<div id='fixScroll'>&nbsp;This is to fix the URL bar hiding on Chrome. I know this is a terrible fix but it works</div>-->
 		

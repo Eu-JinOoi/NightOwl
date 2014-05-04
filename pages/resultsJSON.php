@@ -67,6 +67,8 @@ else
 			$dow=date("w");
 			$isOpen=false;
 			$isUnknown=false;
+			$previous=false;
+			echo '"dow":"'.$dow.'",';
 			echo '"hours":[';
 				for($i=0;$i<7;$i++)
 				{
@@ -89,15 +91,16 @@ else
 						$now=strtotime(date("H:i:s"));
 						$open=strtotime($row['hours_'.$i.'_o']);
 						$close=strtotime($row['hours_'.$i.'_c']);
-						$popen=strtotime($row['hours_'.(($i+6)&7).'_o']);
-						$pclose=strtotime($row['hours_'.(($i+6)&7).'_c']);
-						$l59=strtotime("23:59:59");//L59 $leven fity nine
+						$popen=strtotime($row['hours_'.(($i+5)%6).'_o'] ." yesterday");
+						$pclose=strtotime($row['hours_'.(($i+5)%6).'_c']);
+						//echo "Y:".(($i+6)%8)."   \n";
+						/*
 						//Need to check previous day
 						if($now>=$open && $now<$close)
 						{
 							$isOpen=true;	
 						}
-						else//places that span midnight
+						else if($open>$close)//places that span midnight
 						{
 							if($now>=$open && $open>$close)
 							{
@@ -107,6 +110,34 @@ else
 							{
 								$isOpen=true;	
 							}
+						}*/
+						if($close>$open)//Normal
+						{
+							if($now>=$open && $now<$close)
+							{
+								$isOpen=true;	
+							}
+						}
+						else if($close<$open)
+						{
+							/*echo "{";
+							echo '"now":"'.$now.'","open":"'.$open.'","close":"'.$close.'","pclose":"'.$pclose.'"';
+							echo "}";*/
+							//echo $pclose."/".$now."/".$open;
+							if($now>=$open)
+							{
+								$isOpen=true;	
+							}
+							else if($now<$pclose)
+							{
+								
+								$previous=true;
+								$isOpen=true;
+							}
+							else
+							{
+								//echo "|".date("H:i:s",$now)."/".date("H:i:s",$pclose)."|";	
+							}
 						}
 						
 					}
@@ -115,7 +146,8 @@ else
 					//echo '],';
 				}
 			echo '],';
-			
+			if($previous)
+				echo '"previous":"true",';
 			if($isOpen)
 			{
 				echo '"status":"open"';
