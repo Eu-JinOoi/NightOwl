@@ -541,7 +541,7 @@
 	<div id='maincont'>
         <div id='menu'>
         	<div class='menusection'>
-                <div class="menuitem" id='Nhome' onClick="loadPg('home');"><div class='menuicon' ></div>Home</div>
+                <div class="menuitem" id='Nhome' onClick="loadPg('home');"><div class='menuicon' style="background-image:url(/resources/images/donotuse/home.png);"></div>Home</div>
                 <!--<div class="menuitem" id='Nhome' onClick="loadPg('food');">Food</div>
                 <div class="menuitem" id='Nhome' onClick="loadPg('entertainment');">Entertainment</div>
                 <div class="menuitem" id='Nhome' onClick="loadPg('shopping');">Shopping</div>
