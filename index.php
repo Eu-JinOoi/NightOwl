@@ -182,7 +182,7 @@
 		
 		
 		var ret="";
-		ret+="<div class='"+pjson.status+"' id='"+pjson.pid+"'>";
+		ret+="<div class='"+pjson.status+"' id='place-"+pjson.PID+"'>";
 		ret+="<div class='leftcard'>";
 		if(pjson.status=="open")
 		{
@@ -220,7 +220,10 @@
 		}
 		
 		//ret+="<h3 style='margin:0;'>"+(Math.round(pjson.distance*100)*.01)+" km away</h3>";
-		ret+="<h3 style='margin:0;'>"+(Math.round(pjson.distance*0.62137*100)*.01)+" mi away</h3>";
+		//ret+="<h3 style='margin:0;'>"+(Math.round(pjson.distance*0.62137*100)*.01)+" mi</h3>";
+		//ret+="<h3 style='margin:0;'>"+((Math.round(pjson.distance*0.62137*10))/10).toFixed(2)+" mi</h3>";
+		var miles=pjson.distance*0.62137;
+		ret+="<h3 style='margin:0;'>"+miles.toFixed(2)+" mi</h3>";
 		ret+="<address>"+pjson.address1+"<br>"+pjson.address2+"<br>"+pjson.city+", "+pjson.state+" "+pjson.zip+"</address>";
 		ret+="</div>";
 		ret+="<div class='rightcard' onclick='openplace("+pjson.PID+")'>&nbsp;";
@@ -248,9 +251,10 @@
 				extraextra+="</div>";
 			}
 			var filters="<div id='filters'>";
-			filters+="Filters";
+			//filters+="Filters";
 			filters+="<div id='filteropennow' class='filter' onclick='filterthis(this);'>Open Now</div>";
 			filters+="<div id='filter2' class='filter' onclick='filterthis(this);'>Filter 2</div>";
+			filters+="<div id='filter2' class='filter' onclick='filterthis(this);'>Filter 3</div>";
 			filters+="</div>";
 			filters+="<div class='clear'>&nbsp;</div>";
 			$("#scrollableContent").html(extraextra+filters+fdata);//+json.places.length+" results were returned."+fdata);

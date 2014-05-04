@@ -281,7 +281,10 @@
 	{
 		height:40px;
 		position:relative;
+		margin-left:auto;
+		margin-right:auto;
 		margin-bottom:10px;
+		width:97%;
 	}
 	.filter
 	{
@@ -304,7 +307,10 @@
 		color:#093;
 		font-weight:500;
 		border:2px solid #093;
-		margin-bottom:8px;
+		margin-bottom:9px;
+		margin-top:9px;
+		margin-right:9px;
+		margin-left:9px;
 	}
 	#placemat
 	{
