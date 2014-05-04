@@ -541,16 +541,16 @@
 	<div id='maincont'>
         <div id='menu'>
         	<div class='menusection'>
-                <div class="menuitem" id='Nhome' onClick="loadPg('home');">Home</div>
+                <div class="menuitem" id='Nhome' onClick="loadPg('home');"><div class='menuicon' ></div>Home</div>
                 <!--<div class="menuitem" id='Nhome' onClick="loadPg('food');">Food</div>
                 <div class="menuitem" id='Nhome' onClick="loadPg('entertainment');">Entertainment</div>
                 <div class="menuitem" id='Nhome' onClick="loadPg('shopping');">Shopping</div>
                 <div class="menuitem" id='Nhome' onClick="loadPg('special');">Events</div>-->
-                <div class="menuitem" id='Nadd' onClick="loadPg('addplace');">Add a Place</div>
+                <div class="menuitem" id='Nadd' onClick="loadPg('addplace');"><div class='menuicon' style="background-image:url(/resources/images/donotuse/addplace.png);"></div>Add a Place</div>
             </div>
             <div class='menusection'>
             	<div class='menuitem' id='Nlocation' style="cursor:default;">Location <img src='no_location.png' id='Ilocation' alt='location not found' style='margin-top:6px; position:absolute; right:5px;'/></div>
-                <div class='menuitem' onClick="loadPg('settings');">Settings</div>
+                <div class='menuitem' onClick="loadPg('settings');"><div class='menuicon' style="background-image:url(/resources/images/donotuse/settings.png);">&nbsp;</div>Settings</div>
             </div>
             
             <div class="menubottom">

@@ -300,3 +300,11 @@
 		height:100%;
 		position:absolute;	
 	}
+	.menuicon
+	{
+		height:40px;
+		width:40px;
+		float:left;
+		background-repeat:no-repeat;
+		background-position:center center;
+	}
