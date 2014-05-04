@@ -250,7 +250,9 @@
 			var filters="<div id='filters'>";
 			filters+="Filters";
 			filters+="<div id='filteropennow' class='filter' onclick='filterthis(this);'>Open Now</div>";
+			filters+="<div id='filter2' class='filter' onclick='filterthis(this);'>Filter 2</div>";
 			filters+="</div>";
+			filters+="<div class='clear'>&nbsp;</div>";
 			$("#scrollableContent").html(extraextra+filters+fdata);//+json.places.length+" results were returned."+fdata);
 		}
 		else
