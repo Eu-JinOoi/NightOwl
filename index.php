@@ -191,11 +191,13 @@
 				lclose=pjson.hours[<?php echo ((date("w")+5)%7);?>].close
 			if(lclose.substr(0,1)=="0")
 			{
-				lclose=lclose.substr(1,lclose.length-4);
+				lclose=lclose.substr(1,lclose.length-4)+" am";
 			}
 			else
 			{
-				lclose=lclose.substr(0,lclose.length-4);	
+				var first=Number(lclose.substr(0,2));
+				first-=12;
+				lclose=first+lclose.substr(2,lclose.length-4)+" pm";	
 			}
 			ret+="<h2 style='margin-bottom:0px; margin-top:2px;'>"+pjson.name+"</h2>";
 			ret+="<h3 style='margin-top:0; margin-bottom:0; color:green; font-weight:bold;'>Open Until "+lclose+"</h3>";
@@ -205,11 +207,13 @@
 			var lopen=pjson.hours[<?php echo (date("w"))%7;?>].open;
 			if(lopen.substr(0,1)=="0")
 			{
-				lopen=lopen.substr(1,lopen.length-3);
+				lopen=lopen.substr(1,lopen.length-3)+" am";
 			}
 			else
 			{
-				lopen=lopen.substr(0,lopen.length-3);	
+				var first=Number(lopen.substr(0,2));
+				first-=12;
+				lopen=first+lopen.substr(2,lopen.length-3);	
 			}
 			ret+="<h2 style='margin-bottom:0px; margin-top:2px;'>"+pjson.name+"</h2>";
 			ret+="<h3 style='margin-top:0; margin-bottom:0; color:green;'>Opens at "+lopen+"</h3>";
@@ -295,7 +299,7 @@
 			    $(this).removeAttr("selected");
 			});
 			var locfail=true;
-			$.getJSON("pages/resultsJSON.php",{category: page, latitude: selfLat, longitude: selfLong, distance:'12'})
+			$.getJSON("pages/resultsJSON.php",{category: page, latitude: selfLat, longitude: selfLong, distance:'40.3', resultsperpage:'15', page:'1'})
 				.done(function(json){
 					console.log(json);
 					if(json.gps=="success")
@@ -311,8 +315,10 @@
 					{
 						var extraextra="";
 						extraextra+="<div class='card' style='background-color:#fc6e51; border:1px solid white;'>";
-						extraextra+="<h2 style='margin-left:3px;'>Not so fast!</h2>";
-						extraextra+="<p style='margin-left:7px;'>We can't give you suggestions if we don't know where you are. You're going to need to either allow your browser to tell us or set your location. [<==LINK THAT]</p>";
+						extraextra+="<img src='/resources/images/donotuse/xxhmap.png' style='float:left;'>";
+						extraextra+="<h1 style='margin-left:3px;'>Not so fast!</h1>";
+						extraextra+="<div class='clear'>&nbsp;</div>";
+						extraextra+="<p style='margin-left:7px;'>So we have a bit of a problem here, we don't know where you are. It's going to be awfully hard to tell you where things are if we don't know where you are. You're going to need to either allow your browser to tell us or set your <a onclick='loadPg(\"location\")'> location.</a></p>";
 						extraextra+="</div>";
 						$("#scrollableContent").html(extraextra);
 					}

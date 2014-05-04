@@ -58,7 +58,7 @@ else
 			echo '"distance":"'.$row['kmdist'].'",';
 
 			//Address Components
-			echo '"address1":"'.$row['address1'].'",';
+			echo '"address1":"'.str_replace('"','\"',$row['address1']).'",';
 			echo '"address2":"'.$row['address2'].'",';
 			echo '"city":"'.$row['city'].'",';
 			echo '"state":"'.$row['stateprov'].'",';
