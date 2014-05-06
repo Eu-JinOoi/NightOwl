@@ -145,7 +145,7 @@
 		closeMenu();
 		var loadingMessages=new Array("Loading...","Looking for good places for you!");
 		var r=Math.floor((Math.random()*100)%loadingMessages.length);
-		$("#scrollableContent").html("<div style='text-align:center; margin-left:auto; margin-right:auto; color:#000;'>"+loadingMessages[r]+"<br><img src='ajax-loader.gif'></div>"+"<div id='fixScroll'>&nbsp;</div>");
+		$("#scrollableContent").html("<div style='text-align:center; margin-left:auto; margin-right:auto; margin-top:20px; color:#000;'>"+loadingMessages[r]+"<br><img src='ajax-loader.gif'></div>"+"<div id='fixScroll'>&nbsp;</div>");
 		var dheight=$(document).height();
 		var scheight=$("#scrollableContent").height();
 		var nheight=dheight-scheight-50+150;
@@ -229,7 +229,7 @@
 		//ret+="<h3 style='margin:0;'>"+((Math.round(pjson.distance*0.62137*10))/10).toFixed(2)+" mi</h3>";
 		var miles=pjson.distance*0.62137;
 		ret+="<h3 style='margin:0;'>"+miles.toFixed(2)+" mi</h3>";
-		ret+="<a href='https://maps.google.com/maps?q="+pjson.address1+","+pjson.city+","+pjson.state+" "+pjson.zip+"' target='_blank'>";
+		ret+="<a href='https://maps.google.com/maps?q="+pjson.address1+","+pjson.city+","+pjson.state+" "+pjson.zip+"' target='_blank' style='text-decoration:none;'>";
 		ret+="<address>"+pjson.address1+"<br>"+pjson.address2+"<br>"+pjson.city+", "+pjson.state+" "+pjson.zip+"</address>";
 		ret+="</a>";
 		ret+="</div>";
@@ -252,7 +252,7 @@
 			var extraextra="";
 			if(page=="home")
 			{	
-				extraextra="<div class='card' style='background-color:#222222; color:#eee; border-left:3px solid #196a9f;'>";
+				extraextra="<div class='darkcard'>";
 				extraextra+="<h2 style='font-weight:400; margin-left:3px;'>Welcome to 240&deg;</h2>";
 				extraextra+="<p style='margin-left:7px;'>Instructions on how to do things on the site. Have an option to hide this box forever (maybe - maybe not may be good references since this is the 'landing' page.</p>";
 				extraextra+="</div>";
@@ -268,7 +268,7 @@
 		}
 		else
 		{
-			$("#scrollableContent").html("<h3>Um....you must live in the middle of nowhere...or we haven't gottent your area yet. We couldn't find anything in this category.");	
+			$("#scrollableContent").html("<div style='margin:10px;'><h3 style='color:#000;'>Um....you must live in the middle of nowhere...or we haven't gottent your area yet. We couldn't find anything in this category.</h3></div>");	
 		}
 	}
 	function loadPg(page)
@@ -434,9 +434,6 @@
 		
 		
 		$.getJSON("https://maps.googleapis.com/maps/api/geocode/json?latlng="+position.coords.latitude+","+position.coords.longitude+"&sensor=true",function( data ) {
-			//alert( "Data Loaded: " + data );
-			//dump(data);
-			//alert( "JSON Data: " + data.results[0].address_components[2].long_name+", "+data.results[0].address_components[4].short_name);
 			$("#Nlocation").stop().animate({"height":"80px"});
 			var current=$("#Nlocation").html();
 			var ndata="Unknow";
@@ -455,10 +452,21 @@
 					}
 				}
 			}
+			//#locationDesc
 			citystate=ndata;
-			ndata=current+ndata;
+			if($("#locationDesc").length==0)
+			{
+				ndata=current+"<div id='locationDesc'>"+citystate+"</div>";
+				$("#Nlocation").html(ndata);
+			}
+			else
+			{
+				$("#locationDesc").html(citystate);
+			}
+			
+			
 			currentLocation_full=data.results[0].formatted_address;
-			$("#Nlocation").html(ndata);		
+			$("#location_currentlocation").html(citystate);			
 			//var d=getDistance(34.05482801970849,-118.2381269802915);
 			//alert("You are currently "+Math.round(d*100)/100+" mi from L.A. Union Station");
 		});

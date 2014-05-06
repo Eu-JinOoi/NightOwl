@@ -22,7 +22,8 @@ else
 	if ($mysqli->connect_error) 
 	{
 		//die('Connect Error (' . $mysqli->connect_errno . ') '. $mysqli->connect_error);
-		echo "\"mysql\":\"failure\"";
+		echo "\"mysql\":\"failure\",";
+		echo "\"mysql_query_error\":\"".$mysqli->error."\"";
 	}
 	else 
 		echo "\"mysql\":\"success\",";
@@ -171,7 +172,9 @@ else
 	}	
 	else
 	{
-		echo "\"query\":\"failure\"}";
+		echo "\"query\":\"failure\",";
+		echo "\"mysql_query_error\":\"".$mysqli->error."\"";
+		echo "}";
 	}
 	/*
 	echo '"places":[';
