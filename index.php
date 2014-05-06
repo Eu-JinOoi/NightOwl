@@ -11,6 +11,7 @@
 <script>
 	var counter=0;
 	var currentLocation_full=null;
+	var citystate="";
 	var menuState=1;//0 is away 1 is in frame
 	var searchState=0;//0 is away, 1 is shown
 	var selfLat=0;
@@ -188,7 +189,7 @@
 		{
 			var lclose=pjson.hours[<?php echo date("w");?>].close;
 			if(pjson.previous=="true")
-				lclose=pjson.hours[<?php echo ((date("w")+5)%7);?>].close
+				lclose=pjson.hours[<?php echo ((date("w")+6)%7);?>].close
 			if(lclose.substr(0,1)=="0")
 			{
 				lclose=lclose.substr(1,lclose.length-4)+" am";
@@ -205,9 +206,9 @@
 		else if(pjson.status=="closed")
 		{
 			var lopen=pjson.hours[<?php echo (date("w"))%7;?>].open;
-			if(lopen.substr(0,1)=="0")
+			if(Number(lopen.substr(0,2))<=12)
 			{
-				lopen=lopen.substr(1,lopen.length-3)+" am";
+				lopen=Number(lopen.substr(0,2))+lopen.substr(2,lopen.length-5)+" am";
 			}
 			else
 			{
@@ -228,7 +229,9 @@
 		//ret+="<h3 style='margin:0;'>"+((Math.round(pjson.distance*0.62137*10))/10).toFixed(2)+" mi</h3>";
 		var miles=pjson.distance*0.62137;
 		ret+="<h3 style='margin:0;'>"+miles.toFixed(2)+" mi</h3>";
+		ret+="<a href='https://maps.google.com/maps?q="+pjson.address1+","+pjson.city+","+pjson.state+" "+pjson.zip+"' target='_blank'>";
 		ret+="<address>"+pjson.address1+"<br>"+pjson.address2+"<br>"+pjson.city+", "+pjson.state+" "+pjson.zip+"</address>";
+		ret+="</a>";
 		ret+="</div>";
 		ret+="<div class='rightcard' onclick='openplace("+pjson.PID+")'>&nbsp;";
 		//ret+="<img src='resources/images/arrow.png'>";
@@ -358,6 +361,10 @@
 					  {
 							fillLocation();  
 					  }
+					  if(page=="location")
+					  {
+						$("#location_currentlocation").html(citystate);  
+					  }
 					  location.hash=page;
 					  //var param = document.URL.split('#')[1];	
 					  //Check Doc Height and scrollable;
@@ -420,8 +427,10 @@
 	{
 		selfLat=position.coords.latitude;
 		selfLong=position.coords.longitude;
+		
 		$("#Ilocation").prop("src","location.png");
 		$("#Ilocation").prop("alt","Location Found");
+		$("#iconlocation").css("background-image","url(/location.png)");
 		
 		
 		$.getJSON("https://maps.googleapis.com/maps/api/geocode/json?latlng="+position.coords.latitude+","+position.coords.longitude+"&sensor=true",function( data ) {
@@ -430,23 +439,24 @@
 			//alert( "JSON Data: " + data.results[0].address_components[2].long_name+", "+data.results[0].address_components[4].short_name);
 			$("#Nlocation").stop().animate({"height":"80px"});
 			var current=$("#Nlocation").html();
-			var ndata=current;
-			if(data.results[2].address_components[0].types[0]=='locality')
+			var ndata="Unknow";
+			for(var i=0; i<data.results.length;i++)
 			{
-				ndata+="<br><span id='locationDesc'>"+data.results[2].address_components[0].long_name+", "+data.results[2].address_components[2].short_name+"</span>";
+				if(data.results[i].types[0]=="locality" && data.results[i].types[1]=="political")
+				{
+					var cpos=(data.results[i].formatted_address).indexOf(",");
+					if((data.results[i].formatted_address).indexOf(",",cpos)==-1)
+					{
+						
+					}
+					else
+					{
+						ndata=(data.results[i].formatted_address).substr(0,(data.results[i].formatted_address).indexOf(",",cpos+1));
+					}
+				}
 			}
-			else if(data.results[2].address_components[1].types[0]=='locality')
-			{
-				ndata+="<br><span id='locationDesc'>"+data.results[2].address_components[1].long_name+", "+data.results[2].address_components[3].short_name+"</span>";
-			}
-			else if(data.results[6].address_components[6].types[0]=='locality')
-			{
-				ndata+="<br><span id='locationDesc'>"+data.results[6].address_components[0].long_name+", "+data.results[6].address_components[2].short_name+"</span>";
-			}
-			else
-			{
-				ndata+="3";	
-			}
+			citystate=ndata;
+			ndata=current+ndata;
 			currentLocation_full=data.results[0].formatted_address;
 			$("#Nlocation").html(ndata);		
 			//var d=getDistance(34.05482801970849,-118.2381269802915);
@@ -561,7 +571,9 @@
                 <div class="menuitem" id='Nadd' onClick="loadPg('addplace');"><div class='menuicon' style="background-image:url(/resources/images/donotuse/addplace.png);"></div>Add a Place</div>
             </div>
             <div class='menusection'>
-            	<div class='menuitem' id='Nlocation' style="cursor:default;">Location <img src='no_location.png' id='Ilocation' alt='location not found' style='margin-top:6px; position:absolute; right:5px;'/></div>
+            	<div class='menuitem' id='Nlocation' style="" onClick="loadPg('location');">
+	                <div class='menuicon' id='iconlocation' style="background-image:url(/no_location.png);">&nbsp;</div>
+                	Location <!--<img src='no_location.png' id='Ilocation' alt='location not found' style='margin-top:6px; position:absolute; right:5px;'/>--></div>
                 <div class='menuitem' onClick="loadPg('settings');"><div class='menuicon' style="background-image:url(/resources/images/donotuse/settings.png);">&nbsp;</div>Settings</div>
             </div>
             
