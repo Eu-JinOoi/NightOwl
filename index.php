@@ -282,7 +282,7 @@
 			page="home";
 		/*var getArgs="";
 		var loadpage=page;*/
-		if(page=="entertainment" || page=="food" || page=="shopping" || page=="special" || page=="home")
+		if(page=="entertainment" || page=="food" || page=="shopping" || page=="special" || page=="home" || page.indexOf("search|")==0)
 		{
 			/*Temp Fix*/
 				if(page=="home")
@@ -302,7 +302,12 @@
 			    $(this).removeAttr("selected");
 			});
 			var locfail=true;
-			$.getJSON("pages/resultsJSON.php",{category: page, latitude: selfLat, longitude: selfLong, distance:'40.3', resultsperpage:'15', page:'1'})
+			var a;
+			if(page!="search")
+				a={category: page, latitude: selfLat, longitude: selfLong, distance:'40.3', resultsperpage:'15', page:'1'};
+			else
+				a={category: page, latitude: selfLat, longitude: selfLong, distance:'40.3', resultsperpage:'15', page:'1',searchterms: $("#searchBox").val()};		
+			$.getJSON("pages/resultsJSON.php",a)
 				.done(function(json){
 					console.log(json);
 					if(json.gps=="success")
@@ -542,7 +547,7 @@
 </style>
 </head>
 
-<body id='bodytag'>
+<body id='bodytag' style="background-color:#e5e5e5;">
 	<div id='brandingBar' >
         	<a id='menubutton'>
             	<div style="width:48px; height:48px; position:absolute; top:2px; left:0; cursor:pointer;" >
@@ -566,7 +571,7 @@
             </a>
     </div>
 	<div id='searchRegion'>
-    	<div style='margin:auto;'><input type='text' id='searchBox' name='searchBox' style='width:75%; float:left;' data-role="none"><div id='doSearch'>Search</div></div>
+    	<div style='margin:auto;'><input type='text' id='searchBox' name='searchBox' style='width:75%; float:left;' data-role="none"><div id='doSearch' onClick="loadPg('search|home');">Search</div></div>
     </div>
 	<div id='maincont'>
         <div id='menu'>
@@ -592,7 +597,7 @@
         </div>
         <div class='clear'>&nbsp;</div>
         <div id='pagearea'>
-            <div id='scrollableContent'>
+            <div id='scrollableContent' style="background-color:#e5e5e5;">
                 
             </div>
             <!--<div id='placemat'>

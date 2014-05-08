@@ -9,19 +9,38 @@ else
 {
 	$lat=$_GET['latitude'];
 	$lon=$_GET['longitude'];
+	echo "{\"gps\":\"success\",";
+	
 	$type=$_GET['category'];
 	$distance=$_GET['distance'];//in km
+	$whereType;
+	if(stripos($type,"search")!==FALSE)
+	{
+		
+		$param=explode("|",$type);
+		$type=$param[1];
+		if(sizeof($param)==1)
+			$type="home";
+		else
+		{
+			$type=$param[1];
+		}
+		echo "\"searching\":\"".$type."\",";
+	}
+	else
+	{
+		echo "\"searching\":\"false\",";
+	}
 	$whereType=" WHERE type='".$type."'";
 	if($type=="home")
 	{
 		$whereType="";
 	}
-	echo "{\"gps\":\"success\",";
+	
 	//MySQL setup
 	$mysqli=new mysqli('localhost','eunive5_projNO','NightOwl2014','eunive5_projectNO');
 	if ($mysqli->connect_error) 
 	{
-		//die('Connect Error (' . $mysqli->connect_errno . ') '. $mysqli->connect_error);
 		echo "\"mysql\":\"failure\",";
 		echo "\"mysql_query_error\":\"".$mysqli->error."\"";
 	}
