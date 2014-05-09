@@ -65,8 +65,11 @@
 					$zip=$epoi;
 				else if($epoi->getName()=="clientkey")
 					$storeno=intval($epoi);
-				else if($epoi->getName()=="drive_through")
-					$drivethru=intval($epoi);
+				else if($epoi->getName()=="hasdrivethru")
+					if($epoi=="true")
+					{
+						$drivethru=1;
+					}
 				else if($epoi->getName()=="offerswireless")
 				{
 					if($epoi=="true")
