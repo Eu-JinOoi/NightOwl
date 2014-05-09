@@ -233,7 +233,17 @@
 		ret+="<address>"+pjson.address1+"<br>"+pjson.address2+"<br>"+pjson.city+", "+pjson.state+" "+pjson.zip+"</address>";
 		ret+="</a>";
 		ret+="</div>";
-		ret+="<div class='rightcard' onclick='openplace("+pjson.PID+")'>&nbsp;";
+		ret+="<div class='rightcard'>";
+		if(pjson.wifi=="1")
+		{
+			ret+="<div style='background-color:#33b5e5; width:24px; height:24px; float:right;'><img src='resources/images/donotuse/wifi.png' style='z-index:44448;'></div>";	
+		}
+		if(pjson.drivethru=="1")
+		{
+			ret+="<div style='width:24px; height:24px; float:right;'><img src='resources/images/donotuse/car.png' style='z-index:44448;'></div>";	
+		}
+		ret+="<div class='clear'>&nbsp;</div>";
+		//ret+="<div class='rightcard' onclick='openplace("+pjson.PID+")'>&nbsp;";
 		//ret+="<img src='resources/images/arrow.png'>";
 		ret+="</div>"
 		ret+="<div class='clear'>&nbsp;</div>";
@@ -596,8 +606,8 @@
             </div>
         </div>
         <div class='clear'>&nbsp;</div>
-        <div id='pagearea'>
-            <div id='scrollableContent' style="background-color:#e5e5e5;">
+        <div id='pagearea' style="position:relative;">
+            <div id='scrollableContent' style="background-color:#e5e5e5; position:relative;">
                 
             </div>
             <!--<div id='placemat'>

@@ -116,17 +116,21 @@
 	}
 	.leftcard
 	{
-		float:left;	
+		float:left;
+		position:relative;
+		max-width:75%;
 	}
 	.rightcard
 	{
 		float:right;
 		min-height:120px;
-		width:40px;
+		width:48px;
 		position:relative;
-		background-image:url(/resources/images/arrow.png);
+		margin-top:10px;
+		margin-right:10px;
+		/*background-image:url(/resources/images/arrow.png);
 		background-repeat:no-repeat;
-		background-position:center right;
+		background-position:center right;*/
 	}
 	.clear
 	{

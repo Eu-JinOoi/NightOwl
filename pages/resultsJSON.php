@@ -83,6 +83,8 @@ else
 			echo '"city":"'.$row['city'].'",';
 			echo '"state":"'.$row['stateprov'].'",';
 			echo '"zip":"'.$row['zip'].'",';
+			echo '"wifi":"'.$row['wifi'].'",';
+			echo '"drivethru":"'.$row['drivethru'].'",';
 			//Time Components
 			$dow=date("w");
 			$isOpen=false;
