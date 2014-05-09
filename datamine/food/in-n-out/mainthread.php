@@ -27,6 +27,7 @@
 		{
 			//printf("%s has got %d children.\n", $poi['name'], $poi->count());
 			$name="In-N-Out ";
+			$subname="";
 			$address1="";
 			$address2="";
 			$city="";
@@ -41,12 +42,14 @@
 			$type="food";
 			$storeno=-1;
 			$drivethru=0;
+			$wifi=0;
 			
 			foreach($poi as $epoi)
 			{
 				echo $epoi->getName().":".$epoi."<br>";
 				if($epoi->getName()=="name")
-					$name="In-N-Out";
+					//$name="In-N-Out";
+					$subname=$epoi;
 					//$name.=$epoi;
 				else if($epoi->getName()=="address1")
 					$address1=$epoi;
@@ -151,7 +154,7 @@
 				}
 			}
 			$hash=sha1($address1.$address2.$city.$state.$country.$zip);
-			$query="INSERT INTO places VALUES(NULL,'".$hash."','".$name."','".$storeno."','".$address1."','".$address2."','".$city."','".$state."','".$country."','".$zip."','".$phone."','".$latitude."','".$longitude."','".$type."','".$drivethru."','-8','1','".$open[0]."','".$close[0]."','".$open[1]."','".$close[1]."','".$open[2]."','".$close[2]."','".$open[3]."','".$close[3]."','".$open[4]."','".$close[4]."','".$open[5]."','".$close[5]."','".$open[6]."','".$close[6]."')";
+			$query="INSERT INTO places VALUES(NULL,'".$hash."','".$name."','".$subname."','".$storeno."','".$address1."','".$address2."','".$city."','".$state."','".$country."','".$zip."','".$phone."','".$latitude."','".$longitude."','".$type."','".$drivethru."','".$wifi."','-8','1','".$open[0]."','".$close[0]."','".$open[1]."','".$close[1]."','".$open[2]."','".$close[2]."','".$open[3]."','".$close[3]."','".$open[4]."','".$close[4]."','".$open[5]."','".$close[5]."','".$open[6]."','".$close[6]."')";
 			if($res=$mysqli->query($query))
 			{
 				echo "SUCCESS!";		
@@ -159,7 +162,7 @@
 			else
 			{
 				echo "UPDATE: ".$mysqli->error;
-				$query="UPDATE places SET name='".$name."',storenumber='".$storeno."',drivethru='".$drivethru."', hours_4_o='".$open[4]."',hours_4_c='".$close[4]."',hours_5_o='".$open[5]."',hours_5_c='".$close[5]."',hours_6_o='".$open[6]."',hours_6_c='".$close[6]."' WHERE hash='".$hash."'";
+				$query="UPDATE places SET name='".$name."', subname='".$subname."', storenumber='".$storeno."',drivethru='".$drivethru."', hours_4_o='".$open[4]."',hours_4_c='".$close[4]."',hours_5_o='".$open[5]."',hours_5_c='".$close[5]."',hours_6_o='".$open[6]."',hours_6_c='".$close[6]."' WHERE hash='".$hash."'";
 				if($res=$mysqli->query($query))
 				{
 				}	
