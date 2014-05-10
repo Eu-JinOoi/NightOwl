@@ -127,7 +127,11 @@
 				if($(self).attr("id")=="filteropennow")
 				{
 					$(".closed").show();
-					//$(".unknown").show();
+					$(".unknown").show();
+				}
+				if($(self).attr("id")=="filterwifi")
+				{
+					$(".noWiFi").show();
 				}
 			}
 			else
@@ -136,7 +140,11 @@
 				if($(self).attr("id")=="filteropennow")
 				{
 					$(".closed").hide();
-					//$(".unknown").hide();
+					$(".unknown").hide();
+				}
+				if($(self).attr("id")=="filterwifi")
+				{
+					$(".noWiFi").hide();
 				}
 			}
 	}
@@ -183,7 +191,12 @@
 		
 		
 		var ret="";
-		ret+="<div class='"+pjson.status+"' id='place-"+pjson.PID+"'>";
+		var wificlass="";
+		if(pjson.wifi==0)
+		{
+			wificlass=" noWiFi";
+		}
+		ret+="<div class='"+pjson.status+wificlass+"' id='place-"+pjson.PID+"'>";
 		ret+="<div class='leftcard'>";
 		if(pjson.status=="open")
 		{
@@ -270,7 +283,7 @@
 			var filters="<div id='filters'>";
 			//filters+="Filters";
 			filters+="<div id='filteropennow' class='filter' onclick='filterthis(this);'>Open Now</div>";
-			filters+="<div id='filter2' class='filter' onclick='filterthis(this);'>Filter 2</div>";
+			filters+="<div id='filterwifi' class='filter' onclick='filterthis(this);'>WiFi</div>";
 			filters+="<div id='filter2' class='filter' onclick='filterthis(this);'>Filter 3</div>";
 			filters+="</div>";
 			filters+="<div class='clear'>&nbsp;</div>";
