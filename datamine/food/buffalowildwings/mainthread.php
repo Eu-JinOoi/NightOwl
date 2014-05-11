@@ -28,20 +28,50 @@ function convertAddress($address)
 		$second=stripos($address," ",$first+1);
 		$ainfo["address2"]=substr($address,$suite,$second-$suite);
 		$ainfo["address1"]=trim(trim(substr($address,0,$suite-1)),",");
-		$city1=trim(substr($address,$second));
-		$city2=$city1;
-		$ainfo["city"]=$city2;
+		$city=trim(substr($address,$second));
+		$paren=stripos($city,")");
+		if($paren!==FALSE)
+		{
+			$ainfo["city"]=trim(trim(substr($city,$paren),')'));
+		}
+		else
+		{
+			$ainfo["city"]=$city;
+		}
+		//$ainfo["city"]=$city;
+		//break;	
 	}
 	else
 	{
-		$streetends=array("blvd","blvd.","ave","ave.","avenue","boulevard","st","street","st.","dr","drive","dr.","road","rd.","rd","parkway","pkwy","pkwy.");
+		$streetends=array("blvd ","blvd.","ave ","ave.","avenue","boulevard","street","st.","dr ","drive","dr.","road","rd.","rd ","parkway","pkwy ","pkwy.","court","ct.","ct ","ln ","ln.","lane");
 		$ainfo["address2"]="";
-		$ainfo["address1"];
+		for($i=0;$i<sizeof($streetends);$i++)
+		{
+			$offset=stripos($address,$streetends[$i]);
+			if($offset!==FALSE)
+			{
+				$ainfo["sep"]=$streetends[$i];
+				$space=stripos($address," ",$offset+1);
+				$ainfo["address1"]=substr($address,0,$space);
+				$city=trim(substr($address,$space));
+				$paren=stripos($city,")");
+				if($paren!==FALSE)
+				{
+					$ainfo["city"]=trim(trim(substr($city,$paren),')'));
+				}
+				else
+				{
+					$ainfo["city"]=$city;
+				}
+				break;	
+			}
+		}
 	}
 	
 	
-	//echo "<br><hr><hr><br>";
-	//var_dump($ainfo);
+	echo "<br><hr><hr><br>";
+	var_dump($ainfo);
+	echo "<br>";
 	//echo "<br><hr><hr><br>";
 	return $ainfo;
 }
@@ -136,7 +166,7 @@ $mysqli=new mysqli('localhost','eunive5_projNO','NightOwl2014','eunive5_projectN
     		die('Connect Error (' . $mysqli->connect_errno . ') '. $mysqli->connect_error);
 	}
 	$url1="http://www.buffalowildwings.com/services/FetchStoresByLatLng.aspx?zip=92887&latLng%5B%5D=33.8976995&latLng%5B%5D=-117.72560829999998&lat=33.8976995&lng=-117.72560829999998&radius=50000";
-	$url1="http://www.buffalowildwings.com/services/FetchStoresByLatLng.aspx?zip=92887&latLng%5B%5D=33.8976995&latLng%5B%5D=-117.72560829999998&lat=33.8976995&lng=-117.72560829999998&radius=10";
+	//$url1="http://www.buffalowildwings.com/services/FetchStoresByLatLng.aspx?zip=92887&latLng%5B%5D=33.8976995&latLng%5B%5D=-117.72560829999998&lat=33.8976995&lng=-117.72560829999998&radius=10";
 	$jsondata=file_get_contents($url1);
 	$json=json_decode($jsondata,true);
 	
@@ -168,6 +198,9 @@ $mysqli=new mysqli('localhost','eunive5_projNO','NightOwl2014','eunive5_projectN
 		/*
 		*
 		*****************************NEED TO ADD IS 24 hour field to database
+		*****************************NEED TO ADD Has ALcholol
+		*****************************"          " 18+
+		*****************************"          " 21+
 		*
 		*/
 		
