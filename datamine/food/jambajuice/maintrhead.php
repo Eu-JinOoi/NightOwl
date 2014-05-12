@@ -22,22 +22,20 @@ $mysqli=new mysqli('localhost','eunive5_projNO','NightOwl2014','eunive5_projectN
 		$country="US";
 		$latitude=$store["position"]["latitude"];
 		$longitude=$store["position"]["longitude"];
-		$phone=$store["PhoneNumber"];
+		$phone=str_replace(".","-",$store["phoneNumber"]);
 		$open=$hours["open"];
 		$close=$hours["close"];
 		$type="food";
 		$storeno=$store["Store_Id"];
 		$drivethru=0;
 		$wifi=0;
-		$hours_unknown=$hours["unknown"];
-		/*
-		*
-		*****************************NEED TO ADD IS 24 hour field to database
-		*****************************NEED TO ADD Has ALcholol
-		*****************************"          " 18+
-		*****************************"          " 21+
-		*
-		*/
+		$plus18=0;
+		$plus21=0;
+		$alcohol=0;
+		$hours_unknown=0;
+		$hours_closed=0;
+		$hours_24=0;
+
 		
 		echo "<br>".$name;
 		echo "<br>".$subname;
@@ -60,6 +58,17 @@ $mysqli=new mysqli('localhost','eunive5_projNO','NightOwl2014','eunive5_projectN
 		
 		echo "<hr>";
 		echo "<br><br>";	
+		
+		$hash=sha1($address1.$address2.$city.$state.$country.$zip);
+		$query="INSERT INTO placesPending VALUES(NULL,'".$hash."','".$name."','".$subname."','".$storeno."','".$address1."','".$address2."','".$city."','".$state."','".$country."','".$zip."','".$phone."','".$latitude."','".$longitude."','".$type."','".$drivethru."','".$wifi."','".$plus18."','".$plus21."','".$alcohol."','-8','1','".$hours_unknown."','".$hours_closed."','".$hours_24."','".$open[0]."','".$close[0]."','".$open[1]."','".$close[1]."','".$open[2]."','".$close[2]."','".$open[3]."','".$close[3]."','".$open[4]."','".$close[4]."','".$open[5]."','".$close[5]."','".$open[6]."','".$close[6]."')";
+		if($res=$mysqli->query($query))
+		{
+			echo "SUCCESS!<br>";		
+		}
+		else
+		{
+			echo "NEED TO UPDATE:".$mysqli->error."<br>";	
+		}
 	}
 	//echo sizeof($json->{"Markers"});
 	
