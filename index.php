@@ -98,7 +98,10 @@
     });
 	$(window).load(function()
 	{
-		$("#category-button").css({"background-color":"#196a9f","color":"#FFF","border-color":"#104a6f"});
+		$("#category-button").css({"background-color":"#196a9f","color":"#FFF","border-color":"#104a6f","border-radius":"0","padding-left":".2em"});
+		$(".ui-icon-carat-d:after")
+		$(".ui-icon-carat-d:after").css({"background-image":"url(/resources/images/donotuse/dropdown.png)"});
+		//"background-image":"url(/resources/images/donotuse/dropdown.png)",
 		getLocation();
 		loadPg("");
 	});
@@ -583,7 +586,7 @@
                 	<option value='food'>Food</option>
                     <option value='entertainment'>Entertainment</option>
                     <option value='shopping'>Shopping</option>
-                    <option value='special'>Special Events</option>
+                    <option value='special'>Events</option>
                 </select>
                 </div>
         	<span id='siteTitle'>240&deg;</span>
