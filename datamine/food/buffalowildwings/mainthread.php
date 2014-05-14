@@ -82,7 +82,7 @@ function bwwHoursSuck($hours)
 	$rhours["unknown"]=1;
 	if($hours[0]=="Please call for hours.")
 	{
-		$rhours["unknown"]=1;
+		$rhours["unknown"]=127;
 		return $rhours;
 	}
 	//Check for Daily

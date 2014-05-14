@@ -96,88 +96,9 @@ function convertTimes($time)
 					//$pattern="/(\d+[:*]\d+am|pm)/i";
 					$pattern="/(\d+(am|pm)-\d+(am|pm))/";
 					preg_match($pattern,$field,$matches);	
-					var_dump($matches);
+					var_dump(explode("-",$matches[0]));
 					
 					$field="";
-				}
-				else if($epoi->getName()=="friday_hours")
-				{
-					$hours=explode("-",$epoi);
-					$hours[0]=trim($hours[0]);
-					$hours[1]=trim($hours[1]);
-					if(stripos($hours[0],"a.m.")!==false)
-					{
-						$open[5]=substr($hours[0],0,strpos($hours[0]," ")).":00";
-					}
-					else
-					{
-						$open[5]=((substr($hours[0],0,2)+12)%24).substr($hours[0],2,strpos($hours[0]," ")).":00";	
-					}
-					if(stripos($hours[1],"a.m.")!==false)
-					{
-						$close[5]=str_pad(substr($hours[1],0,strpos($hours[1]," ")).":00",8,"0",STR_PAD_LEFT);
-					}
-					else
-					{
-						$close[5]=str_pad(((substr($hours[1],0,2)+12)%24),3,"0",STR_PAD_LEFT).substr($hours[1],2,strpos($hours[1]," ")).":00";	
-					}
-					
-				}
-				else if($epoi->getName()=="saturday_hours")
-				{
-					$hours=explode("-",$epoi);
-					$hours[0]=trim($hours[0]);
-					$hours[1]=trim($hours[1]);
-					if(stripos($hours[0],"a.m.")!==false)
-					{
-						$open[6]=substr($hours[0],0,strpos($hours[0]," ")).":00";
-					}
-					else
-					{
-						$open[6]=((substr($hours[0],0,2)+12)%24).substr($hours[0],2,strpos($hours[0]," ")).":00";	
-					}
-					if(stripos($hours[1],"a.m.")!==false)
-					{
-						$close[6]=str_pad(substr($hours[1],0,strpos($hours[1]," ")).":00",8,"0",STR_PAD_LEFT);
-					}
-					else
-					{
-						$close[6]=str_pad(((substr($hours[1],0,2)+12)%24),3,"0",STR_PAD_LEFT).substr($hours[1],2,strpos($hours[1]," ")).":00";	
-					}
-				}
-				else if($epoi->getName()=="weekday_hours")
-				{
-					$hours=explode("-",$epoi);
-					$hours[0]=trim($hours[0]);
-					$hours[1]=trim($hours[1]);
-					if(strpos($hours[0]," a.m.")!==false)
-					{
-						for($i=0; $i<=4; $i++)
-						{
-							$open[$i]=substr($hours[0],0,strpos($hours[0]," ")).":00";
-						}
-						//$open[6]=substr($hours[0],0,strpos($hours[0]," ")).":00";
-					}
-					else
-					{
-						
-					}
-					if(strpos($hours[1]," a.m.")!==false)
-					{
-						for($i=0; $i<=4; $i++)
-						{
-							$close[$i]=str_pad(substr($hours[1],0,strpos($hours[1]," ")).":00",8,"0",STR_PAD_LEFT);
-						}
-						//$close[6]=str_pad(substr($hours[1],0,strpos($hours[1]," ")).":00",8,"0",STR_PAD_LEFT);
-					}
-					else
-					{
-						for($i=0; $i<=4; $i++)
-						{
-							$close[$i]=str_pad(((substr($hours[1],0,2)+12)%24),3,"0",STR_PAD_LEFT).substr($hours[1],2,strpos($hours[1]," ")).":00";	
-						}
-						//$close[6]=str_pad(((substr($hours[1],0,2)+12)%24),3,"0",STR_PAD_LEFT).substr($hours[1],2,strpos($hours[1]," ")).":00";	
-					}
 				}
 			}
 			$hash=sha1($address1.$address2.$city.$state.$country.$zip);

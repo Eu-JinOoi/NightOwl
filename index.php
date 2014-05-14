@@ -233,7 +233,14 @@
 				lopen=first+lopen.substr(2,lopen.length-3);	
 			}
 			ret+="<h2 style='margin-bottom:0px; margin-top:2px;'>"+pjson.name+"</h2>";
-			ret+="<h3 style='margin-top:0; margin-bottom:0; color:green;'>Opens at "+lopen+"</h3>";
+			if(pjson.hours[<?php echo (date("w"))%7;?>].closed==1)
+			{
+				ret+="<h3 style='margin-top:0; margin-bottom:0; color:red;'>Closed Today</h3>";
+			}
+			else
+			{
+				ret+="<h3 style='margin-top:0; margin-bottom:0; color:green;'>Opens at "+lopen+"</h3>";
+			}
 		}
 		else
 		{

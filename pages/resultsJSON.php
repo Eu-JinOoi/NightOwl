@@ -9,7 +9,7 @@ else
 {
 	$lat=$_GET['latitude'];
 	$lon=$_GET['longitude'];
-	echo "{\"gps\":\"success\",";
+	echo "{\n\t\"gps\":\"success\",\n";
 	
 	$type=$_GET['category'];
 	$distance=$_GET['distance'];//in km
@@ -25,11 +25,11 @@ else
 		{
 			$type=$param[1];
 		}
-		echo "\"searching\":\"".$type."\",";
+		echo "\t\"searching\":\"".$type."\",\n";
 	}
 	else
 	{
-		echo "\"searching\":\"false\",";
+		echo "\t\"searching\":\"false\",\n";
 	}
 	$whereType=" WHERE type='".$type."'";
 	if($type=="home")
@@ -41,11 +41,11 @@ else
 	$mysqli=new mysqli('localhost','eunive5_projNO','NightOwl2014','eunive5_projectNO');
 	if ($mysqli->connect_error) 
 	{
-		echo "\"mysql\":\"failure\",";
-		echo "\"mysql_query_error\":\"".$mysqli->error."\"";
+		echo "\t\"mysql\":\"failure\",\n";
+		echo "\t\"mysql_query_error\":\"".$mysqli->error."\"\n";
 	}
 	else 
-		echo "\"mysql\":\"success\",";
+		echo "\t\"mysql\":\"success\",\n";
 	//$distance=12;
 	$query="SELECT *, (acos(sin(RADIANS(".$lat."))*sin(RADIANS(places.latitude))+cos(RADIANS(".$lat."))*cos(RADIANS(places.latitude))*cos(RADIANS(places.longitude) - RADIANS(".$lon.")))*6371) AS kmdist 
 			FROM places 
@@ -57,7 +57,7 @@ else
 	//LEFT JOIN hours ON places.PID=hours.PID
 	if($result=$mysqli->query($query))
 	{
-		echo "\"query\":\"success\",";
+		echo "\t\"query\":\"success\",\n";
 		echo '"places":[';
 		$first=true;
 		while($row=$result->fetch_assoc())
@@ -97,68 +97,55 @@ else
 					//echo '"hours_'.$i.'":[';
 					echo "{";
 						echo '"open":"'.$row['hours_'.$i.'_o'].'",';
-						echo '"close":"'.$row['hours_'.$i.'_c'].'"';
+						echo '"close":"'.$row['hours_'.$i.'_c'].'",';
+						echo '"closed":"'.(intval($row["hours_closed"]&(0x0001<<$i))>0 ? 1 : 0).'",';
+						echo '"unknown":"'.(intval($row["hours_unknown"]&(0x0001<<$i))>0 ? 1 : 0).'"';
 					echo "}";		
 					
 					if($i==$dow)
 					{
-						if(
+						/*if(
 							($row['hours_'.$i.'_o']=="00:00:00" && $row['hours_'.$i.'_c']=="00:00:00") 
 							||
-							($row['hours_'.$i.'_o']==NULL && $row['hours_'.$i.'_c']==NULL))
+							($row['hours_'.$i.'_o']==NULL && $row['hours_'.$i.'_c']==NULL))*/
+						if(($row['hours_unknown']&(0x0001<<$i))!=0)
 						{	
 							$isUnknown=true;
 						}
-						
-						$now=strtotime(date("H:i:s"));
-						$open=strtotime($row['hours_'.$i.'_o']);
-						$close=strtotime($row['hours_'.$i.'_c']);
-						$popen=strtotime($row['hours_'.(($i+5)%6).'_o'] ." yesterday");
-						$pclose=strtotime($row['hours_'.(($i+5)%6).'_c']);
-						//echo "Y:".(($i+6)%8)."   \n";
-						/*
-						//Need to check previous day
-						if($now>=$open && $now<$close)
+						else if(($row['hours_closed']&(0x0001<<$i))!=0)
 						{
-							$isOpen=true;	
+							$isOpen=false;	
 						}
-						else if($open>$close)//places that span midnight
+						else
 						{
-							if($now>=$open && $open>$close)
+							$now=strtotime(date("H:i:s"));
+							$open=strtotime($row['hours_'.$i.'_o']);
+							$close=strtotime($row['hours_'.$i.'_c']);
+							$popen=strtotime($row['hours_'.(($i+5)%6).'_o'] ." yesterday");
+							$pclose=strtotime($row['hours_'.(($i+5)%6).'_c']);
+							if($close>$open)//Normal
 							{
-								$isOpen=true;	
+								if($now>=$open && $now<$close)
+								{
+									$isOpen=true;	
+								}
 							}
-							if($now<$pclose && $now<$open)
+							else if($close<$open)
 							{
-								$isOpen=true;	
-							}
-						}*/
-						if($close>$open)//Normal
-						{
-							if($now>=$open && $now<$close)
-							{
-								$isOpen=true;	
-							}
-						}
-						else if($close<$open)
-						{
-							/*echo "{";
-							echo '"now":"'.$now.'","open":"'.$open.'","close":"'.$close.'","pclose":"'.$pclose.'"';
-							echo "}";*/
-							//echo $pclose."/".$now."/".$open;
-							if($now>=$open)
-							{
-								$isOpen=true;	
-							}
-							else if($now<$pclose)
-							{
-								
-								$previous=true;
-								$isOpen=true;
-							}
-							else
-							{
-								//echo "|".date("H:i:s",$now)."/".date("H:i:s",$pclose)."|";	
+								if($now>=$open)
+								{
+									$isOpen=true;	
+								}
+								else if($now<$pclose)
+								{
+									
+									$previous=true;
+									$isOpen=true;
+								}
+								else
+								{
+									//echo "|".date("H:i:s",$now)."/".date("H:i:s",$pclose)."|";	
+								}
 							}
 						}
 						
@@ -197,18 +184,5 @@ else
 		echo "\"mysql_query_error\":\"".$mysqli->error."\"";
 		echo "}";
 	}
-	/*
-	echo '"places":[';
-	echo "{";
-	echo '"name":"Test",';
-	echo '"status":"open"';
-	echo "},";
-	echo "{";
-	echo '"name":"Test2",';
-	echo '"status":"closed"';
-	echo "}";
-	echo ']';
-	echo "}";
-	*/
 }
 ?>

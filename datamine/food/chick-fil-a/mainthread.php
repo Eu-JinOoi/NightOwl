@@ -38,7 +38,8 @@
 			$storeno=-1;
 			$drivethru=0;
 			$wifi=0;
-			$hours_unknown=1;
+			$hours_unknown=126;
+			$hours_closed=1;
 			
 			foreach($poi as $epoi)
 			{
@@ -87,7 +88,7 @@
 			else
 			{
 				echo "UPDATE: ".$mysqli->error;
-				$query="UPDATE places SET name='".$name."',storenumber='".$storeno."',drivethru='".$drivethru."', hours_4_o='".$open[4]."',hours_4_c='".$close[4]."',hours_5_o='".$open[5]."',hours_5_c='".$close[5]."',hours_6_o='".$open[6]."',hours_6_c='".$close[6]."' WHERE hash='".$hash."'";
+				$query="UPDATE places SET name='".$name."', subname='".$subname."', storenumber='".$storeno."',drivethru='".$drivethru."',hours_0_o='".$open[0]."',hours_0_c='".$close[0]."',hours_1_o='".$open[1]."',hours_1_c='".$close[1]."',hours_2_o='".$open[2]."',hours_2_c='".$close[2]."', hours_3_o='".$open[3]."',hours_3_c='".$close[3]."', hours_4_o='".$open[4]."',hours_4_c='".$close[4]."',hours_5_o='".$open[5]."',hours_5_c='".$close[5]."',hours_6_o='".$open[6]."',hours_6_c='".$close[6]."', hours_unknown='".$hours_unknown."', hours_closed='".$hours_closed."' WHERE hash='".$hash."'";
 				if($res=$mysqli->query($query))
 				{
 				}	
