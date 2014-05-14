@@ -1,4 +1,8 @@
 <?php
+function convertTimes($time)
+{
+	
+}
 	$mysqli=new mysqli('localhost','eunive5_projNO','NightOwl2014','eunive5_projectNO');
 	if ($mysqli->connect_error) 
 	{
@@ -46,13 +50,13 @@
 			$plus18=0;
 			$plus21=0;
 			$alcohol=0;
-			$hours_unknown=0;
-			$hours_closed=0;
+			$hours_unknown=127;
+			$hours_closed=127;
 			$hours_24=0;
 			
 			foreach($poi as $epoi)
 			{
-				echo $epoi->getName().":".$epoi."<br>";
+				echo "<br>".$epoi->getName().":".$epoi." ";//."<br>";
 				if($epoi->getName()=="name")
 					//$name="In-N-Out";
 					$subname=addslashes($epoi);
@@ -85,6 +89,16 @@
 					{
 						$alcohol=1;	
 					}
+				}
+				else if($epoi->getName()=="hours" || $epoi->getName()=="hours1" || $epoi->getName()=="hours2" || $epoi->getName()=="hours3"  || $epoi->getName()=="hours4" )
+				{
+					$field=$epoi;
+					//$pattern="/(\d+[:*]\d+am|pm)/i";
+					$pattern="/(\d+(am|pm)-\d+(am|pm))/";
+					preg_match($pattern,$field,$matches);	
+					var_dump($matches);
+					
+					$field="";
 				}
 				else if($epoi->getName()=="friday_hours")
 				{
@@ -170,18 +184,18 @@
 			$query="INSERT INTO placesPending VALUES(NULL,'".$hash."','".$name."','".$subname."','".$storeno."','".$address1."','".$address2."','".$city."','".$state."','".$country."','".$zip."','".$phone."','".$latitude."','".$longitude."','".$type."','".$drivethru."','".$wifi."','".$plus18."','".$plus21."','".$alcohol."','-8','1','".$hours_unknown."','".$hours_closed."','".$hours_24."','".$open[0]."','".$close[0]."','".$open[1]."','".$close[1]."','".$open[2]."','".$close[2]."','".$open[3]."','".$close[3]."','".$open[4]."','".$close[4]."','".$open[5]."','".$close[5]."','".$open[6]."','".$close[6]."')";
 			if($res=$mysqli->query($query))
 			{
-				echo "SUCCESS!";		
+				echo "SUCCESS!"."<br>";		
 			}
 			else
 			{
-				echo "UPDATE: ".$mysqli->error;
-				$query="UPDATE places SET name='".$name."', subname='".$subname."', storenumber='".$storeno."',drivethru='".$drivethru."', hours_4_o='".$open[4]."',hours_4_c='".$close[4]."',hours_5_o='".$open[5]."',hours_5_c='".$close[5]."',hours_6_o='".$open[6]."',hours_6_c='".$close[6]."' WHERE hash='".$hash."'";
+				echo "UPDATE: ".$mysqli->error."<br>";
+				$query="UPDATE places SET name='".$name."', subname='".$subname."', storenumber='".$storeno."',drivethru='".$drivethru."',hours_0_o='".$open[0]."',hours_0_c='".$close[0]."',hours_1_o='".$open[1]."',hours_1_c='".$close[1]."',hours_2_o='".$open[2]."',hours_2_c='".$close[2]."', hours_3_o='".$open[3]."',hours_3_c='".$close[3]."', hours_4_o='".$open[4]."',hours_4_c='".$close[4]."',hours_5_o='".$open[5]."',hours_5_c='".$close[5]."',hours_6_o='".$open[6]."',hours_6_c='".$close[6]."', hours_unknown='".$hours_unknown."', hours_closed='".$hours_closed."' WHERE hash='".$hash."'";
 				if($res=$mysqli->query($query))
 				{
 				}	
 				else
 				{
-					echo "Unable to update: ".$mysqli->error;
+					echo "Unable to update: ".$mysqli->error."<br>";
 				}
 			}
 			var_dump($open);
