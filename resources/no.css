@@ -61,11 +61,16 @@
 		height:25%;
 		margin-top:1%;
 		margin-bottom:1%;
-		background-color: #CCE;
+		/*background-color: #CCE;*/
+		background-color:#FEFEFE;
+		color:#000;
 		z-index:44445;
 		position:relative;
 		cursor:pointer;
-		color:#FFF;
+		/*color:#FFF;*/
+		-webkit-box-shadow: 1px 1px 0px 1px rgba(0,0,0,0.16);
+	   -moz-box-shadow: 1px 1px 0px 1px rgba(0,0,0,0.16);
+	        box-shadow: 1px 1px 0px 1px rgba(0,0,0,0.16);
 	}
 	.darkcard
 	{
@@ -361,4 +366,8 @@
 		background-repeat:no-repeat;
 		background-position:center center;
 		margin-right:10px;
+	}
+	label
+	{
+		margin-bottom:0;	
 	}

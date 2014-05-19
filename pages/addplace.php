@@ -1,4 +1,4 @@
-<div class="card_dynamic" style="color:#000;">
+<div class="card" style="color:#fff; background-color:#0755e6;">
 	<p style="padding:10px; font-weight:300;">Chances are you know about places that we don't so why not share it with everyone? While we only require that you provide us with the name of the place and it's location, we would appreciate any other information you could provide. </p>
 </div>
 <form>
@@ -75,9 +75,94 @@
         </table>
     </div>-->
     <div class="card">
-    	<h2>The Minimum</h2>
-         Venue Name <input type="text" name='vname' id='vname' style="max-width:100%;"><br>
-         Address <input type='text' name='vlocation' id='vlocation'><br>
+    	<div style='margin:5px;'>
+            <h2>What and Where</h2>
+             Name<br>
+             <input type="text" name='vname' id='vname' style="width:95%;"><br>
+             Address - All of it<br>
+             <input type='text' name='vlocation' id='vlocation' style="width:95%;"><br>
+             <input type='hidden' name='vlat' id='vlat'>
+             <input type='hidden' name='vlon' id='vlon'>
+             Category<br>
+             <select id='vcat' name='vcat'>
+             	<option value="-1">----</option>
+             	<option value="food">Food</option>
+                <option value="entertainment">Entertainment</option>
+                <option value="shopping">Shopping</option>
+                <option value="events">Events</option>
+             </select>
+         </div>
+    </div>
+    
+    <div class="card">
+    	<div style='margin:5px;'>
+            <h2>What's it like?</h2>
+        	<h3>It has...</h3>
+            Wifi <input type="checkbox" id="wifi" name='wifi'>
+            Drive Thru <input type="checkbox" id="drivethru" name='drivethru'>     
+            Alcohol <input type="checkbox" id="alcohol" name='alcohol'>       
+            <h3>You should...</h3>
+            be over 18 <input type="checkbox" id="age_18" name='age_18'> <br>
+            be over 21 <input type="checkbox" id="age_21" name='age_21'> <br>
+            be dressed...<br>
+            	<select id='dresscode' name='dresscode'>
+	                <option value='-1'>----</option>
+                	<option>Casual</option>
+                    <option>Business Casual</option>
+                    <option>Formal</option>
+                    <option>Anything Goes</option>
+                </select>
+        </div>
+    </div>
+    <div class="card">
+    	<div style='margin:5px;'>
+            <h2>When is it open?</h2>
+            <?php
+			$dz=array("Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday");
+			for($i=0;$i<7;$i++)
+			{
+				echo "<h3>".$dz[$i]."</h3>";
+				echo "Open 24 hours <input type='checkbox' name='open24_".$i."' id='open24_".$i."' onChange='hideDay(this);'>";
+				echo "Closed <input type='checkbox' name='closed_".$i."' id='closed_".$i."' onChange='hideDay(this);'><br>";
+				echo "<label for='open_".$i."' id='lopen_".$i."'>Open:</label>\n"; 
+	            echo "<input type='time' name='open_".$i."' id='open_".$i."' style='width:95%;'><br>\n";
+				echo "<label for='close_".$i."' id='lclose_".$i."'>Close:</label>\n";
+			    echo "<input type='time' name='close_".$i."' id='close_".$i."' style='width:95%;'><br>\n";
+			}
+			?>
+             <!--Sunday Open:<br>
+             <input type="time" name="open_0" id="open_0" style="width:95%;"><br>
+             Sunday Close:<br>
+             <input type="time" name="close_0" id="close_0" style="width:95%;"><br>-->
+             
+            
+         </div>
     </div>
     
 </form>
+
+<script>
+function hideDay(element)
+{
+	//var eid=(element.id).substr(2,element.id.length-3);
+	var field="#"+element.id;
+	var isChecked=$(field).is(":checked");
+	var dow=$(field).attr("id").match(/\d+/);
+	if(isChecked)
+	{
+		//alert(element.id + " is checked");	
+		$("#lopen_"+dow).hide();
+		$("#open_"+dow).hide();
+		$("#lclose_"+dow).hide();
+		$("#close_"+dow).hide();
+	}
+	else
+	{
+		//alert(element.id + " is NOT checked");		
+		$("#lopen_"+dow).show();
+		$("#open_"+dow).show();
+		$("#lclose_"+dow).show();
+		$("#close_"+dow).show();
+	}
+}	
+</script>

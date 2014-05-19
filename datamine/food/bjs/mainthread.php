@@ -1,8 +1,25 @@
 <?php
-function convertTimes($time)
+function converttimes($time)
 {
-	
+	if(stripos($time,"am")!==FALSE)
+	{
+		$hr=intval($time);
+		if($hr==12)
+			return "00:00:00";
+		else
+			return str_pad($hr,2,"0",STR_PAD_LEFT).":00:00";
+	}
+	else//PM
+	{
+		$hr=intval($time);
+		if($hr==12)
+			return "12:00:00";
+		else
+			return ($hr+12).":00:00";
+	}
 }
+
+
 	$mysqli=new mysqli('localhost','eunive5_projNO','NightOwl2014','eunive5_projectNO');
 	if ($mysqli->connect_error) 
 	{
@@ -93,16 +110,57 @@ function convertTimes($time)
 				else if($epoi->getName()=="hours" || $epoi->getName()=="hours1" || $epoi->getName()=="hours2" || $epoi->getName()=="hours3"  || $epoi->getName()=="hours4" )
 				{
 					$field=$epoi;
-					//$pattern="/(\d+[:*]\d+am|pm)/i";
-					$pattern="/(\d+(am|pm)-\d+(am|pm))/";
-					preg_match($pattern,$field,$matches);	
-					var_dump(explode("-",$matches[0]));
-					
-					$field="";
+					if(trim($epoi!=""))
+					{
+						//$pattern="/(\d+[:*]\d+am|pm)/i";
+						$pattern="/(\d+(am|pm)-\d+(am|pm))/";
+						preg_match($pattern,$field,$matches);	
+						$h=explode("-",$matches[0]);
+						$houro=$h[0];
+						$hourc=$h[1];
+						//var_dump(explode("-",$matches[0]));
+						$rdays=array("Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday");
+						$rvals=array("^0^","^1^","^2^","^3^","^4^","^5^","^6^");
+						$field=str_replace($rdays,$rvals,$field);
+						strpos($hay,$ne);
+						$daz=str_replace("^","",substr($field,strpos($field,"^"),(strrpos($field,"^")-strpos($field,"^"))));
+						$daz=str_replace(" ","",$daz);
+						$daz=str_replace("&",",",$daz);
+						if(stripos($daz,"-")!==FALSE)
+						{
+							$first=substr($daz,0,1);
+							$last=substr($daz,stripos($daz,"-")+1,1);
+							$n="";
+							for($i=$first;$i<=$last;$i++)
+							{
+								$n.=$i.",";
+							}	
+							$daz=$n;
+						}
+						$days=explode(",",$daz);
+						$hro=converttimes($houro);
+						$hrc=converttimes($hourc);
+						//Set Days
+						for($i=0;$i<sizeof($days);$i++)
+						{
+							if(trim($days[$i])!="")
+							{
+								$open[$days[$i]]=$hro;
+								$close[$days[$i]]=$hrc;
+								$shift=1;
+									$hours_closed^=($shift<<$days[$i]);
+									$hours_unknown^=($shift<<$days[$i]);
+								//echo $days[$i]."|";
+							}
+						}
+						
+						//echo "<br>".$daz.":".$hro."-".$hrc."<br>";
+						$field="";
+					}
 				}
 			}
 			$hash=sha1($address1.$address2.$city.$state.$country.$zip);
-			$query="INSERT INTO placesPending VALUES(NULL,'".$hash."','".$name."','".$subname."','".$storeno."','".$address1."','".$address2."','".$city."','".$state."','".$country."','".$zip."','".$phone."','".$latitude."','".$longitude."','".$type."','".$drivethru."','".$wifi."','".$plus18."','".$plus21."','".$alcohol."','-8','1','".$hours_unknown."','".$hours_closed."','".$hours_24."','".$open[0]."','".$close[0]."','".$open[1]."','".$close[1]."','".$open[2]."','".$close[2]."','".$open[3]."','".$close[3]."','".$open[4]."','".$close[4]."','".$open[5]."','".$close[5]."','".$open[6]."','".$close[6]."')";
+			$query="INSERT INTO places VALUES(NULL,'".$hash."','".$name."','".$subname."','".$storeno."','".$address1."','".$address2."','".$city."','".$state."','".$country."','".$zip."','".$phone."','".$latitude."','".$longitude."','".$type."','".$drivethru."','".$wifi."','".$plus18."','".$plus21."','".$alcohol."','-8','1','".$hours_unknown."','".$hours_closed."','".$hours_24."','".$open[0]."','".$close[0]."','".$open[1]."','".$close[1]."','".$open[2]."','".$close[2]."','".$open[3]."','".$close[3]."','".$open[4]."','".$close[4]."','".$open[5]."','".$close[5]."','".$open[6]."','".$close[6]."')";
 			if($res=$mysqli->query($query))
 			{
 				echo "SUCCESS!"."<br>";		
@@ -110,7 +168,7 @@ function convertTimes($time)
 			else
 			{
 				echo "UPDATE: ".$mysqli->error."<br>";
-				$query="UPDATE places SET name='".$name."', subname='".$subname."', storenumber='".$storeno."',drivethru='".$drivethru."',hours_0_o='".$open[0]."',hours_0_c='".$close[0]."',hours_1_o='".$open[1]."',hours_1_c='".$close[1]."',hours_2_o='".$open[2]."',hours_2_c='".$close[2]."', hours_3_o='".$open[3]."',hours_3_c='".$close[3]."', hours_4_o='".$open[4]."',hours_4_c='".$close[4]."',hours_5_o='".$open[5]."',hours_5_c='".$close[5]."',hours_6_o='".$open[6]."',hours_6_c='".$close[6]."', hours_unknown='".$hours_unknown."', hours_closed='".$hours_closed."' WHERE hash='".$hash."'";
+				$query="UPDATE placesPending SET name='".$name."', subname='".$subname."', storenumber='".$storeno."',drivethru='".$drivethru."',hours_0_o='".$open[0]."',hours_0_c='".$close[0]."',hours_1_o='".$open[1]."',hours_1_c='".$close[1]."',hours_2_o='".$open[2]."',hours_2_c='".$close[2]."', hours_3_o='".$open[3]."',hours_3_c='".$close[3]."', hours_4_o='".$open[4]."',hours_4_c='".$close[4]."',hours_5_o='".$open[5]."',hours_5_c='".$close[5]."',hours_6_o='".$open[6]."',hours_6_c='".$close[6]."', hours_unknown='".$hours_unknown."', hours_closed='".$hours_closed."' WHERE hash='".$hash."'";
 				if($res=$mysqli->query($query))
 				{
 				}	
@@ -119,6 +177,9 @@ function convertTimes($time)
 					echo "Unable to update: ".$mysqli->error."<br>";
 				}
 			}
+			echo "<br>";
+			echo "Unknown:".$hours_unknown."<br>";
+			echo "Closed:".$hours_closed."<br>";
 			var_dump($open);
 			var_dump($close);
 			//var_dump($poi);

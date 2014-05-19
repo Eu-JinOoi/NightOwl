@@ -99,7 +99,7 @@
 	$(window).load(function()
 	{
 		$("#category-button").css({"background-color":"#196a9f","color":"#FFF","border-color":"#104a6f","border-radius":"0","padding-left":".2em"});
-		$(".ui-icon-carat-d:after")
+		//$(".ui-icon-carat-d:after")
 		$(".ui-icon-carat-d:after").css({"background-image":"url(/resources/images/donotuse/dropdown.png)"});
 		//"background-image":"url(/resources/images/donotuse/dropdown.png)",
 		getLocation();
@@ -315,6 +315,33 @@
 			page="home";
 		/*var getArgs="";
 		var loadpage=page;*/
+		var colorCode="#196A9F";
+		colorCode="#0755e6";
+		var colorCodeBorder="#104a6f";
+		if(page=="food")
+		{
+			colorCode="#de0907";
+			colorCodeBorder="#8c0604"
+		}
+		else if(page=="shopping")
+		{
+			colorCode="#e3c81a";
+			colorCodeBorder="#978511";
+		}
+		else if(page=="entertainment")
+		{
+			colorCode="#fb8521";
+			colorCodeBorder="#c45c04";
+		}
+		else if(page=="special")
+		{
+			colorCode="#1aa1e1";
+			colorCodeBorder="#116b95";
+		}
+		$("#category-button").css({"background-color":colorCode,"color":"#FFF","border-color":colorCodeBorder,"border-radius":"0","padding-left":".2em"});
+		$("#brandingBar").css({"background-color":colorCode});
+		
+		
 		if(page=="entertainment" || page=="food" || page=="shopping" || page=="special" || page=="home" || page.indexOf("search|")==0)
 		{
 			/*Temp Fix*/

@@ -114,6 +114,7 @@ else
 						}
 						else if(($row['hours_closed']&(0x0001<<$i))!=0)
 						{
+							//echo '"dumb":"'.($row['hours_closed']&(0x0001<<$i)).'",';
 							$isOpen=false;	
 						}
 						else
@@ -128,7 +129,9 @@ else
 								if($now>=$open && $now<$close)
 								{
 									$isOpen=true;	
+									//echo "in***";
 								}
+								//echo "here:".$now." ".$open." ".$close."<br>";
 							}
 							else if($close<$open)
 							{
