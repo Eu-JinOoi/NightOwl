@@ -309,14 +309,21 @@
 		startLoading();
 		var isOk=true;
 		var isLoaded=false;
+		var xtra=document.URL.split('|')[1];
+		//if(xtra)
+			//alert(xtra);
+		var sterms=page.split('|')[1];
+		if(sterms)
+			alert(sterms);
+		page=page.split('|')[0];
 		if(page=="")
-			page=document.URL.split('#')[1];
+			page=(document.URL.split('#')[1]).split('|')[0];
 		if(page==undefined)
 			page="home";
 		/*var getArgs="";
 		var loadpage=page;*/
 		var colorCode="#196A9F";
-		colorCode="#0755e6";
+		//colorCode="#0755e6";
 		var colorCodeBorder="#104a6f";
 		if(page=="food")
 		{
@@ -325,8 +332,8 @@
 		}
 		else if(page=="shopping")
 		{
-			colorCode="#e3c81a";
-			colorCodeBorder="#978511";
+			colorCode="#4da900";
+			colorCodeBorder="#265400";
 		}
 		else if(page=="entertainment")
 		{
@@ -363,7 +370,8 @@
 			});
 			var locfail=true;
 			var a;
-			if(page!="search")
+			//if(page!="search")
+			if(sterms)
 				a={category: page, latitude: selfLat, longitude: selfLong, distance:'40.3', resultsperpage:'15', page:'1'};
 			else
 				a={category: page, latitude: selfLat, longitude: selfLong, distance:'40.3', resultsperpage:'15', page:'1',searchterms: $("#searchBox").val()};		
@@ -624,11 +632,11 @@
                 </select>
                 </div>
         	<span id='siteTitle'>240&deg;</span>
-            <a id='searchbutton'>
+            <!--<a id='searchbutton'>
             	<div style="width:48px; height:48px; position:absolute; top:-5px; right:0; cursor:pointer;">
                 	<img src='search.png' alt='Search' style='max-height:48px; max-width:48px;' />
                 </div>
-            </a>
+            </a>-->
     </div>
 	<div id='searchRegion'>
     	<div style='margin:auto;'><input type='text' id='searchBox' name='searchBox' style='width:75%; float:left;' data-role="none"><div id='doSearch' onClick="loadPg('search|home');">Search</div></div>
@@ -647,7 +655,7 @@
             	<div class='menuitem' id='Nlocation' style="" onClick="loadPg('location');">
 	                <div class='menuicon' id='iconlocation' style="background-image:url(/no_location.png);">&nbsp;</div>
                 	Location <!--<img src='no_location.png' id='Ilocation' alt='location not found' style='margin-top:6px; position:absolute; right:5px;'/>--></div>
-                <div class='menuitem' onClick="loadPg('settings');"><div class='menuicon' style="background-image:url(/resources/images/donotuse/settings.png);">&nbsp;</div>Settings</div>
+                <!--<div class='menuitem' onClick="loadPg('settings');"><div class='menuicon' style="background-image:url(/resources/images/donotuse/settings.png);">&nbsp;</div>Settings</div>-->
             </div>
             
             <div class="menubottom">
