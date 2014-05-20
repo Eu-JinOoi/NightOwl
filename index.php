@@ -312,12 +312,13 @@
 		var xtra=document.URL.split('|')[1];
 		//if(xtra)
 			//alert(xtra);
-		var sterms=page.split('|')[1];
-		if(sterms)
-			alert(sterms);
-		page=page.split('|')[0];
+		//var sterms=page.split('|')[1];
+		//if(sterms)
+		//	alert(sterms);
+		//page=page.split('|')[0];
 		if(page=="")
-			page=(document.URL.split('#')[1]).split('|')[0];
+			page=(document.URL.split('#')[1]);
+	//		page=(document.URL.split('#')[1]).split('|')[0];
 		if(page==undefined)
 			page="home";
 		/*var getArgs="";
@@ -371,10 +372,10 @@
 			var locfail=true;
 			var a;
 			//if(page!="search")
-			if(sterms)
+			//if(sterms)
 				a={category: page, latitude: selfLat, longitude: selfLong, distance:'40.3', resultsperpage:'15', page:'1'};
-			else
-				a={category: page, latitude: selfLat, longitude: selfLong, distance:'40.3', resultsperpage:'15', page:'1',searchterms: $("#searchBox").val()};		
+			//else
+				//a={category: page, latitude: selfLat, longitude: selfLong, distance:'40.3', resultsperpage:'15', page:'1',searchterms: $("#searchBox").val()};		
 			$.getJSON("pages/resultsJSON.php",a)
 				.done(function(json){
 					console.log(json);
