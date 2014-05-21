@@ -206,15 +206,22 @@
 			var lclose=pjson.hours[<?php echo date("w");?>].close;
 			if(pjson.previous=="true")
 				lclose=pjson.hours[<?php echo ((date("w")+6)%7);?>].close
+			lclose=lclose.trim();
 			if(lclose.substr(0,1)=="0")
 			{
-				lclose=lclose.substr(1,lclose.length-4)+" am";
+				if(lclose=="00:00:00")
+				    lclose="Midnight"
+				else
+				  lclose=lclose.substr(1,lclose.length-4)+" am";
 			}
 			else
 			{
 				var first=Number(lclose.substr(0,2));
 				first-=12;
-				lclose=first+lclose.substr(2,lclose.length-4)+" pm";	
+				if(first==0)
+				    lclose="Noon";
+				else
+				    lclose=first+lclose.trim().substr(2,lclose.length-5)+" pm";	
 			}
 			ret+="<h2 style='margin-bottom:0px; margin-top:2px;'>"+pjson.name+"</h2>";
 			ret+="<h3 style='margin-top:0; margin-bottom:0; color:green; font-weight:bold;'>Open Until "+lclose+"</h3>";
@@ -222,7 +229,7 @@
 		else if(pjson.status=="closed")
 		{
 			var lopen=pjson.hours[<?php echo (date("w"))%7;?>].open;
-			if(Number(lopen.substr(0,2))<=12)
+			if(Number(lopen.substr(0,2))<12)
 			{
 				lopen=Number(lopen.substr(0,2))+lopen.substr(2,lopen.length-5)+" am";
 			}
@@ -230,7 +237,10 @@
 			{
 				var first=Number(lopen.substr(0,2));
 				first-=12;
-				lopen=first+lopen.substr(2,lopen.length-3);	
+				if(first==0)
+				    lopen="Noon";
+		        else
+				    lopen=first+lopen.substr(2,lopen.length-3);	
 			}
 			ret+="<h2 style='margin-bottom:0px; margin-top:2px;'>"+pjson.name+"</h2>";
 			if(pjson.hours[<?php echo (date("w"))%7;?>].closed==1)
