@@ -44,6 +44,9 @@ $dlst=1;
 $hash=sha1($address1.$address2.$city.$state.$country.$zip);
 function convertDHours($time)
 {
+	if(strpos($time," ")!==FALSE)
+		$time=substr($time,0,strpos($time," "));
+	//echo "|".$time."|";
 	return date("H:i:s",strtotime($time."m"));	
 }
 //New Place
@@ -79,7 +82,7 @@ foreach($json["weeks"] as $week)
 				$o=convertDHours($hrs[0]);
 				$c=convertDHours($hrs[1]);
 				$is24=0;
-				if($hrs[0]==$hrs[1])
+				if($o==$c)
 				{
 					echo "<span style='color:green; font-weight:bolder;'>OPEN 24 HOURS!</span><br>";
 					$is24=1;

@@ -99,7 +99,8 @@ else
 						echo '"open":"'.$row['hours_'.$i.'_o'].'",';
 						echo '"close":"'.$row['hours_'.$i.'_c'].'",';
 						echo '"closed":"'.(intval($row["hours_closed"]&(0x0001<<$i))>0 ? 1 : 0).'",';
-						echo '"unknown":"'.(intval($row["hours_unknown"]&(0x0001<<$i))>0 ? 1 : 0).'"';
+						echo '"unknown":"'.(intval($row["hours_unknown"]&(0x0001<<$i))>0 ? 1 : 0).'",';
+						echo '"open24":"'.(intval($row["hours_24"]&(0x0001<<$i))>0 ? 1 : 0).'"';
 					echo "}";		
 					
 					if($i==$dow)
@@ -149,6 +150,10 @@ else
 								{
 									//echo "|".date("H:i:s",$now)."/".date("H:i:s",$pclose)."|";	
 								}
+							}
+							else if($open==$close)
+							{
+								$isOpen=true;	
 							}
 						}
 						
