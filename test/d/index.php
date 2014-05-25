@@ -1,5 +1,5 @@
 <?php
-require($_SERVER['DOCUMENT_ROOT']."/resources/classes/place.php");
+require("../../resources/classes/place.php");
 
 
 
