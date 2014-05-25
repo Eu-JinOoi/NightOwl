@@ -278,6 +278,9 @@
 		ret+="<div class='clear'>&nbsp;</div>";
 		//ret+="<div class='rightcard' onclick='openplace("+pjson.PID+")'>&nbsp;";
 		//ret+="<img src='resources/images/arrow.png'>";
+		//ret+="<div class='xpander close' style='position:absolute; bottom:0px; right:0;'>";
+		//ret+="<img src='/resources/images/donotuse/expander_max.png'>";
+		//ret+="</div>";
 		ret+="</div>"
 		ret+="<div class='clear'>&nbsp;</div>";
 		ret+="</div>"

@@ -8,4 +8,6 @@
 <file name="wifi.png" server="ftp.eu-niverse.com" local="130374870900000000" remote="130440981600000000" Dst="2" />
 <file name="car.png" server="ftp.eu-niverse.com" local="130440992710943992" remote="130440993000000000" Dst="2" />
 <file name="dropdown.png" server="ftp.eu-niverse.com" local="130374870920000000" remote="130444448400000000" Dst="2" />
+<file name="expander_max.png" server="ftp.eu-niverse.com" local="130374870900000000" remote="130455312600000000" Dst="2" />
+<file name="expander_min.png" server="ftp.eu-niverse.com" local="130374870900000000" remote="130455312600000000" Dst="2" />
 </dwsync>

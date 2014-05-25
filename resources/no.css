@@ -18,7 +18,7 @@
 		width:100%;	
 		color:#FFF;
 		padding-top:0px;
-		maring-top:0px;	
+		margin-top:0px;	
 		position:relative;
 		overflow-x: hidden;	
 		background-color:#e5e5e5;
@@ -38,12 +38,12 @@
 		top:0px;
 		z-index:99999;
 	}
-	#ableContent
+	#scrollableContent
 	{
 		position:relative;
-		padding:20px;
-		padding-top:55px;
-		overflow-y: ;
+		/*padding:20px;*/
+		/*padding-top:55px;*/
+		overflow-y: scroll;
 		overflow-x: hidden;	
 		z-index:44444;
 		background-color:#EEE;
@@ -133,6 +133,7 @@
 		position:relative;
 		margin-top:10px;
 		margin-right:10px;
+		
 		/*background-image:url(/resources/images/arrow.png);
 		background-repeat:no-repeat;
 		background-position:center right;*/
@@ -201,7 +202,7 @@
 	}
 	address
 	{
-		font-color:#CCC;
+		color:#CCCCCC;
 		font-style:normal;
 	}
 	table
