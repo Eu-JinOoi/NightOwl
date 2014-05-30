@@ -17,6 +17,7 @@
 	var selfLat=0;
 	var selfLong=0;
 	var locSet=false;
+	var dowToString= ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 	function toggleMenu()
 	{
 		
@@ -69,7 +70,7 @@
 		$("#searchbutton").click(function(){
 			toggleSearch();
 		});
-		$("#filteropennow").click(function(){
+		/*$("#filteropennow").click(function(){
 			alert("CLICK");
 			/*if($(this).hasClass("filterselected"))
 			{
@@ -78,7 +79,11 @@
 			else
 			{
 				$(this).addClass("filterselected");	
-			}*/
+			}
+		});*/
+		$(".xpandB").click(function(){
+		
+			alert("!");	
 		});
 		window.onpopstate = function(event) {
 		  if(event.state!=null)
@@ -278,11 +283,42 @@
 		ret+="<div class='clear'>&nbsp;</div>";
 		//ret+="<div class='rightcard' onclick='openplace("+pjson.PID+")'>&nbsp;";
 		//ret+="<img src='resources/images/arrow.png'>";
-		//ret+="<div class='xpander close' style='position:absolute; bottom:0px; right:0;'>";
-		//ret+="<img src='/resources/images/donotuse/expander_max.png'>";
-		//ret+="</div>";
+		
+		ret+="<div class='xpander close' style='position:absolute; bottom:0px; right:0;'>";
+		ret+="<a class='xpandB'>";
+		ret+="<img src='/resources/images/donotuse/expander_max.png'>";
+		ret+="</a>";
+		ret+="</div>";
+
 		ret+="</div>"
 		ret+="<div class='clear'>&nbsp;</div>";
+		//Rest of the Hours
+		ret+="<hr style='margin:auto; width:50%; '>";
+		ret+="<div class='xpand' style='margin-top:2em; margin-bottom:2em;'>";
+		
+		
+		var vdow=pjson.dow;
+		for(var i=0;i<7;i++)
+		{
+			ret+="<div style=' float:left; width:8em;'>"+dowToString[vdow]+": </div><div style='float:left;'>";
+			if(pjson.hours[vdow].unknown=='1')
+			{
+				ret+="Data unavailable";	
+			}
+			else if(pjson.hours[vdow].closed=='1')
+			{
+				ret+="<span style='color:#ff0000;'>Closed</span>";	
+			}
+			else
+			{
+				ret+=pjson.hours[vdow].open+" - "+pjson.hours[vdow].close;
+			}
+			ret+="</div>\n";
+			ret+="<div class='clear'>&nbsp;</div>";
+			vdow++;
+			vdow=vdow%7;
+		}
+		ret+="</div>";
 		ret+="</div>"
 		return ret;
 	}
@@ -386,6 +422,7 @@
 			var a;
 			//if(page!="search")
 			//if(sterms)
+			//distance 40.3
 				a={category: page, latitude: selfLat, longitude: selfLong, distance:'40.3', resultsperpage:'15', page:'1'};
 			//else
 				//a={category: page, latitude: selfLat, longitude: selfLong, distance:'40.3', resultsperpage:'15', page:'1',searchterms: $("#searchBox").val()};		
