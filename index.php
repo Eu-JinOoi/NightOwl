@@ -62,11 +62,18 @@
 	$("#dumpdata").html(out);
 	}
 	$(document).ready(function(e) {
+				$(function()
+			{
+			$(".xpandB").click(function(){
 		
+				alert("!");	
+			});
+		});
 		$( "#menubutton" ).click(function() {
 			toggleMenu();
 		  	
 		});
+
 		$("#searchbutton").click(function(){
 			toggleSearch();
 		});
@@ -81,10 +88,7 @@
 				$(this).addClass("filterselected");	
 			}
 		});*/
-		$(".xpandB").click(function(){
 		
-			alert("!");	
-		});
 		window.onpopstate = function(event) {
 		  if(event.state!=null)
 			  loadPg(event.state.hash.substr(1))
@@ -110,6 +114,24 @@
 		getLocation();
 		loadPg("");
 	});
+	function xpand(PID)
+	{
+		//alert(PID);	
+		//"<img class='xpandB' id='xpandB-"+pjson.PID+"' src='/resources/images/donotuse/expander_max.png'>"
+		var src=$("#xpandB-"+PID).attr("src");
+		if(src=='/resources/images/donotuse/expander_max.png')
+		{
+			$("#xpandB-"+PID).attr("src","/resources/images/donotuse/expander_min.png");
+			$("#xpand-"+PID).show();
+		}
+		else
+		{
+			$("#xpandB-"+PID).attr("src","/resources/images/donotuse/expander_max.png");
+			$("#xpand-"+PID).hide();
+		}
+		
+		//resources/images/donotuse/expander_max.png
+	}
 	function toggleSearch()
 	{
 		if(searchState==0)
@@ -284,17 +306,17 @@
 		//ret+="<div class='rightcard' onclick='openplace("+pjson.PID+")'>&nbsp;";
 		//ret+="<img src='resources/images/arrow.png'>";
 		
-		ret+="<div class='xpander close' style='position:absolute; bottom:0px; right:0;'>";
-		ret+="<a class='xpandB'>";
-		ret+="<img src='/resources/images/donotuse/expander_max.png'>";
-		ret+="</a>";
+		ret+="<div id='xpander-"+pjson.PID+"' class='xpander close' style='position:absolute; bottom:0px; right:0;' onClick='xpand("+pjson.PID+");'>";
+		//ret+="<a class=''>";
+		ret+="<img class='xpandB' id='xpandB-"+pjson.PID+"' src='/resources/images/donotuse/expander_max.png'>";
+		//ret+="</a>";
 		ret+="</div>";
 
 		ret+="</div>"
 		ret+="<div class='clear'>&nbsp;</div>";
 		//Rest of the Hours
-		ret+="<hr style='margin:auto; width:50%; '>";
-		ret+="<div class='xpand' style='margin-top:2em; margin-bottom:2em;'>";
+		//ret+="<hr style='margin:auto; width:50%; '>";
+		ret+="<div class='xpand' id='xpand-"+pjson.PID+"' style='margin-top:2em; margin-bottom:2em; display:none;'>";
 		
 		
 		var vdow=pjson.dow;
