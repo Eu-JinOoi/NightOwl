@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>240&deg;</title>
+<title>eatnon</title>
 <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css">
 <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
 <script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
@@ -316,13 +316,19 @@
 		ret+="<div class='clear'>&nbsp;</div>";
 		//Rest of the Hours
 		//ret+="<hr style='margin:auto; width:50%; '>";
-		ret+="<div class='xpand' id='xpand-"+pjson.PID+"' style='margin-top:2em; margin-bottom:2em; display:none;'>";
+		ret+="<div class='xpand' id='xpand-"+pjson.PID+"' style='margin-top:.5em; margin-bottom:.5em; display:none;'>";
 		
 		
 		var vdow=pjson.dow;
 		for(var i=0;i<7;i++)
 		{
-			ret+="<div style=' float:left; width:8em;'>"+dowToString[vdow]+": </div><div style='float:left;'>";
+			lstyle="";
+			if(vdow==pjson.dow)
+			{
+				lstyle=" font-weight:bold;";	
+			}
+			ret+="<div style='"+lstyle+" float:left; width:8em;'>"+dowToString[vdow]+": </div><div style='"+lstyle+" float:left;'>";
+			
 			if(pjson.hours[vdow].unknown=='1')
 			{
 				ret+="Data unavailable";	
@@ -335,7 +341,8 @@
 			{
 				ret+=pjson.hours[vdow].open+" - "+pjson.hours[vdow].close;
 			}
-			ret+="</div>\n";
+			ret+="</div>";
+			ret+="\n";
 			ret+="<div class='clear'>&nbsp;</div>";
 			vdow++;
 			vdow=vdow%7;
@@ -357,7 +364,7 @@
 			if(page=="home")
 			{	
 				extraextra="<div class='darkcard'>";
-				extraextra+="<h2 style='font-weight:400; margin-left:3px;'>Welcome to 240&deg;</h2>";
+				extraextra+="<h2 style='font-weight:400; margin-left:3px;'>Welcome to <b>eatnon</b></h2>";
 				extraextra+="<p style='margin-left:7px;'>Instructions on how to do things on the site. Have an option to hide this box forever (maybe - maybe not may be good references since this is the 'landing' page.</p>";
 				extraextra+="</div>";
 			}
@@ -704,7 +711,7 @@
                     <option value='special'>Events</option>
                 </select>
                 </div>
-        	<span id='siteTitle'>240&deg;</span>
+        	<span id='siteTitle'>eatnon</span>
             <!--<a id='searchbutton'>
             	<div style="width:48px; height:48px; position:absolute; top:-5px; right:0; cursor:pointer;">
                 	<img src='search.png' alt='Search' style='max-height:48px; max-width:48px;' />
