@@ -4,11 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>eatnon</title>
-<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css">
 <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-<script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
 <script src='/resources/js/menu.js'></script>
-<!--<script src="/resources/js/location.js"></script>-->
 <script>
 	var counter=0;
 	var currentLocation_full=null;
@@ -42,37 +39,15 @@
 			toggleMenu();
 		  	
 		});
-		
-		
-		
-		
-
 		$("#searchbutton").click(function(){
-			toggleSearch();
+			//toggleSearch();
 		});
-		/*$("#filteropennow").click(function(){
-			alert("CLICK");
-			/*if($(this).hasClass("filterselected"))
-			{
-				$(this).removeClass("filterselected");
-			}
-			else
-			{
-				$(this).addClass("filterselected");	
-			}
-		});*/
 		
 		window.onpopstate = function(event) {
-		  if(event.state!=null)
-			  loadPg(event.state.hash.substr(1))
+		  //if(event.state!=null)
+			//  loadPg(event.state.hash.substr(1))
 		  //Add in fix for scrolling
 		};
-		
-		
-		
-		
-		
-		
 		$(".day").click(function(e)
 		{
 			alert ("DAY");	
@@ -81,16 +56,12 @@
 	$(window).load(function()
 	{
 		$("#category-button").css({"background-color":"#196a9f","color":"#FFF","border-color":"#104a6f","border-radius":"0","padding-left":".2em"});
-		//$(".ui-icon-carat-d:after")
 		$(".ui-icon-carat-d:after").css({"background-image":"url(/resources/images/donotuse/dropdown.png)"});
-		//"background-image":"url(/resources/images/donotuse/dropdown.png)",
 		getLocation();
-		loadPg("");
+		//loadPg("");
 	});
 	function xpand(PID)
 	{
-		//alert(PID);	
-		//"<img class='xpandB' id='xpandB-"+pjson.PID+"' src='/resources/images/donotuse/expander_max.png'>"
 		var src=$("#xpandB-"+PID).attr("src");
 		if(src=='/resources/images/donotuse/expander_max.png')
 		{
@@ -102,54 +73,6 @@
 			$("#xpandB-"+PID).attr("src","/resources/images/donotuse/expander_max.png");
 			$("#xpand-"+PID).hide();
 		}
-		
-		//resources/images/donotuse/expander_max.png
-	}
-	function toggleSearch()
-	{
-		if(searchState==0)
-		{
-			$("#scrollableContent").stop().animate({"padding-top":"0px"});
-			$("#searchRegion").stop().animate({"padding-top":"55px","height":"40px"});
-			//$("#searchRegion").html("<div style='margin:auto;'><input type='text' id='searchBox' name='searchBox' style='width:75%; float:left;'> <div id='doSearch'>Search</div></div>");
-			searchState=1;
-		}
-		else
-		{
-			$("#scrollableContent").stop().animate({"padding-top":"55px"});
-			$("#searchRegion").stop().animate({"padding-top":"-10px","height":"0px"});
-			//$("#searchRegion").html("");
-			searchState=0;	
-		}
-	}
-	function filterthis(self)
-	{
-			if($(self).hasClass("filterselected"))
-			{
-				$(self).removeClass("filterselected");
-				if($(self).attr("id")=="filteropennow")
-				{
-					$(".closed").show();
-					$(".unknown").show();
-				}
-				if($(self).attr("id")=="filterwifi")
-				{
-					$(".noWiFi").show();
-				}
-			}
-			else
-			{
-				$(self).addClass("filterselected");	
-				if($(self).attr("id")=="filteropennow")
-				{
-					$(".closed").hide();
-					$(".unknown").hide();
-				}
-				if($(self).attr("id")=="filterwifi")
-				{
-					$(".noWiFi").hide();
-				}
-			}
 	}
 	function startLoading()
 	{
@@ -159,10 +82,7 @@
 		$("#scrollableContent").html("<div style='text-align:center; margin-left:auto; margin-right:auto; margin-top:20px; color:#000;'>"+loadingMessages[r]+"<br><img src='ajax-loader.gif'></div>"+"<div id='fixScroll'>&nbsp;</div>");
 		var dheight=$(document).height();
 		var scheight=$("#scrollableContent").height();
-		var nheight=dheight-scheight-50+150;
-		 //alert(dheight+"/"+scheight+"/"+nheight);
-		//$("#fixScroll").css("height",nheight+"px");
-		
+		var nheight=dheight-scheight-50+150;		
 	}
 	function ucwords(str) {
 	  //  discuss at: http://phpjs.org/functions/ucwords/
@@ -188,11 +108,6 @@
 	}
 	function createCard(pjson)
 	{
-		//var d=new Date();
-		//ret+= d.toLocaleTimeString();
-		//if(pjson.hours[2].open<d)
-		
-		
 		var ret="";
 		var wificlass="";
 		if(pjson.wifi==0)
@@ -256,10 +171,6 @@
 		{
 			ret+="<h2 style='margin-top:2px;'>"+pjson.name+"</h2>";
 		}
-		
-		//ret+="<h3 style='margin:0;'>"+(Math.round(pjson.distance*100)*.01)+" km away</h3>";
-		//ret+="<h3 style='margin:0;'>"+(Math.round(pjson.distance*0.62137*100)*.01)+" mi</h3>";
-		//ret+="<h3 style='margin:0;'>"+((Math.round(pjson.distance*0.62137*10))/10).toFixed(2)+" mi</h3>";
 		var miles=pjson.distance*0.62137;
 		ret+="<h3 style='margin:0;'>"+miles.toFixed(2)+" mi</h3>";
 		ret+="<a href='https://maps.google.com/maps?q="+pjson.address1+","+pjson.city+","+pjson.state+" "+pjson.zip+"' target='_blank' style='text-decoration:none;'>";
@@ -276,19 +187,13 @@
 			ret+="<div style='width:24px; height:24px; float:right;'><img src='resources/images/donotuse/car.png' style='z-index:44448;'></div>";	
 		}
 		ret+="<div class='clear'>&nbsp;</div>";
-		//ret+="<div class='rightcard' onclick='openplace("+pjson.PID+")'>&nbsp;";
-		//ret+="<img src='resources/images/arrow.png'>";
 		
 		ret+="<div id='xpander-"+pjson.PID+"' class='xpander close' style='position:absolute; bottom:0px; right:0;' onClick='xpand("+pjson.PID+");'>";
-		//ret+="<a class=''>";
 		ret+="<img class='xpandB' id='xpandB-"+pjson.PID+"' src='/resources/images/donotuse/expander_max.png'>";
-		//ret+="</a>";
 		ret+="</div>";
 
 		ret+="</div>"
 		ret+="<div class='clear'>&nbsp;</div>";
-		//Rest of the Hours
-		//ret+="<hr style='margin:auto; width:50%; '>";
 		ret+="<div class='xpand' id='xpand-"+pjson.PID+"' style='margin-top:.5em; margin-bottom:.5em; display:none;'>";
 		
 		
@@ -334,21 +239,7 @@
 		if(json.places.length!=0)
 		{
 			var extraextra="";
-			if(page=="home")
-			{	
-				extraextra="<div class='darkcard'>";
-				extraextra+="<h2 style='font-weight:400; margin-left:3px;'>Welcome to <b>eatnon</b></h2>";
-				extraextra+="<p style='margin-left:7px;'>Instructions on how to do things on the site. Have an option to hide this box forever (maybe - maybe not may be good references since this is the 'landing' page.</p>";
-				extraextra+="</div>";
-			}
-			var filters="<div id='filters'>";
-			//filters+="Filters";
-			filters+="<div id='filteropennow' class='filter' onclick='filterthis(this);'>Open Now</div>";
-			filters+="<div id='filterwifi' class='filter' onclick='filterthis(this);'>WiFi</div>";
-			filters+="<div id='filter2' class='filter' onclick='filterthis(this);'>Filter 3</div>";
-			filters+="</div>";
-			filters+="<div class='clear'>&nbsp;</div>";
-			$("#scrollableContent").html(extraextra+filters+fdata);//+json.places.length+" results were returned."+fdata);
+			$("#scrollableContent").html(extraextra+fdata);
 		}
 		else
 		{
@@ -361,21 +252,11 @@
 		var isOk=true;
 		var isLoaded=false;
 		var xtra=document.URL.split('|')[1];
-		//if(xtra)
-			//alert(xtra);
-		//var sterms=page.split('|')[1];
-		//if(sterms)
-		//	alert(sterms);
-		//page=page.split('|')[0];
 		if(page=="")
 			page=(document.URL.split('#')[1]);
-	//		page=(document.URL.split('#')[1]).split('|')[0];
 		if(page==undefined)
 			page="home";
-		/*var getArgs="";
-		var loadpage=page;*/
 		var colorCode="#196A9F";
-		//colorCode="#0755e6";
 		var colorCodeBorder="#104a6f";
 		if(page=="food")
 		{
@@ -497,44 +378,11 @@
 					  var dheight=$(document).height();
 					  var wheight=$(window).height();
 					  var scheight=$("#scrollableContent").height();
-					  //var nheight=dheight-scheight-50+150;
 					  var nheight=wheight+50;
-					  //alert(dheight+" "+wheight+" "+scheight);
-					  //alert(dheight+"/"+scheight+"/"+nheight);
-					 //$("#fixScroll").css("height",nheight+"px");
-					  //alert(nheight+" "+dheight+" ");
-					 //$(".menubottom").css("bottom",nheight-125+"px");
 					  isLoaded=true;
 				  }
 			  });
 		  }
-		  /*if(isLoaded==false)
-		  {
-			  if(isOk==false)
-			  {
-					page="home";
-			  
-			$.get( "pages/"+page+".php", function( data ) {
-			  //alert( "Data Loaded: " + data );
-			  data=data+"<div id='fixScroll'>&nbsp;</div>";
-			  $("#scrollableContent").html(data);
-			  if(page=="addplace")
-			  {
-					fillLocation();  
-			  }
-			  location.hash=page;
-			  //var param = document.URL.split('#')[1];	
-			  //Check Doc Height and scrollable;
-			  var dheight=$(document).height();
-			  var scheight=$("#scrollableContent").height();
-			  var nheight=dheight-scheight-50+150;
-			  //alert(dheight+"/"+scheight+"/"+nheight);
-			 //$("#fixScroll").css("height",nheight+"px");
-			  //alert(nheight+" "+dheight+" ");
-			 //$(".menubottom").css("bottom",nheight-125+"px");
-			});
-			  }
-		  }*/
 	}
 	function getLocation()
 	{
@@ -544,7 +392,6 @@
 		}
 		else
 		{
-		//x.innerHTML="Geolocation is not supported by this browser.";
 			lat.value=(-1);
 			long.value=(-1);
 		}
@@ -578,7 +425,6 @@
 					}
 				}
 			}
-			//#locationDesc
 			citystate=ndata;
 			if($("#locationDesc").length==0)
 			{
@@ -590,16 +436,11 @@
 				$("#locationDesc").html(citystate);
 			}
 			
-			
 			currentLocation_full=data.results[0].formatted_address;
 			$("#location_currentlocation").html(citystate);			
-			//var d=getDistance(34.05482801970849,-118.2381269802915);
-			//alert("You are currently "+Math.round(d*100)/100+" mi from L.A. Union Station");
 		});
 		locSet=true;
-		//-------------------
-		
-		loadPg(document.URL.split('#')[1]);
+		//loadPg(document.URL.split('#')[1]);
 		
 		
 	}
@@ -609,7 +450,6 @@
 	}
 	function driveThruHours()
 	{
-		//$("#vdt").change(function(){
 			if($("#vdt").prop('checked'))
 			{
 				$(".dth").css("opacity","1");
@@ -618,7 +458,6 @@
 			{
 				$(".dth").css("opacity","0");
 			}
-		//});	
 	}
 	function daySelect(dow)
 	{
@@ -651,11 +490,9 @@
 		var dLon = (selfLong-destLong).toRad();
 		var lat1 = selfLat.toRad();
 		var lat2 = destLat.toRad();
-		//alert(selfLat+","+selfLong+" "+destLat+","+destLong+" "+dLat+","+dLon+"\n"+lat1+","+lat2);
 		var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2); 
 		var c = 2 * Math.atan2(Math.sqrt(Math.abs(a)), Math.sqrt(Math.abs(1-a))); 
 		var d = R * c;
-		//alert(a+"\n"+c+"\n"+d);
 		return d*0.62137;//.62137 converts to mi
 	}
 	
@@ -676,24 +513,16 @@
                 </div>
             </a>
             	<div style="width:160px; position:absolute; top:2px; left:55px; margin-top:-22px; height:48px;" id="dropDownArea">
-          		<select name="category" id='category' style="margin:0;" onChange="loadPg(this.value.toLowerCase());">
+          		<!--<select name="category" id='category' style="margin:0;" onChange="loadPg(this.value.toLowerCase());">
                 	<option value='home'>Everything</option>
                 	<option value='food'>Food</option>
                     <option value='entertainment'>Entertainment</option>
                     <option value='shopping'>Shopping</option>
                     <option value='special'>Events</option>
-                </select>
+                </select>-->
                 </div>
         	<span id='siteTitle'>eatnon</span>
-            <!--<a id='searchbutton'>
-            	<div style="width:48px; height:48px; position:absolute; top:-5px; right:0; cursor:pointer;">
-                	<img src='search.png' alt='Search' style='max-height:48px; max-width:48px;' />
-                </div>
-            </a>-->
     </div>
-	<!--<div id='searchRegion'>
-    	<div style='margin:auto;'><input type='text' id='searchBox' name='searchBox' style='width:75%; float:left;' data-role="none"><div id='doSearch' onClick="loadPg('search|home');">Search</div></div>
-    </div>-->
 	<div id='maincont'>
         <div id='menu'>
         	<div class='menusection'>
@@ -703,28 +532,29 @@
             <div class='menusection'>
             	<div class='menuitem' id='Nlocation' style="" onClick="loadPg('location');">
 	                <div class='menuicon' id='iconlocation' style="background-image:url(/no_location.png);">&nbsp;</div>
-                	Location <!--<img src='no_location.png' id='Ilocation' alt='location not found' style='margin-top:6px; position:absolute; right:5px;'/>--></div>
-                <!--<div class='menuitem' onClick="loadPg('settings');"><div class='menuicon' style="background-image:url(/resources/images/donotuse/settings.png);">&nbsp;</div>Settings</div>-->
-            </div>
-            
+                		Location 
+                    </div>
+            	</div>
             <div class="menubottom">
-                
                 <div class='menuitemr' onClick="loadPg('about');">&copy; 2014 - Company Name</div>
             </div>
         </div>
         <div class='clear'>&nbsp;</div>
         <div id='pagearea' style="position:relative;">
-            <div id='scrollableContent' style="background-color:#e5e5e5; position:relative;">
-                
-            </div>
-            <!--<div id='placemat'>
-            	<span style="color:#FF0000;">Test</span>
-            </div>-->
-        </div>
-		<!--<div id='fixScroll'>&nbsp;This is to fix the URL bar hiding on Chrome. I know this is a terrible fix but it works</div>-->
-		
         
-
+        	<div id='scrollableContent2' style="background-color:#e5e5e5; position:relative;">
+                <div class='img_portion' style="height:20%; width:100%; position:absolute; top:40px; left:0; background-image:url('food.jpg');">
+                    <!--<img src="/food.jpg" style='display:block;'>-->
+                </div>
+                <div class="desc_portion" style="height:50%;">
+                        hELLO
+                </div>	
+            </div>
+        
+        	
+        
+           
+        </div> 
     </div>
 </body>
 </html>

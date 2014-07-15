@@ -37,14 +37,25 @@
 		position:fixed;
 		top:0px;
 		z-index:99999;
+
 	}
 	#scrollableContent
 	{
 		position:relative;
 		/*padding:20px;*/
-		/*padding-top:55px;*/
+		padding-top:55px;
 		overflow-y: scroll;
 		overflow-x: hidden;	
+		z-index:44444;
+		background-color:#EEE;
+		height:100%;
+		color:#000;
+	}
+	#scrollableContent2
+	{
+		position:relative;
+		/*padding:20px;*/
+		padding-top:55px;
 		z-index:44444;
 		background-color:#EEE;
 		height:100%;
