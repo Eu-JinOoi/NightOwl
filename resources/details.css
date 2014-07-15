@@ -1,0 +1,66 @@
+.address, .phone
+{
+	background-repeat:no-repeat;
+	background-position: left center;
+	padding-left:40px;
+}
+.address
+{
+	background-image:url(/resources/images/donotuse/ic_dialog_map.png);
+}
+.phone
+{
+	background-image:url(/resources/images/donotuse/ic_emergency.png);
+}
+
+.cont_contact /*1*/
+{
+	float:left;
+	width:100%;
+	position:relative;
+	background-color:#fdf6d9;
+	background-repeat:no-repeat;
+	background-position: left center;
+	border:1px solid #fae798;
+}
+.cont_contact_internal /*2*/
+{
+	float:left;
+	width:100%;
+	position:relative;
+	right:50%;
+	background-color:#fdf6d9;
+	background-repeat:no-repeat;
+	background-position: left center;
+	border:1px solid #fae798;
+}
+.cont_address, .cont_phone, .cont_icons
+{
+	color:#000; 
+	font-weight:300; 
+	font-size:1.0em;					
+}
+.cont_icons
+{
+				
+}
+.cont_address
+{
+	float:left;
+	width:50%;
+	position:relative;
+	left:50%;
+	background-image:url(/resources/images/donotuse/ic_dialog_map.png);
+	background-repeat:no-repeat;
+	background-position: left center;					
+}
+.cont_phone
+{
+	float:left;
+	width:50%;
+	position:relative;
+	left:50%;
+	background-image:url(/resources/images/donotuse/ic_emergency.png);
+	background-repeat:no-repeat;
+	background-position: left center;
+}

@@ -490,78 +490,7 @@
 		background-image:url(/resources/images/donotuse/ic_emergency.png);
 	}
 </style>
-</head>
-
-<body id='bodytag' style="background-color:#e5e5e5;">
-	<div id='brandingBar' >
-        	<a id='menubutton'>
-            	<div style="width:48px; height:48px; position:absolute; top:2px; left:0; cursor:pointer;" >
-                	<div class='border-menu'>&nbsp;</div>
-                </div>
-            </a>
-            	<div style="width:160px; position:absolute; top:2px; left:55px; margin-top:-22px; height:48px;" id="dropDownArea">
-          		<!--<select name="category" id='category' style="margin:0;" onChange="loadPg(this.value.toLowerCase());">
-                	<option value='home'>Everything</option>
-                	<option value='food'>Food</option>
-                    <option value='entertainment'>Entertainment</option>
-                    <option value='shopping'>Shopping</option>
-                    <option value='special'>Events</option>
-                </select>-->
-                </div>
-        	<span id='siteTitle'>eatnon</span>
-    </div>
-	<div id='maincont'>
-        <div id='menu'>
-        	<div class='menusection'>
-                <div class="menuitem" id='Nhome' onClick="loadPg('home');"><div class='menuicon' style="background-image:url(/resources/images/donotuse/home.png);"></div>Home</div>
-                <div class="menuitem" id='Nadd' onClick="loadPg('addplace');"><div class='menuicon' style="background-image:url(/resources/images/donotuse/addplace.png);"></div>Add a Place</div>
-            </div>
-            <div class='menusection'>
-            	<div class='menuitem' id='Nlocation' style="" onClick="loadPg('location');">
-	                <div class='menuicon' id='iconlocation' style="background-image:url(/no_location.png);">&nbsp;</div>
-                		Location 
-                    </div>
-            	</div>
-            <div class="menubottom">
-                <div class='menuitemr' onClick="loadPg('about');">&copy; 2014 - Company Name</div>
-            </div>
-        </div>
-        <div class='clear'>&nbsp;</div>
-        <div id='pagearea' style="position:relative;">
-        
-        	
-        	<div class='img_portion' style="height:40%; width:100%; position:relative; overflow-y:hidden;">
-                <img src="/food.jpg" style='display:block; width:100%; position:relative;'>
-               
-            </div>
-                <div class="desc_portion" style="margin-top:1.4em; height:50%; color:#000; padding:20px; z-index:77776; position:relative;">
-                
-                 <div style='position:absolute; top:-75px; left:0px;'>
-                  	<h2 style="font-size:2.3em; color:#FFFFFF; font-weight:400; background-color:rgb(222, 9, 7); padding-left:35px;padding-right:10px;">Airplane Food</h2>
-                </div>
-                <div style="position:absolute; top:-40px; right:15px;">
-                	<h4 style="font-size:1.2em; color:green; font-weight:bold;">Open Until 11:00 PM</h4>
-                </div>
-                	<div class='description'>
-                    	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sed nulla elit. Mauris erat neque, gravida vitae magna eget, accumsan posuere tortor. Proin tempus pulvinar odio. Sed consectetur lobortis dui, id sodales quam pretium ac. Morbi tempus eleifend eros et rutrum. Cras nec suscipit leo. Pellentesque eget arcu id justo blandit aliquet vehicula et ligula. Phasellus lacinia dolor varius sapien ornare congue. Donec vitae nulla ac sem mattis aliquet ut sit amet lorem. Praesent dictum sapien ac porta fringilla. Donec ultrices eros quis enim semper vulputate. Nulla facilisi. Proin ultricies, eros vel vulputate tincidunt, erat est eleifend mauris, in consequat lectus magna sit amet nulla. Integer sagittis nisi vitae ligula semper vehicula. Donec auctor erat consequat aliquam egestas. Sed consectetur dui convallis ligula lacinia, id tincidunt dui dapibus.
-                    </div>
-                    
- <!--                   	<table style="width:100%; border:0; margin:1em;">
-                        	<tbody>
-                                <tr>
-                                    <td class='address'>
-                                        <address style="color:#000;">
-                                        -1 Imaginary Street<br>
-                                        Some City, CA 999999
-                                        </address>
-                                    </td>
-                                    <td class="phone">
-                                        <a href='tel:15555551234'>(555) 555-1234</a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>-->
-                <style>
+<style>
 					.cont_contact /*1*/
 					{
 						float:left;
@@ -618,6 +547,77 @@
 						background-position: left center;
 					}
 				</style>
+</head>
+
+<body id='bodytag' style="background-color:#e5e5e5;">
+	<div id='brandingBar' >
+        	<a id='menubutton'>
+            	<div style="width:48px; height:48px; position:absolute; top:2px; left:0; cursor:pointer;" >
+                	<div class='border-menu'>&nbsp;</div>
+                </div>
+            </a>
+            	<div style="width:160px; position:absolute; top:2px; left:55px; margin-top:-22px; height:48px;" id="dropDownArea">
+          		<!--<select name="category" id='category' style="margin:0;" onChange="loadPg(this.value.toLowerCase());">
+                	<option value='home'>Everything</option>
+                	<option value='food'>Food</option>
+                    <option value='entertainment'>Entertainment</option>
+                    <option value='shopping'>Shopping</option>
+                    <option value='special'>Events</option>
+                </select>-->
+                </div>
+        	<span id='siteTitle'>eatnon</span>
+    </div>
+	<div id='maincont'>
+        <div id='menu'>
+        	<div class='menusection'>
+                <div class="menuitem" id='Nhome' onClick="loadPg('home');"><div class='menuicon' style="background-image:url(/resources/images/donotuse/home.png);"></div>Home</div>
+                <div class="menuitem" id='Nadd' onClick="loadPg('addplace');"><div class='menuicon' style="background-image:url(/resources/images/donotuse/addplace.png);"></div>Add a Place</div>
+            </div>
+            <div class='menusection'>
+            	<div class='menuitem' id='Nlocation' style="" onClick="loadPg('location');">
+	                <div class='menuicon' id='iconlocation' style="background-image:url(/no_location.png);">&nbsp;</div>
+                		Location 
+                    </div>
+            	</div>
+            <div class="menubottom">
+                <div class='menuitemr' onClick="loadPg('about');">&copy; 2014 - Company Name</div>
+            </div>
+        </div>
+        <div class='clear'>&nbsp;</div>
+        <div id='pagearea' style="position:relative;">
+        
+        	
+        	<div class='img_portion' style="height:40%; width:100%; position:relative; overflow-y:hidden;">
+                <img src="/food.jpg" style='display:block; width:100%; position:relative;'> 
+            </div>
+                <div class="desc_portion" style="margin-top:1.4em; height:50%; color:#000; padding:20px; z-index:77776; position:relative;">
+                
+                 <div style='position:absolute; top:-75px; left:0px;'>
+                  	<h2 style="font-size:2.3em; color:#FFFFFF; font-weight:400; background-color:rgb(222, 9, 7); padding-left:35px;padding-right:10px;">Airplane Food</h2>
+                </div>
+                <div style="position:absolute; top:-40px; right:15px;">
+                	<h4 style="font-size:1.2em; color:green; font-weight:bold;">Open Until 11:00 PM</h4>
+                </div>
+                	<div class='description'>
+                    	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sed nulla elit. Mauris erat neque, gravida vitae magna eget, accumsan posuere tortor. Proin tempus pulvinar odio. Sed consectetur lobortis dui, id sodales quam pretium ac. Morbi tempus eleifend eros et rutrum. Cras nec suscipit leo. Pellentesque eget arcu id justo blandit aliquet vehicula et ligula. Phasellus lacinia dolor varius sapien ornare congue. Donec vitae nulla ac sem mattis aliquet ut sit amet lorem. Praesent dictum sapien ac porta fringilla. Donec ultrices eros quis enim semper vulputate. Nulla facilisi. Proin ultricies, eros vel vulputate tincidunt, erat est eleifend mauris, in consequat lectus magna sit amet nulla. Integer sagittis nisi vitae ligula semper vehicula. Donec auctor erat consequat aliquam egestas. Sed consectetur dui convallis ligula lacinia, id tincidunt dui dapibus.
+                    </div>
+                    
+ <!--                   	<table style="width:100%; border:0; margin:1em;">
+                        	<tbody>
+                                <tr>
+                                    <td class='address'>
+                                        <address style="color:#000;">
+                                        -1 Imaginary Street<br>
+                                        Some City, CA 999999
+                                        </address>
+                                    </td>
+                                    <td class="phone">
+                                        <a href='tel:15555551234'>(555) 555-1234</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>-->
+                
                 <div style="margin:1em;" class='cont_contact'>
                 	<div class='cont_contact_internal'>
                         <div class='cont_address'>
@@ -634,8 +634,7 @@
                             </div>
                         </div>
                     </div>
-                </div>	
-                
+                </div>	  
             </div>
         
         	

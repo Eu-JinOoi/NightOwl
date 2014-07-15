@@ -5,6 +5,11 @@
 <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>eatnon</title>
 <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css">
+<link href='http://fonts.googleapis.com/css?family=Roboto:900,800,700,600,500,400,300,200,100' rel='stylesheet' type='text/css'>
+<link href='/resources/no.css' rel="stylesheet" type="text/css">
+<link href='/resources/openclose.css' rel="stylesheet" type="text/css">
+<link href='/resources/details.css' rel="stylesheet" type="text/css">
+
 <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
 <script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
 <script src='/resources/js/menu.js'></script>
@@ -42,11 +47,6 @@
 			toggleMenu();
 		  	
 		});
-		
-		
-		
-		
-
 		$("#searchbutton").click(function(){
 			toggleSearch();
 		});
@@ -340,6 +340,10 @@
 				extraextra+="<h2 style='font-weight:400; margin-left:3px;'>Welcome to <b>eatnon</b></h2>";
 				extraextra+="<p style='margin-left:7px;'>Instructions on how to do things on the site. Have an option to hide this box forever (maybe - maybe not may be good references since this is the 'landing' page.</p>";
 				extraextra+="</div>";
+				
+				extraextra+="<div class='darkcard' style='text-align:center; font-size:4em;' onClick='openDetails(1);'>";
+				extraextra+="Open Details";
+				extraextra+="</div>";
 			}
 			var filters="<div id='filters'>";
 			//filters+="Filters";
@@ -354,6 +358,12 @@
 		{
 			$("#scrollableContent").html("<div style='margin:10px;'><h3 style='color:#000;'>Um....you must live in the middle of nowhere...or we haven't gottent your area yet. We couldn't find anything in this category.</h3></div>");	
 		}
+	}
+	function openDetails(PID)
+	{
+		//alert("Open Details");	
+		$("#scrollableContent").stop().animate({"left":"-100%"});
+		$("#placeDetails").stop().animate({"left":"0"});
 	}
 	function loadPg(page)
 	{
@@ -660,12 +670,6 @@
 	}
 	
 </script>
-<link href='http://fonts.googleapis.com/css?family=Roboto:900,800,700,600,500,400,300,200,100' rel='stylesheet' type='text/css'>
-<link href='/resources/no.css' rel="stylesheet" type="text/css">
-<link href='/resources/openclose.css' rel="stylesheet" type="text/css">
-<style>
-	
-</style>
 </head>
 
 <body id='bodytag' style="background-color:#e5e5e5;">
@@ -717,14 +721,49 @@
             <div id='scrollableContent' style="background-color:#e5e5e5; position:relative;">
                 
             </div>
-            <!--<div id='placemat'>
-            	<span style="color:#FF0000;">Test</span>
-            </div>-->
+            <div id='placeDetails'>
+         
+                <div class='img_portion' style="height:40%; width:100%; position:relative; overflow-y:hidden;">
+                    <img src="/food.jpg" style='display:block; width:100%; position:relative;'> 
+                </div>
+                <div class="desc_portion" style="margin-top:1.4em; height:50%; color:#000; padding:20px; z-index:77776; position:relative;">
+                
+                     <div style='position:absolute; top:-120px; left:0px;'>
+                        <h2 style="font-size:2.3em; color:#FFFFFF; font-weight:400; background-color:rgba(100,100,100,.4); padding-left:30px;padding-right:10px;">Airplane Food</h2>
+                    </div>
+                    <div style="position:absolute; top:-40px; right:15px;">
+                        <h4 style="font-size:1.2em; color:green; font-weight:bold;">Open Until 11:00 PM</h4>
+                    </div>
+                	<div class='description'>
+                    	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sed nulla elit. Mauris erat neque, gravida vitae magna eget, accumsan posuere tortor. Proin tempus pulvinar odio. Sed consectetur lobortis dui, id sodales quam pretium ac. Morbi tempus eleifend eros et rutrum. Cras nec suscipit leo. Pellentesque eget arcu id justo blandit aliquet vehicula et ligula. Phasellus lacinia dolor varius sapien ornare congue. Donec vitae nulla ac sem mattis aliquet ut sit amet lorem. Praesent dictum sapien ac porta fringilla. Donec ultrices eros quis enim semper vulputate. Nulla facilisi. Proin ultricies, eros vel vulputate tincidunt, erat est eleifend mauris, in consequat lectus magna sit amet nulla. Integer sagittis nisi vitae ligula semper vehicula. Donec auctor erat consequat aliquam egestas. Sed consectetur dui convallis ligula lacinia, id tincidunt dui dapibus.
+                    </div>                
+                	<div style="margin:1em;" class='cont_contact'>
+                        <div class='cont_contact_internal'>
+                            <div class='cont_address'>
+                                <div class="address">
+                                    <address style="color:#000;">
+                                        -1 Imaginary Street<br>
+                                        Some City, CA 999999
+                                    </address>
+                                </div>
+                            </div>
+                            <div class="cont_phone">
+                                <div class='phone'>
+                                    <a href='tel:15555551234'>(555) 555-1234</a>
+                                </div>
+                            </div>
+                        </div>
+                	</div>	  
+                </div>
+            
+            </div>
         </div>
+        
 		<!--<div id='fixScroll'>&nbsp;This is to fix the URL bar hiding on Chrome. I know this is a terrible fix but it works</div>-->
 		
         
 
     </div>
+    
 </body>
 </html>
