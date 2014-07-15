@@ -36,7 +36,11 @@
 	$("#dumpdata").html(out);
 	}
 	$(document).ready(function(e) {
-				$(function()
+		var wh=$(window).height();
+		var mwh=wh-55;
+		$("#maincont").height(wh);
+		
+			$(function()
 			{
 			$(".xpandB").click(function(){
 		
@@ -435,7 +439,7 @@
 			//if(page!="search")
 			//if(sterms)
 			//distance 40.3
-				a={category: page, latitude: selfLat, longitude: selfLong, distance:'40.3', resultsperpage:'15', page:'1'};
+				a={category: page, latitude: selfLat, longitude: selfLong, distance:'25', resultsperpage:'15', page:'1'};
 			//else
 				//a={category: page, latitude: selfLat, longitude: selfLong, distance:'40.3', resultsperpage:'15', page:'1',searchterms: $("#searchBox").val()};		
 			$.getJSON("pages/resultsJSON.php",a)
@@ -545,6 +549,8 @@
 			});
 			  }
 		  }*/
+		  //Window Stuff
+
 	}
 	function getLocation()
 	{
