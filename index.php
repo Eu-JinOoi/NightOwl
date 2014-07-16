@@ -38,6 +38,8 @@
 	$(document).ready(function(e) {
 		var wh=$(window).height();
 		var mwh=wh-55;
+		$("#scrollableContent").height(mwh+"px");
+		$("#placeDetails").height(mwh+"px");
 		$("#maincont").height(wh);
 		
 			$(function()
@@ -366,6 +368,7 @@
 	function openDetails(PID)
 	{
 		//alert("Open Details");	
+
 		$("#scrollableContent").stop().animate({"left":"-100%"});
 		$("#placeDetails").stop().animate({"left":"0"});
 	}
@@ -727,7 +730,7 @@
             <div id='scrollableContent' style="background-color:#e5e5e5; position:relative;">
                 
             </div>
-            <div id='placeDetails'>
+            <div id='placeDetails' style="height:200px;">
          
                 <div class='img_portion' style="height:40%; width:100%; position:relative; overflow-y:hidden;">
                     <img src="/food.jpg" style='display:block; width:100%; position:relative;'> 
