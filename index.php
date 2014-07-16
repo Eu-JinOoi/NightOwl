@@ -35,6 +35,13 @@
     alert(out);
 	$("#dumpdata").html(out);
 	}
+	$(document).resize(function(e) {
+        var wh=$(window).height();
+		var mwh=wh-55;
+		$("#scrollableContent").height(mwh+"px");
+		$("#placeDetails").height(mwh+"px");
+		$("#maincont").height(wh);
+    });
 	$(document).ready(function(e) {
 		var wh=$(window).height();
 		var mwh=wh-55;
@@ -279,7 +286,7 @@
 		}
 		if(pjson.drivethru=="1")
 		{
-			ret+="<div style='width:24px; height:24px; float:right;'><img src='resources/images/donotuse/car.png' style='z-index:44448;'></div>";	
+			ret+="<div style='width:24px; height:24px; float:right;'><img src='resources/images/donotuse/car.png' alt='drivethru' style='z-index:44448;'></div>";	
 		}
 		ret+="<div class='clear'>&nbsp;</div>";
 		//ret+="<div class='rightcard' onclick='openplace("+pjson.PID+")'>&nbsp;";
@@ -287,7 +294,7 @@
 		
 		ret+="<div id='xpander-"+pjson.PID+"' class='xpander close' style='position:absolute; bottom:0px; right:0;' onClick='xpand("+pjson.PID+");'>";
 		//ret+="<a class=''>";
-		ret+="<img class='xpandB' id='xpandB-"+pjson.PID+"' src='/resources/images/donotuse/expander_max.png'>";
+		ret+="<img class='xpandB' id='xpandB-"+pjson.PID+"' src='/resources/images/donotuse/expander_max.png' alt='expander'>";
 		//ret+="</a>";
 		ret+="</div>";
 
@@ -461,7 +468,7 @@
 					{
 						var extraextra="";
 						extraextra+="<div class='card' style='background-color:#fc6e51; border:1px solid white;'>";
-						extraextra+="<img src='/resources/images/donotuse/xxhmap.png' style='float:left;'>";
+						extraextra+="<img src='/resources/images/donotuse/xxhmap.png' style='float:left;' alt='map'>";
 						extraextra+="<h1 style='margin-left:3px;'>Not so fast!</h1>";
 						extraextra+="<div class='clear'>&nbsp;</div>";
 						extraextra+="<p style='margin-left:7px;'>So we have a bit of a problem here, we don't know where you are. It's going to be awfully hard to tell you where things are if we don't know where you are. You're going to need to either allow your browser to tell us or set your <a onclick='loadPg(\"location\")'> location.</a></p>";
@@ -731,7 +738,7 @@
                 
             </div>
             <div id='placeDetails' style="height:200px;">
-         
+         		
                 <div class='img_portion' style="height:40%; width:100%; position:relative; overflow-y:hidden;">
                     <img src="/food.jpg" style='display:block; width:100%; position:relative;'> 
                 </div>

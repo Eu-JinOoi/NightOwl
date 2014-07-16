@@ -4,7 +4,8 @@
 	margin:auto;
 	/*width: 97%;*/
 	min-height:100px;
-	height:25%;
+	/*height:25%;*/
+	min-height:125px;
 	margin-top:12px;
 	margin-bottom:8px;
 	margin-left:10px;
