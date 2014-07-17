@@ -24,7 +24,7 @@
 	var selfLong=0;
 	var locSet=false;
 	var dowToString= ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-	
+	var gRawJSON="";
 	
 	function dump(obj) {
     var out = '';
@@ -37,17 +37,17 @@
 	}
 	$(document).resize(function(e) {
         var wh=$(window).height();
-		var mwh=wh-55;
+		var mwh=wh-40;
 		$("#scrollableContent").height(mwh+"px");
 		$("#placeDetails").height(mwh+"px");
-		$("#maincont").height(wh);
+		$("#maincont").height(wh+"px");
     });
 	$(document).ready(function(e) {
 		var wh=$(window).height();
-		var mwh=wh-55;
+		var mwh=wh-40;
 		$("#scrollableContent").height(mwh+"px");
 		$("#placeDetails").height(mwh+"px");
-		$("#maincont").height(wh);
+		$("#maincont").height(wh+"px");
 		
 			$(function()
 			{
@@ -292,7 +292,8 @@
 		//ret+="<div class='rightcard' onclick='openplace("+pjson.PID+")'>&nbsp;";
 		//ret+="<img src='resources/images/arrow.png'>";
 		
-		ret+="<div id='xpander-"+pjson.PID+"' class='xpander close' style='position:absolute; bottom:0px; right:0;' onClick='xpand("+pjson.PID+");'>";
+		//ret+="<div id='xpander-"+pjson.PID+"' class='xpander close' style='position:absolute; bottom:0px; right:0;' onClick='xpand("+pjson.PID+");'>";
+		ret+="<div id='xpander-"+pjson.PID+"' class='xpander close' style='position:absolute; bottom:0px; right:0;' onClick='openDetails("+pjson.PID+");'>";
 		//ret+="<a class=''>";
 		ret+="<img class='xpandB' id='xpandB-"+pjson.PID+"' src='/resources/images/donotuse/expander_max.png' alt='expander'>";
 		//ret+="</a>";
@@ -354,9 +355,9 @@
 				extraextra+="<p style='margin-left:7px;'>Instructions on how to do things on the site. Have an option to hide this box forever (maybe - maybe not may be good references since this is the 'landing' page.</p>";
 				extraextra+="</div>";
 				
-				extraextra+="<div class='darkcard' style='text-align:center; font-size:4em;' onClick='openDetails(1);'>";
-				extraextra+="Open Details";
-				extraextra+="</div>";
+				//extraextra+="<div class='darkcard' style='text-align:center; font-size:4em;' onClick='openDetails(1);'>";
+				//extraextra+="Open Details";
+				//extraextra+="</div>";
 			}
 			var filters="<div id='filters'>";
 			//filters+="Filters";
@@ -372,12 +373,56 @@
 			$("#scrollableContent").html("<div style='margin:10px;'><h3 style='color:#000;'>Um....you must live in the middle of nowhere...or we haven't gottent your area yet. We couldn't find anything in this category.</h3></div>");	
 		}
 	}
+	function findPIDindex(PID)
+	{
+		var ret=-1;
+		var lcount=0;
+		$.each(gRawJSON.places,function(i, item)
+		{
+			if(item.PID==PID)
+			{
+				console.log("!PID Match "+item.PID+" / "+PID);
+				ret=lcount;
+				console.log("RET:"+ret);
+				//break;
+			}
+			lcount++;
+		});	
+		return ret;
+	}
 	function openDetails(PID)
 	{
 		//alert("Open Details");	
 
 		$("#scrollableContent").stop().animate({"left":"-100%"});
 		$("#placeDetails").stop().animate({"left":"0"});
+		$("#backToList").stop().animate({"left":"0"});
+		
+		//Load Detail Info
+		var jindex=findPIDindex(PID);
+		console.log("PID: "+PID+", JI: "+jindex+" ");
+		if(jindex==-1)
+		{
+			alert("Sorry an error has occurred.");	
+		}
+		else
+		{
+			$("#d_place_title").html(gRawJSON.places[jindex].name);
+			$("#d_place_phone").html("<a href='tel:"+gRawJSON.places[jindex].phone+"'>"+gRawJSON.places[jindex].phone+"</a>");
+			var baddr=gRawJSON.places[jindex].address1;
+			if(gRawJSON.places[jindex].address2!="")
+			{
+				 baddr+="<br>"+gRawJSON.places[jindex].address2;
+			}
+			baddr+="<br>"+gRawJSON.places[jindex].city+","+gRawJSON.places[jindex].state+","+gRawJSON.places[jindex].zip;
+			$("#d_place_actualaddr").html(baddr);
+		}
+	}
+	function closeDetails()
+	{
+		$("#scrollableContent").stop().animate({"left":"0"});
+		$("#placeDetails").stop().animate({"left":"100%"});
+		$("#backToList").stop().animate({"left":"100%"});	
 	}
 	function loadPg(page)
 	{
@@ -461,6 +506,7 @@
 						isLoaded=true;
 						locfail=false;
 						location.hash=page;
+						gRawJSON=json;
 						handleJSON(json,page);
 						
 					}
@@ -738,17 +784,19 @@
                 
             </div>
             <div id='placeDetails' style="height:200px;">
-         		
+         		<div id='backToList' style="color:#FFF; background-color:rgba(64,64,64,.9); width:100%; height:40px; position:fixed; top:40px; z-index:888888; line-height:40px;">
+                	<div onClick="closeDetails();" style="margin:auto; text-align:center; font-weight:600; z-index:888888;">Back to Search Results</div>
+                </div>
                 <div class='img_portion' style="height:40%; width:100%; position:relative; overflow-y:hidden;">
                     <img src="/food.jpg" style='display:block; width:100%; position:relative;'> 
                 </div>
                 <div class="desc_portion" style="margin-top:1.4em; height:50%; color:#000; padding:20px; z-index:77776; position:relative;">
                 
                      <div style='position:absolute; top:-120px; left:0px;'>
-                        <h2 style="font-size:2.3em; color:#FFFFFF; font-weight:400; background-color:rgba(100,100,100,.4); padding-left:30px;padding-right:10px;">Airplane Food</h2>
+                        <h2 style="font-size:2.3em; color:#FFFFFF; font-weight:400; background-color:rgba(100,100,100,.4); padding-left:30px;padding-right:10px;" id="d_place_title">Airplane Food</h2>
                     </div>
                     <div style="position:absolute; top:-40px; right:15px;">
-                        <h4 style="font-size:1.2em; color:green; font-weight:bold;">Open Until 11:00 PM</h4>
+                        <h4 style="font-size:1.2em; color:green; font-weight:bold; z-index:44445;">Open Until 11:00 PM</h4>
                     </div>
                 	<div class='description'>
                     	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sed nulla elit. Mauris erat neque, gravida vitae magna eget, accumsan posuere tortor. Proin tempus pulvinar odio. Sed consectetur lobortis dui, id sodales quam pretium ac. Morbi tempus eleifend eros et rutrum. Cras nec suscipit leo. Pellentesque eget arcu id justo blandit aliquet vehicula et ligula. Phasellus lacinia dolor varius sapien ornare congue. Donec vitae nulla ac sem mattis aliquet ut sit amet lorem. Praesent dictum sapien ac porta fringilla. Donec ultrices eros quis enim semper vulputate. Nulla facilisi. Proin ultricies, eros vel vulputate tincidunt, erat est eleifend mauris, in consequat lectus magna sit amet nulla. Integer sagittis nisi vitae ligula semper vehicula. Donec auctor erat consequat aliquam egestas. Sed consectetur dui convallis ligula lacinia, id tincidunt dui dapibus.
@@ -757,14 +805,14 @@
                         <div class='cont_contact_internal'>
                             <div class='cont_address'>
                                 <div class="address">
-                                    <address style="color:#000;">
+                                    <address id="d_place_actualaddr" style="color:#000;">
                                         -1 Imaginary Street<br>
                                         Some City, CA 999999
                                     </address>
                                 </div>
                             </div>
                             <div class="cont_phone">
-                                <div class='phone'>
+                                <div class='phone' id='d_place_phone'>
                                     <a href='tel:15555551234'>(555) 555-1234</a>
                                 </div>
                             </div>

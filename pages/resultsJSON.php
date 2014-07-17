@@ -85,6 +85,8 @@ else
 			echo '"zip":"'.$row['zip'].'",';
 			echo '"wifi":"'.$row['wifi'].'",';
 			echo '"drivethru":"'.$row['drivethru'].'",';
+			//PHONE
+			echo '"phone":"'.$row['phone'].'",';
 			//Time Components
 			$dow=date("w");
 			$isOpen=false;

@@ -45,7 +45,7 @@
 		position:absolute;
 		/*padding:20px;*/
 		/*padding-top:55px;*/
-		top:55px;
+		top:40px;
 		left:0;
 		overflow-y: scroll;
 		overflow-x: hidden;	
@@ -58,7 +58,7 @@
 	#placeDetails
 	{
 		position:absolute;
-		top:55px;
+		top:40px;
 		left:100%;
 		overflow-y: scroll;
 		overflow-x: hidden;
