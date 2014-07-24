@@ -27,7 +27,7 @@ class place
 	private $hours_unknown;
 	private $hours_closed;
 	private $hours_24;
-	
+	private $description;
 	private $hash;
 	
 	public function __construct($name,$subname="")
@@ -40,6 +40,8 @@ class place
 		$this->hours_24=0;
 		$this->open=array_fill(0,7,"00:00:00");
 		$this->close=array_fill(0,7,"00:00:00");
+		
+		$this->description="";
 	}
 	public function addHours($dow,$open,$close,$hr24,$hrclosed)
 	{
@@ -89,6 +91,10 @@ class place
 	{
 		$this->hash=sha1($this->address1.$this->address2.$this->city.$this->state.$this->zip.$this->country.$this->storeno);
 	}
+	public function setDescription($desc)
+	{
+		$this->description=$desc;	
+	}
 	public function writeDB()
 	{
 		$this->genHash();
@@ -134,7 +140,8 @@ class place
 		`hours_5_o`,
 		`hours_5_c`,
 		`hours_6_o`,
-		`hours_6_c`
+		`hours_6_c`,
+		`description`
 		) VALUES ( 
 		'NULL',
 		'".$this->hash."',
@@ -174,7 +181,8 @@ class place
 		'".$this->open[5]."',
 		'".$this->close[5]."',
 		'".$this->open[6]."',
-		'".$this->close[6]."'
+		'".$this->close[6]."',
+		'".$this->description."'
 		)";
 		$query=str_replace("\r\n","",$query);
 		$mysqli=new mysqli('localhost','eunive5_projNO','NightOwl2014','eunive5_projectNO');

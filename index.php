@@ -392,8 +392,6 @@
 	}
 	function openDetails(PID)
 	{
-		//alert("Open Details");	
-
 		$("#scrollableContent").stop().animate({"left":"-100%"});
 		$("#placeDetails").stop().animate({"left":"0"});
 		$("#backToList").stop().animate({"left":"0"});
@@ -416,6 +414,57 @@
 			}
 			baddr+="<br>"+gRawJSON.places[jindex].city+","+gRawJSON.places[jindex].state+","+gRawJSON.places[jindex].zip;
 			$("#d_place_actualaddr").html(baddr);
+			var pjson=gRawJSON.places[jindex];
+			//Hours
+			if(pjson.status=="open")
+			{
+				var lclose=pjson.hours[<?php echo date("w");?>].close;
+				if(pjson.previous=="true")
+					lclose=pjson.hours[<?php echo ((date("w")+6)%7);?>].close
+				lclose=lclose.trim();
+				if(lclose.substr(0,1)=="0")
+				{
+					if(lclose=="00:00:00")
+						lclose="Midnight"
+					else
+					  lclose=lclose.substr(1,lclose.length-4)+" am";
+				}
+				else
+				{
+					var first=Number(lclose.substr(0,2));
+					first-=12;
+					if(first==0)
+						lclose="Noon";
+					else
+						lclose=first+lclose.trim().substr(2,lclose.length-5)+" pm";	
+				}
+				$("#d_place_quickhour").html("Open Until "+lclose)
+			}
+			else if(pjson.status=="closed")
+			{
+				var lopen=pjson.hours[<?php echo (date("w"))%7;?>].open;
+				if(Number(lopen.substr(0,2))<12)
+				{
+					lopen=Number(lopen.substr(0,2))+lopen.substr(2,lopen.length-5)+" am";
+				}
+				else
+				{
+					var first=Number(lopen.substr(0,2));
+					first-=12;
+					if(first==0)
+						lopen="Noon";
+					else
+						lopen=first+lopen.substr(2,lopen.length-3);	
+				}
+				if(pjson.hours[<?php echo (date("w"))%7;?>].closed==1)
+				{
+					$("#d_place_quickhour").html("Closed Today");
+				}
+				else
+				{
+					$("#d_place_quickhour").html("Opens at "+lopen);
+				}
+			}
 		}
 	}
 	function closeDetails()
@@ -796,7 +845,7 @@
                         <h2 style="font-size:2.3em; color:#FFFFFF; font-weight:400; background-color:rgba(100,100,100,.4); padding-left:30px;padding-right:10px;" id="d_place_title">Airplane Food</h2>
                     </div>
                     <div style="position:absolute; top:-40px; right:15px;">
-                        <h4 style="font-size:1.2em; color:green; font-weight:bold; z-index:44445;">Open Until 11:00 PM</h4>
+                        <h4 style="font-size:1.2em; color:green; font-weight:bold; z-index:44445;" id='d_place_quickhour'>Open Until 11:00 PM</h4>
                     </div>
                 	<div class='description'>
                     	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sed nulla elit. Mauris erat neque, gravida vitae magna eget, accumsan posuere tortor. Proin tempus pulvinar odio. Sed consectetur lobortis dui, id sodales quam pretium ac. Morbi tempus eleifend eros et rutrum. Cras nec suscipit leo. Pellentesque eget arcu id justo blandit aliquet vehicula et ligula. Phasellus lacinia dolor varius sapien ornare congue. Donec vitae nulla ac sem mattis aliquet ut sit amet lorem. Praesent dictum sapien ac porta fringilla. Donec ultrices eros quis enim semper vulputate. Nulla facilisi. Proin ultricies, eros vel vulputate tincidunt, erat est eleifend mauris, in consequat lectus magna sit amet nulla. Integer sagittis nisi vitae ligula semper vehicula. Donec auctor erat consequat aliquam egestas. Sed consectetur dui convallis ligula lacinia, id tincidunt dui dapibus.
