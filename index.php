@@ -406,6 +406,14 @@
 		else
 		{
 			$("#d_place_title").html(gRawJSON.places[jindex].name);
+			if(PID==328)
+			{
+				$("#d_place_photo").attr("src","https://lh5.googleusercontent.com/-foqDOk4BZtQ/VInQy7Em07I/AAAAAAAAASw/rmNCV5PRR00/w629-h354-no/disneyland-monorail-00%2B%281%29.jpg");
+			}
+			else if(PID==329)
+			{
+				$("#d_place_photo").attr("src","https://scontent-a-lax.xx.fbcdn.net/hphotos-xpa1/t31.0-8/10460846_10152789398885742_4891854155811182575_o.jpg");
+			}
 			$("#d_place_phone").html("<a href='tel:"+gRawJSON.places[jindex].phone+"'>"+gRawJSON.places[jindex].phone+"</a>");
 			var baddr=gRawJSON.places[jindex].address1;
 			if(gRawJSON.places[jindex].address2!="")
@@ -837,7 +845,7 @@
                 	<div onClick="closeDetails();" style="margin:auto; text-align:center; font-weight:600; z-index:888888;">Back to Search Results</div>
                 </div>
                 <div class='img_portion' style="height:40%; width:100%; position:relative; overflow-y:hidden;">
-                    <img src="/food.jpg" style='display:block; width:100%; position:relative;'> 
+                    <img id='d_place_photo' src="/food.jpg" style='display:block; width:100%; position:relative;'> 
                 </div>
                 <div class="desc_portion" style="margin-top:1.4em; height:50%; color:#000; padding:20px; z-index:77776; position:relative;">
                 
@@ -865,10 +873,11 @@
                                     <a href='tel:15555551234'>(555) 555-1234</a>
                                 </div>
                             </div>
+                            <div class="clear">&nbsp;</div>
                         </div>
-                	</div>	  
-                </div>
-            
+                	</div>
+                    Test	  
+                </div>            
             </div>
         </div>
         

@@ -78,6 +78,16 @@
 		
 		color:#000;
 	}
+	#searchingNear
+	{
+		/*background-image:url(images/donotuse/location.png);
+		background-position:right center;	
+		background-repeat:no-repeat;*/
+	}
+	#categories
+	{
+		cursor:pointer;	
+	}
 	div.card
 	{
 		margin:auto;
