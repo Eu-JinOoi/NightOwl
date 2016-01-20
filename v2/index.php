@@ -8,6 +8,12 @@
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Night Owl</title>
+    <style>
+		.stars
+		{
+			fill:red;	
+		}
+	</style>
 </head>
 <body>
 <header>
@@ -90,7 +96,7 @@ function createCard(result)
 		rating=result.rating;
 		intRating=Math.floor(rating);
 		decRating=rating-intRating;
-		
+		var isSVG=false;
 		
 		//alert("creating card");
 		var cardHTML="";
@@ -98,18 +104,27 @@ function createCard(result)
 		cardHTML+="<div class='card-panel'>";
 		cardHTML+="\n\t<span class='card-title' style='font-weight:bold; font-size:1.25em'>"+result.name+"</span>";
 		//cardHTML+="\n\t<i class='small material_icons'>star_rate</i>";
-		cardHTML+="\n\t<p>";
+		cardHTML+="\n\t<div>";
 		for(var i=0; i<5;i++)
 		{
-			if(i<intRating)
-				cardHTML+="<img src='/v2/resources/icons/google-material/ic_star_black_24px.svg'>";
-			else if(i==intRating && decRating>=0.5)
-				cardHTML+="<img src='/v2/resources/icons/google-material/ic_star_half_black_24px.svg'>";
+			if(isSVG==false)
+			{
+				if(i<intRating)
+					cardHTML+="<img src='/v2/resources/icons/google-material/ic_star_black_24px.svg'>";
+				else if(i==intRating && decRating>=0.5)
+					cardHTML+="<img src='/v2/resources/icons/google-material/ic_star_half_black_24px.svg'>";
+				else
+					cardHTML+="<img src='/v2/resources/icons/google-material/ic_star_border_black_24px.svg'>";
+			}
 			else
-				cardHTML+="<img src='/v2/resources/icons/google-material/ic_star_border_black_24px.svg'>";
+			{
+				cardHTML+="<svg class='stars'>";
+				cardHTML+="<use xlink:href='/v2/resources/icons/google-material/ic_star_black_24px.svg'></use>";
+				cardHTML+="</svg>";
+			}
 		}
 		cardHTML+=rating;
-		cardHTML+="\n\t</p>";
+		cardHTML+="\n\t</div>";
 		cardHTML+="</div>";
 		var col_m="col_0";
 		if(colCNT!=0)
