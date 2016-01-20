@@ -87,13 +87,29 @@ function callback(results, status) {
 }
 function createCard(result)
 {
+		rating=result.rating;
+		intRating=Math.floor(rating);
+		decRating=rating-intRating;
+		
+		
 		//alert("creating card");
 		var cardHTML="";
 		//cardHTML+="<div class='card''>\n\t<div class='card-image'>\n\t\t<!--<img src='https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference="+result.reference+"&key=AIzaSyBIg2RSi_wx3-NAbMc0-aIOac2Xf9AvV3Y'>-->\n\t\t<span class='card-title'>"+result.name+"</span></div>";
 		cardHTML+="<div class='card-panel'>";
-		cardHTML+="\n\t<span class='card-title'>"+result.name+"</span>";
-		cardHTML+="\n\t<i class='small material_icons'>star_rate</i>";
-		cardHTML+="\n\t<p></p>";
+		cardHTML+="\n\t<span class='card-title' style='font-weight:bold; font-size:1.25em'>"+result.name+"</span>";
+		//cardHTML+="\n\t<i class='small material_icons'>star_rate</i>";
+		cardHTML+="\n\t<p>";
+		for(var i=0; i<5;i++)
+		{
+			if(i<intRating)
+				cardHTML+="<img src='/v2/resources/icons/google-material/ic_star_black_24px.svg'>";
+			else if(i==intRating && decRating>=0.5)
+				cardHTML+="<img src='/v2/resources/icons/google-material/ic_star_half_black_24px.svg'>";
+			else
+				cardHTML+="<img src='/v2/resources/icons/google-material/ic_star_border_black_24px.svg'>";
+		}
+		cardHTML+=rating;
+		cardHTML+="\n\t</p>";
 		cardHTML+="</div>";
 		var col_m="col_0";
 		if(colCNT!=0)
