@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#4285f4">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#4285f4">
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="#4285f4">
 	<!--Import Google Icon Font-->
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
@@ -17,7 +23,7 @@
 </head>
 <body>
 <header>
-    <nav class="top-nav indigo darken-4">
+    <nav class="top-nav" style="background-color:#3367d6;">
 		<div class="container">
 			<div class="nav-wrapper" style="font-size:3em;" id='nwrap'><a class="page-title">Night Owl&nbsp;<div id="html_attribution" style="display:inline;"><img src='/v2/resources/poweredbygoogle/desktop/powered_by_google_on_non_white.png'/></div></a></div>
 		</div>
@@ -63,16 +69,19 @@ var colCNT=0;
 var allRes="";
 //var attribution=$("#data_attribution").html();
 var attribution=$("#html_attribution");
+var userLoc = {lat: 33.810188, lng: -117.921142};
+var browserSupportFlag =  new Boolean();
 function initMap() {
-  var userLoc = {lat: 33.810188, lng: -117.921142};
-
-  /*map = new google.maps.Map(document.getElementById('map'), {
-    center: userLoc,
-    zoom: 15
-  });*/
-
+  // Try W3C Geolocation (Preferred)
+  if(navigator.geolocation) {
+    browserSupportFlag = true;
+    navigator.geolocation.getCurrentPosition(function(position) {
+      userLoc = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+    }, function() {
+      handleNoGeolocation(browserSupportFlag);
+    });
+  }
   infowindow = new google.maps.InfoWindow();
-
   var service = new google.maps.places.PlacesService(attribution[0]);
   service.nearbySearch({
     location: userLoc,
@@ -96,12 +105,14 @@ function createCard(result)
 		rating=result.rating;
 		intRating=Math.floor(rating);
 		decRating=rating-intRating;
+		//alert(result.photos[0].raw_reference);
 		var isSVG=false;
 		
 		//alert("creating card");
 		var cardHTML="";
 		//cardHTML+="<div class='card''>\n\t<div class='card-image'>\n\t\t<!--<img src='https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference="+result.reference+"&key=AIzaSyBIg2RSi_wx3-NAbMc0-aIOac2Xf9AvV3Y'>-->\n\t\t<span class='card-title'>"+result.name+"</span></div>";
-		cardHTML+="<div class='card-panel'>";
+		cardHTML+="<div class='card-panel' id='card-"+result.id+"'>";
+		//cardHTML+="<div><img src='"+result.photos[0].raw_reference[0].fife_url+"' /></div>";
 		cardHTML+="\n\t<span class='card-title' style='font-weight:bold; font-size:1.25em'>"+result.name+"</span>";
 		//cardHTML+="\n\t<i class='small material_icons'>star_rate</i>";
 		cardHTML+="\n\t<div>";
