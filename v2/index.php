@@ -8,9 +8,10 @@
     <!-- iOS Safari -->
     <meta name="apple-mobile-web-app-status-bar-style" content="#4285f4">
 	<!--Import Google Icon Font-->
-    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->
+    <link href="/resources/icons/MaterialIcons.css" rel="stylesheet">
     <!--Import materialize.css-->
-    <link type="text/css" rel="stylesheet" href="/v2/resources/materialize/css/materialize.min.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="/resources/materialize/css/materialize.min.css"  media="screen,projection"/>
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Night Owl</title>
@@ -25,7 +26,7 @@
 <header>
     <nav class="top-nav" style="background-color:#3367d6;">
 		<div class="container">
-			<div class="nav-wrapper" style="font-size:3em;" id='nwrap'><a class="page-title">Night Owl&nbsp;<div id="html_attribution" style="display:inline;"><img src='/v2/resources/poweredbygoogle/desktop/powered_by_google_on_non_white.png'/></div></a></div>
+			<div class="nav-wrapper" style="font-size:3em;" id='nwrap'><a class="page-title">Night Owl&nbsp;<div id="html_attribution" style="display:inline;"><img src='/resources/poweredbygoogle/desktop/powered_by_google_on_non_white.png'/></div></a></div>
 		</div>
 	</nav>
 </header>
@@ -46,7 +47,7 @@
         <div class='row'>
             <div class='col s12 m12 l12'>
             	<div class='card-panel center-align'>
-                	<div id='html_attributions'><img src='/v2/resources/poweredbygoogle/desktop/powered_by_google_on_white.png'/></div>
+                	<div id='html_attributions'><img src='/resources/poweredbygoogle/desktop/powered_by_google_on_white.png'/></div>
                 </div>
             </div>
         </div>
@@ -60,7 +61,7 @@
 	</div>
 <!--Import jQuery before materialize.js-->
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-<script type="text/javascript" src="/v2/resources/materialize/js/materialize.min.js"></script>
+<script type="text/javascript" src="/resources/materialize/js/materialize.min.js"></script>
 <script type="text/javascript">
 
 var map;
@@ -121,16 +122,16 @@ function createCard(result)
 			if(isSVG==false)
 			{
 				if(i<intRating)
-					cardHTML+="<img src='/v2/resources/icons/google-material/ic_star_black_24px.svg'>";
+					cardHTML+="<img src='/resources/icons/google-material/ic_star_black_24px.svg'>";
 				else if(i==intRating && decRating>=0.5)
-					cardHTML+="<img src='/v2/resources/icons/google-material/ic_star_half_black_24px.svg'>";
+					cardHTML+="<img src='/resources/icons/google-material/ic_star_half_black_24px.svg'>";
 				else
-					cardHTML+="<img src='/v2/resources/icons/google-material/ic_star_border_black_24px.svg'>";
+					cardHTML+="<img src='/resources/icons/google-material/ic_star_border_black_24px.svg'>";
 			}
 			else
 			{
 				cardHTML+="<svg class='stars'>";
-				cardHTML+="<use xlink:href='/v2/resources/icons/google-material/ic_star_black_24px.svg'></use>";
+				cardHTML+="<use xlink:href='/resources/icons/google-material/ic_star_black_24px.svg'></use>";
 				cardHTML+="</svg>";
 			}
 		}
