@@ -114,6 +114,7 @@ var allRes="";
 //var attribution=$("#data_attribution").html();
 var attribution=$("#html_attribution");
 var userLoc = {lat: 33.810188, lng: -117.921142};
+var passLoc;
 var browserSupportFlag =  new Boolean();
 var locationDetermined=false;
 function initMap() {
@@ -123,27 +124,29 @@ function initMap() {
     	browserSupportFlag = true;
     	navigator.geolocation.getCurrentPosition(function(position) 
 		{
-      		userLoc = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
-	  		//locationCallback();
+      		passLoc = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+			userLoc.lat=position.coords.latitude;
+			userLoc.lng=position.coords.longitude;
+	  		locationCallback();
 	  		
     	}, function() 
 		{
       	handleNoGeolocation(browserSupportFlag);
     	});
 		
-		infowindow = new google.maps.InfoWindow();
-  			var service = new google.maps.places.PlacesService(attribution[0]);
-  			service.nearbySearch({
-    			location: userLoc,
-    			radius: 500,
-    			types: ['restaurant']
-  			}, callback);
+		
   }
   
 }
 function locationCallback()
 {
-	
+	infowindow = new google.maps.InfoWindow();
+  			var service = new google.maps.places.PlacesService(attribution[0]);
+  			service.nearbySearch({
+    			location: userLoc,
+    			radius: 5000,
+    			types: ['restaurant']
+  			}, callback);	
 }
 function callback(results, status) {
   	if (status === google.maps.places.PlacesServiceStatus.OK) {
@@ -161,8 +164,9 @@ function callback(results, status) {
 		dispHTML="<div class='card-panel red darken-1' style='color:#FFFFFF'>";
 		dispHTML+="<h4>ERROR INFORMATION</h4>";
 		dispHTML+="<ul>";
-		dispHTML+="<li>Latitude:"+userLoc.lat+"</li>";
-		dispHTML+="<li>Longitude:"+userLoc.lng+"</li>";
+		dispHTML+="<li>Error Returned: No Results Returned";
+		dispHTML+="<li>Latitude: "+userLoc.lat+"</li>";
+		dispHTML+="<li>Longitude: "+userLoc.lng+"</li>";
 		dispHTML+="</ul>";
 		dispHTML+="</div>";
 		$("#errorInfo").html(dispHTML);
@@ -186,25 +190,29 @@ function createCard(result)
 		cardHTML+="\n\t<span class='card-title' style='font-weight:bold; font-size:1.25em'>"+result.name+"</span>";
 		//cardHTML+="\n\t<i class='small material_icons'>star_rate</i>";
 		cardHTML+="\n\t<div>";
-		for(var i=0; i<5;i++)
+		if(result.hasOwnProperty('rating'))
 		{
-			if(isSVG==false)
+			for(var i=0; i<5;i++)
 			{
-				if(i<intRating)
-					cardHTML+="<img src='/resources/icons/google-material/ic_star_black_24px.svg'>";
-				else if(i==intRating && decRating>=0.5)
-					cardHTML+="<img src='/resources/icons/google-material/ic_star_half_black_24px.svg'>";
+				if(isSVG==false)
+				{
+					if(i<intRating)
+						cardHTML+="<img src='/resources/icons/google-material/ic_star_black_24px.svg'>";
+					else if(i==intRating && decRating>=0.5)
+						cardHTML+="<img src='/resources/icons/google-material/ic_star_half_black_24px.svg'>";
+					else
+						cardHTML+="<img src='/resources/icons/google-material/ic_star_border_black_24px.svg'>";
+				}
 				else
-					cardHTML+="<img src='/resources/icons/google-material/ic_star_border_black_24px.svg'>";
+				{
+					cardHTML+="<svg class='stars'>";
+					cardHTML+="<use xlink:href='/resources/icons/google-material/ic_star_black_24px.svg'></use>";
+					cardHTML+="</svg>";
+				}
 			}
-			else
-			{
-				cardHTML+="<svg class='stars'>";
-				cardHTML+="<use xlink:href='/resources/icons/google-material/ic_star_black_24px.svg'></use>";
-				cardHTML+="</svg>";
-			}
+			cardHTML+=rating;
 		}
-		cardHTML+=rating;
+		cardHTML+="<div>"+result.vicinity+"</div>";
 		cardHTML+="\n\t</div>";
 		cardHTML+="</div>";
 		var col_m="col_0";
