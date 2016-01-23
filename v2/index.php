@@ -37,6 +37,49 @@
             <div class="chip">Other Filtering Categories<i class="material-icons">close</i></div>
             <div class="chip">Restaurants<i class="material-icons">close</i></div>
         </div>
+        <div class="row" id="loadingCircle">
+        	<div class='col s12 m12 l12 center-align'>
+	        	<div class="preloader-wrapper big active">
+					<div class="spinner-layer spinner-blue">
+			        	<div class="circle-clipper left">
+			          		<div class="circle"></div>
+			        	</div>
+			        	<div class="gap-patch">
+			          		<div class="circle"></div>
+			        	</div>
+			        	<div class="circle-clipper right">
+			          		<div class="circle"></div>
+			        	</div>
+			      	</div>
+			      	<div class="spinner-layer spinner-red">
+			        	<div class="circle-clipper left">
+			          		<div class="circle"></div>
+			        	</div>
+			        	<div class="gap-patch">
+			          		<div class="circle"></div>
+			        	</div>
+			        	<div class="circle-clipper right">
+			          		<div class="circle"></div>
+			        	</div>
+			      	</div>
+      		 		<div class="spinner-layer spinner-yellow">
+			        	<div class="circle-clipper left">
+          					<div class="circle"></div>
+        				</div>
+        				<div class="gap-patch">
+          					<div class="circle"></div>
+        				</div>
+        				<div class="circle-clipper right">
+          					<div class="circle"></div>
+        				</div>
+      				</div>      	
+				</div>
+			</div>
+        </div>
+        <div class="row" >
+        	<div class='col s12 m12 l12' id="errorInfo" style='display:none;'>
+            </div>
+        </div>
 		<div class="row">
         	<div class='col s12 m6 l6' id='col_0'>
             	
@@ -72,34 +115,60 @@ var allRes="";
 var attribution=$("#html_attribution");
 var userLoc = {lat: 33.810188, lng: -117.921142};
 var browserSupportFlag =  new Boolean();
+var locationDetermined=false;
 function initMap() {
   // Try W3C Geolocation (Preferred)
-  if(navigator.geolocation) {
-    browserSupportFlag = true;
-    navigator.geolocation.getCurrentPosition(function(position) {
-      userLoc = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
-    }, function() {
-      handleNoGeolocation(browserSupportFlag);
-    });
+	if(navigator.geolocation) 
+	{
+    	browserSupportFlag = true;
+    	navigator.geolocation.getCurrentPosition(function(position) 
+		{
+      		userLoc = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+	  		//locationCallback();
+	  		
+    	}, function() 
+		{
+      	handleNoGeolocation(browserSupportFlag);
+    	});
+		
+		infowindow = new google.maps.InfoWindow();
+  			var service = new google.maps.places.PlacesService(attribution[0]);
+  			service.nearbySearch({
+    			location: userLoc,
+    			radius: 500,
+    			types: ['restaurant']
+  			}, callback);
   }
-  infowindow = new google.maps.InfoWindow();
-  var service = new google.maps.places.PlacesService(attribution[0]);
-  service.nearbySearch({
-    location: userLoc,
-    radius: 500,
-    types: ['restaurant']
-  }, callback);
+  
 }
-
+function locationCallback()
+{
+	
+}
 function callback(results, status) {
-  if (status === google.maps.places.PlacesServiceStatus.OK) {
-	  allRes=results;
-    for (var i = 0; i < results.length; i++) {
-      //createMarker(results[i]);
-	  //alert(results[i].name);
-	  createCard(results[i]);
-    }
-  }
+  	if (status === google.maps.places.PlacesServiceStatus.OK) {
+	  	allRes=results;
+    for (var i = 0; i < results.length; i++) 
+	{
+      	//createMarker(results[i]);
+	  	//alert(results[i].name);
+	  	createCard(results[i]);
+    	}
+		$("#loadingCircle").hide();
+  	}	
+	else if(status == "ZERO_RESULTS")
+  	{
+		dispHTML="<div class='card-panel red darken-1' style='color:#FFFFFF'>";
+		dispHTML+="<h4>ERROR INFORMATION</h4>";
+		dispHTML+="<ul>";
+		dispHTML+="<li>Latitude:"+userLoc.lat+"</li>";
+		dispHTML+="<li>Longitude:"+userLoc.lng+"</li>";
+		dispHTML+="</ul>";
+		dispHTML+="</div>";
+		$("#errorInfo").html(dispHTML);
+		$("#loadingCircle").hide();
+		$("#errorInfo").show();
+  	}
 }
 function createCard(result)
 {
