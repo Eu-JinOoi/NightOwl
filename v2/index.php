@@ -117,6 +117,8 @@ var userLoc = {lat: 33.810188, lng: -117.921142};
 var passLoc;
 var browserSupportFlag =  new Boolean();
 var locationDetermined=false;
+var radarradius=2000;
+//var loadedPIDs=[];
 function initMap() {
   // Try W3C Geolocation (Preferred)
 	if(navigator.geolocation) 
@@ -144,7 +146,7 @@ function locationCallback()
   			var service = new google.maps.places.PlacesService(attribution[0]);
   			service.nearbySearch({
     			location: userLoc,
-    			radius: 5000,
+    			radius: radarradius,
     			types: ['restaurant']
   			}, callback);	
 }
@@ -161,17 +163,28 @@ function callback(results, status) {
   	}	
 	else if(status == "ZERO_RESULTS")
   	{
-		dispHTML="<div class='card-panel red darken-1' style='color:#FFFFFF'>";
-		dispHTML+="<h4>ERROR INFORMATION</h4>";
-		dispHTML+="<ul>";
-		dispHTML+="<li>Error Returned: No Results Returned";
-		dispHTML+="<li>Latitude: "+userLoc.lat+"</li>";
-		dispHTML+="<li>Longitude: "+userLoc.lng+"</li>";
-		dispHTML+="</ul>";
-		dispHTML+="</div>";
-		$("#errorInfo").html(dispHTML);
-		$("#loadingCircle").hide();
-		$("#errorInfo").show();
+		radarradius+=1000;
+		console.log("Unable to find a location at "+(radarradius-1000)+" meters. Trying "+radarradius+" meters.");
+		if(radarradius>50000)
+		{
+			dispHTML="<div class='card-panel red darken-1' style='color:#FFFFFF'>";
+			/*dispHTML+="<h4>ERROR INFORMATION</h4>";
+			dispHTML+="<ul>";
+			dispHTML+="<li>Error Returned: No Results Returned";
+			dispHTML+="<li>Latitude: "+userLoc.lat+"</li>";
+			dispHTML+="<li>Longitude: "+userLoc.lng+"</li>";
+			dispHTML+="</ul>";*/
+			dispHTML+="<h4>Where are you?</h4>";
+			dispHTML+="<p>We looked and looked and looked. You must be in the middle of the desert or something because there isn't anything within at least 30 miles of your location!</p>";
+			dispHTML+="</div>";
+			$("#errorInfo").html(dispHTML);
+			$("#loadingCircle").hide();
+			$("#errorInfo").show();		
+		}
+		else
+		{
+			locationCallback();	
+		}
   	}
 }
 function createCard(result)
