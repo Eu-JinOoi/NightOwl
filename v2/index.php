@@ -117,7 +117,7 @@ var userLoc = {lat: 33.810188, lng: -117.921142};
 var passLoc;
 var browserSupportFlag =  new Boolean();
 var locationDetermined=false;
-var radarradius=2000;
+var radarradius=500;
 //var loadedPIDs=[];
 function initMap() {
   // Try W3C Geolocation (Preferred)
@@ -138,7 +138,6 @@ function initMap() {
 		
 		
   }
-  
 }
 function locationCallback()
 {
@@ -151,20 +150,24 @@ function locationCallback()
   			}, callback);	
 }
 function callback(results, status) {
-  	if (status === google.maps.places.PlacesServiceStatus.OK) {
-	  	allRes=results;
-    for (var i = 0; i < results.length; i++) 
+  	if (status === google.maps.places.PlacesServiceStatus.OK && results.length>=13) 
 	{
-      	//createMarker(results[i]);
-	  	//alert(results[i].name);
-	  	createCard(results[i]);
-    	}
-		$("#loadingCircle").hide();
-  	}	
-	else if(status == "ZERO_RESULTS")
+	  	allRes=results;
+		for (var i = 0; i < results.length; i++) 
+		{
+			//createMarker(results[i]);
+			//alert(results[i].name);
+			createCard(results[i]);
+			}
+			$("#loadingCircle").hide();
+		}	
+	else if(status == "ZERO_RESULTS" ||  results.length<13) 
   	{
 		radarradius+=1000;
-		console.log("Unable to find a location at "+(radarradius-1000)+" meters. Trying "+radarradius+" meters.");
+		if(status=="ZERO_RESULTS")
+			console.log("Unable to find a location at "+(radarradius-1000)+" meters. Trying "+radarradius+" meters.");
+		else
+			console.log("At "+(radarradius-1000)+" meters only "+results.length+" were found. Trying "+radarradius+" meters.");
 		if(radarradius>50000)
 		{
 			dispHTML="<div class='card-panel red darken-1' style='color:#FFFFFF'>";
